@@ -5,7 +5,7 @@
 
 typedef struct
 {
-	int fecha[19];
+	char fecha[19];
 	char tipo[19];
 	float datos[24];
 }datos_2122;
@@ -19,7 +19,7 @@ int main()
 	char tamano;
 	float numero;
 	
-	plectura = fopen("C:/Users/Adrian/Downloads/generacion_por_tecnologias_21_22.csv","r");
+	plectura = fopen("C:/Users/Adrian/Downloads/generacion_por_tecnologias_21_22_puntos.csv","r");
 	
 	if (plectura == NULL) {
         printf("No se pudo abrir el archivo.\n");
@@ -42,39 +42,31 @@ int main()
 		else if(tamano == ',')
 		{
 			generacion[i].tipo[j] = '\0';
-			break;
+			j++;
 		}
 		else
 		{
 			generacion[i].tipo[j] = tamano;
 			j++;
-		}	    
+		}
+		/*if(tamano > '0' && tamano <'9')
+		{
+			numero = tamano - '0';
+		}*/
+			    
 		//printf("%c", tamano);
-    }  
+    } 
 	
-	/*while (fscanf(plectura, "%c", &tamano) != EOF)
-	{
-		if(tamano == ',')
-		{
-			generacion[i].tipo[j] = '\0';
-			i++;
-			j = 0;
-		}
-		else
-		{
-			generacion[i].tipo[j] = tamano;
-			j++;
-		}	    
-    }*/
-    
+	
 
 
 	fclose(plectura);
 	
-	for(k=0;k<i;k++)
+	for(k=4;k<i;k++)
 	{
 		printf("Linea %d: %s\n", k+1, generacion[k].tipo);
 	}
+
 	
 	return 0;
 }
