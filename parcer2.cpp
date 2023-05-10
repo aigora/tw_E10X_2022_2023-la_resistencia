@@ -2,7 +2,7 @@
 #include<malloc.h>
 #include<string.h>
 typedef struct{
-	char fila[100];
+	char fila[10000];
 }lineas;
 
 int main()
@@ -20,20 +20,21 @@ int main()
 		c=fgetc(input);
 		if(c=='\n') n++;
 	}//contar lineas del archivo
-	printf("Numero de lineas= %i",n);
+	//printf("Numero de lineas= %i",n);
 	rewind(input);
 	filas=(lineas*)malloc(n*sizeof(lineas));
 	
 	for(i=0;i<n;i++)
 	{
 		fgets(filas[i].fila,sizeof(filas[i].fila),input);
-		filas[i].fila[strlen(filas[i].fila)-1]=',';
+		filas[i].fila[strlen(filas[i].fila)-1]=',';//Se añade un coma justo antes del \0
 		filas[i].fila[strlen(filas[i].fila)]='\0';
 	}//recoger TODAS las filas
 	
-	for(i=4;i<n;i++)
+	for(i=0;i<n;i++)
 	{
 		printf("%s\n",filas[i].fila);
 	}
 	fclose(input);
+	
 }
