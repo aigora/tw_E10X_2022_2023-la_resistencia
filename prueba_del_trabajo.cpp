@@ -19,7 +19,7 @@ int main()
 	char tamano;
 	float numero;
 	
-	plectura = fopen("C:/Users/Adrian/Downloads/generacion_por_tecnologias_21_22_puntos.csv","r");
+	plectura = fopen("generacion_por_tecnologias_21_22_puntos.csv","r");
 	
 	if (plectura == NULL) {
         printf("No se pudo abrir el archivo.\n");
