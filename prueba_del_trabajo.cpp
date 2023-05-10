@@ -25,7 +25,7 @@ int main()
         printf("No se pudo abrir el archivo.\n");
         return 1; // Terminar el programa con un código de error
     }
-    
+
 	while (fscanf(plectura, "%c", &tamano) != EOF)
 	{
 		if (i >= 100) 
@@ -62,7 +62,7 @@ int main()
 
 	fclose(plectura);
 	
-	for(k=4;k<i;k++)
+	for(k=0;k<i;k++)
 	{
 		printf("Linea %d: %s\n", k+1, generacion[k].tipo);
 	}
