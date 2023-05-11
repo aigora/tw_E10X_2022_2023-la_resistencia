@@ -13,7 +13,7 @@ float obtener_datos(char *filas);
 
 int main()
 {
-	int n,i,k,j = 0;
+	int n,i;
 	char c;
 	lineas *filas;
 	FILE *input, *output;
@@ -39,17 +39,18 @@ int main()
 	
 
 	/*for(i=4;i<n;i++)
-
-	for(i=0;i<n;i++)
-
 	{
 		printf("%s\n",filas[i].fila);
 	}*/
-	for(i=8;i<n;i++)
+	
+	//printf("\n%s", filas[6].fila);
+	
+	for(i=4;i<n;i++)
 	{
 		printf("%s %.2f\n",filas[i].fila,obtener_datos(filas[i].fila));
 	} 
 
+	
 	
 	fclose(input);
 	
@@ -60,32 +61,24 @@ int main()
 
 float obtener_datos(char *filas)
 {
-	char numdato[25];
-	float dato[25];
-	float datofinal, suma;
-	int k = 0, i, j;
+	char numdato[24];
+	float dato[24];
+	int k = 0, i = 0, j;
 	
-	while(k<24)
+	while(k<23)
 	{
 		for(j=0; filas[i] != ',';j++,i++)
 		{
 			numdato[j]=filas[i];
 		}
 		numdato[j]='\0';
-		printf("esta es la nota como cadena: %s\n",numdato);
+		printf("esta es el dato como cadena: %s\n",numdato);
 		dato[k]=atof(numdato);
-		printf ("esta es la nota como real: %f\n",dato[k]);
+		printf ("esta es el dato como real: %f\n",dato[k]);
 		i++;
 		k++;
 	}
-	for(k=0,suma=0;k<24;k++)
-	{
-		suma += dato[k];
-	}
 	
-	datofinal = suma/3.;
 	
-	return datofinal;
-
-
+	return dato[k];
 }
