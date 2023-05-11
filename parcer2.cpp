@@ -4,7 +4,9 @@
 #include<stdlib.h>
 
 typedef struct{
+
 	char fila[1000];
+
 }lineas;
 
 float obtener_datos(char *filas);
@@ -31,11 +33,15 @@ int main()
 	for(i=0;i<n;i++)
 	{
 		fgets(filas[i].fila,sizeof(filas[i].fila),input);
-		filas[i].fila[strlen(filas[i].fila)-1]=',';
+		filas[i].fila[strlen(filas[i].fila)-1]=',';//Se añade un coma justo antes del \0
 		filas[i].fila[strlen(filas[i].fila)]='\0';
 	}//recoger TODAS las filas
 	
+
 	/*for(i=4;i<n;i++)
+
+	for(i=0;i<n;i++)
+
 	{
 		printf("%s\n",filas[i].fila);
 	}*/
@@ -47,6 +53,7 @@ int main()
 	
 	fclose(input);
 	
+
 	
 	return 0;
 }
@@ -79,4 +86,6 @@ float obtener_datos(char *filas)
 	datofinal = suma/3.;
 	
 	return datofinal;
+
+
 }
