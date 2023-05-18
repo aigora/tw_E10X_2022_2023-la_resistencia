@@ -13,12 +13,12 @@ float obtener_datos(char *filas);
 
 int main()
 {
-	int n,i;
+	int n = 0,i = 0;
 	char c;
 	lineas *filas;
 	FILE *input, *output;
 	input = fopen("generacion_por_tecnologias_21_22_puntos.csv","r");
-	output= fopen("generacion_por_tecnologias_21_22_puntos.csv","a");
+	output= fopen("salida.csv","w");
 	if(input==NULL)printf("problema al abrir el fichero input");
 	if(output==NULL)printf("Problema al abrir el fichero output");
 	while(!feof(input))
@@ -37,17 +37,10 @@ int main()
 		filas[i].fila[strlen(filas[i].fila)]='\0';
 	}//recoger TODAS las filas
 	
-
-	/*for(i=4;i<n;i++)
-	{
-		printf("%s\n",filas[i].fila);
-	}*/
-	
-	//printf("\n%s", filas[6].fila);
 	
 	for(i=4;i<n;i++)
 	{
-		printf("%s %.2f\n",filas[i].fila,obtener_datos(filas[i].fila));
+		printf("%.2f\n", obtener_datos(filas[i].fila));
 	} 
 
 	
@@ -61,17 +54,17 @@ int main()
 
 float obtener_datos(char *filas)
 {
-	char numdato[24];
-	float dato[24];
+	char numdato[20];
+	float dato[25];
 	int k = 0, i = 0, j;
 	
-	while(k<23)
+	while(k<25)
 	{
 		for(j=0; filas[i] != ',';j++,i++)
 		{
 			numdato[j]=filas[i];
 		}
-		numdato[j]='\0';
+		numdato[j] = '\0';
 		printf("esta es el dato como cadena: %s\n",numdato);
 		dato[k]=atof(numdato);
 		printf ("esta es el dato como real: %f\n",dato[k]);
@@ -80,5 +73,5 @@ float obtener_datos(char *filas)
 	}
 	
 	
-	return dato[k];
+	return dato[k-1];
 }
