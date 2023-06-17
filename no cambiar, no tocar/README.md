@@ -4,7 +4,7 @@
 
 ## Integrantes del equipo
 
-[Lucas van Tatenhove,Adrían Surrianu,Darío Sirrera,Perdo Seguí]
+[Lucas van Tatenhove,Adrían Suruianu,Darío Sirera,Perdo Seguí]
 
 ## Objetivos del trabajo
 
