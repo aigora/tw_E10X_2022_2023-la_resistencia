@@ -1,11 +1,11 @@
-# [Título del trabajo]
+# [Trabajo de grupo]
 
-[Descripción breve del proyecto a realizar (2-3 frases).]
+[El trabajo consiste en manipular datos extraídos de archivos csv y hacer uso de ellos en operaciones breves]
 
 ## Integrantes del equipo
 
-[Nombres, apellidos, y usuario GitHub de los integrantes del equipo.]
+[Lucas van Tatenhove,Adrían Surrianu,Darío Sirrera,Perdo Seguí]
 
 ## Objetivos del trabajo
 
-[Lista de los objetivos que se persiguen con el trabajo propuesto.]
+[Realizar operaciones con los datos.]
