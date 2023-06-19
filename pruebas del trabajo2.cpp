@@ -101,13 +101,15 @@ int main()
 					q++;
 					printf("Valor de q= %i",q);
 					printf("\t%c\t",numlineas[5].lineas[11]);
+					d=0;
 					while(numlineas[i].lineas[q]!=',')
 					{
 						extradatos[l].cardato[d]=numlineas[i].lineas[q];
 						d++;
-						l++;
 						q++;
+						printf("\t%s\t",extradatos[l].cardato);
 					}
+					l++;
 						
 				}
 			}
