@@ -26,7 +26,7 @@ int main()
 	datos n[24];
 	int i = 0, j = 0;
 	FILE *pf;
-	pf = fopen("C:/Users/Adrian/OneDrive/Documentos/Informatica/generacion_por_tecnologias_21_22_puntos_simplificado.csv","r");
+	pf = fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv","r");
 	if (pf == NULL)
     {
         printf("Error al abrir el fichero.\n");
