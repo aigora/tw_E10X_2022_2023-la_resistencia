@@ -11,7 +11,7 @@ typedef struct
 
 typedef struct
 {
-	char tipo[60];
+	char tipo[35];
 	float dato[24];
 }datos;
 
@@ -21,7 +21,8 @@ int main()
 	//La cantidad de lineas "n" sera la dimension de nuestro vector de estructuras "lin" cada elemento de este vector tendra una linea.
 	lin *numlineas; //El puntero de estructuras que cambiaremos a vector con dimension n.
 	FILE *fich;
-	int n,i,j,numcomas;
+	int n,i,j,k,numcomas;
+	datos numdatos[17];
 	if((fich=fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv","r"))==NULL)printf("Problema al abrir fichero"); //Apertura
 	
 	while(!feof(fich))
@@ -41,6 +42,7 @@ int main()
 		//Hay que cerrar la cadena obviamente se añade un '\0'
 		numlineas[i].lineas[strlen(numlineas[i].lineas)]='\0';
 	}
+	fclose(fich);
 	//Se ve si hemos copiado bien el archivo entero
 	/*for(i=0;i<n;i++)
 	{
@@ -57,19 +59,24 @@ int main()
 	y cambiar los numeros de caracteres a floats(numeros reales)*/
 	
 	//Para ello encontramos la coma en cada cadena
-	for(i=5;i<n;i++)
+	for(i=5,k=0;i<n;i++,k++)
 	{
 		for(j=0,numcomas=0;numcomas<1;j++)
 		{
 			if(numlineas[i].lineas[j]==',')
 			{
 				numcomas++;
-				printf("\nEn la linea %i la primera coma se encuentra en la posicion %i",i,j);	
+				printf("\nEn la linea %i la primera coma se encuentra en la posicion %i",i,j);
+				//Ahora copiamos en la segunda estructura el nombre del tipo correspondiente
+				memcpy(numdatos[k].tipo,numlineas[i].lineas,j*sizeof(char));	
 			}
 		}
-
-
 	}
+	for(i=0;i<17;i++)
+	{
+		printf("\n%s",numdatos[i].tipo);
+	}
+	
 	
 	
 	
