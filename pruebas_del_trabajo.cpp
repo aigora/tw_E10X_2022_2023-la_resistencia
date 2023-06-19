@@ -51,6 +51,8 @@ int main()
     {
     	printf("%s\n", t[i].tipo);
 	}
+	
+	printf("%s",c[6].linea);
 
     fclose(pf);
 	
