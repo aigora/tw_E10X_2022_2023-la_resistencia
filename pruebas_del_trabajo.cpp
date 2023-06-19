@@ -26,6 +26,15 @@ typedef struct
     double numero[24];
 }datos;
 
+float media();
+float moda();
+float mediana();
+float maximo();
+float minimo();
+float varianza();
+float desviacion_tipica();
+float buscar_dato();
+
 int main()
 {
 	lineas c[22];
@@ -176,12 +185,48 @@ int main()
 		}
 		
 	}
-	printf("%.15f",n[5].numero[1]);
-
-	//printf("%s",c[6].linea);
 
     fclose(pf);
 	
+	char tecla;
+	
+    printf("--------------------------------------------------------MENU--------------------------------------------------------\n");
+    printf("1) Buscador de datos.\n");
+    printf("2) Calculos estadisticos.\n");
+    printf("3) \n");
+    printf("A donde quiere acceder?\n");
+    scanf("%i", &tecla);
+    
+    switch(tecla)
+    {
+    	case 1:
+    		int x;
+    		printf("A que tipo de generacion quiere acceder?\n");
+    		for(i=0;i<17;i++)
+    		{
+    			printf("%i) %s\n", i+1 ,t[i].tipo);
+			}
+			scanf("%i", &x);
+			for(i=0;i<=17;i++)
+			{
+				if(x == i)
+			{
+				printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 años(24 datos en total)\n");
+				printf("Elija la posicion del valor deseado:\t");
+				scanf("%i", &j);
+				printf("%.15lf GWh",n[i-1].numero[j-1]);
+			}
+			}
+			
+    		break;
+    	case 2:
+    		printf("");
+    		break;
+    		
+			
+	}
+    
+    
     
     
     
