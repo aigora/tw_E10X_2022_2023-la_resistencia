@@ -21,7 +21,7 @@ int main()
 	//La cantidad de lineas "n" sera la dimension de nuestro vector de estructuras "lin" cada elemento de este vector tendra una linea.
 	lin *numlineas; //El puntero de estructuras que cambiaremos a vector con dimension n.
 	FILE *fich;
-	int n,i;
+	int n,i,j,numcomas;
 	if((fich=fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv","r"))==NULL)printf("Problema al abrir fichero"); //Apertura
 	
 	while(!feof(fich))
@@ -41,10 +41,36 @@ int main()
 		//Hay que cerrar la cadena obviamente se añade un '\0'
 		numlineas[i].lineas[strlen(numlineas[i].lineas)]='\0';
 	}
-	for(i=0;i<n;i++)
+	//Se ve si hemos copiado bien el archivo entero
+	/*for(i=0;i<n;i++)
 	{
 		printf("%s",numlineas[i].lineas);
+	}*/
+	
+	//Pero solo nos interesa desde la linea que empiezan los tipos de datos(linea 6)
+	/*for(i=6;i<n;i++)
+	{
+		printf("\n%s",numlineas[i].lineas);
+	}*/
+	
+	/*Lo siguente que tenemos que hacer es ordenar los nombres de los tipos en la segunda estructura 
+	y cambiar los numeros de caracteres a floats(numeros reales)*/
+	
+	//Para ello encontramos la coma en cada cadena
+	for(i=5;i<n;i++)
+	{
+		for(j=0,numcomas=0;numcomas<1;j++)
+		{
+			if(numlineas[i].lineas[j]==',')
+			{
+				numcomas++;
+				printf("\nEn la linea %i la primera coma se encuentra en la posicion %i",i,j);	
+			}
+		}
+
+
 	}
+	
 	
 	
 	
