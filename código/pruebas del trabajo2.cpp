@@ -9,30 +9,69 @@ typedef struct
 	char lineas[500];
 }lin;
 
-typedef struct
+struct datos
 {
 	char tipo[35];
 	double dato[24];
-}datos;
+}numdatos[17];
 
 struct extra
 {
 	char cardato[30];//El numero de caracteres que permite la cadena cardato
 }extradatos[408];//La dimension es 408 numero que corresponde al numero total de datos que hay, obtenido multiplicando 17*24
 
-//void DATOS(char *,float *);
-
+void RECOGER(FILE *);
 
 int main()
+{
+	int tecla,n=0,i=0,j=0,k=0,numcomas=0,q=0,d=0,l=0,m=0;
+	FILE *fich;
+	if((fich=fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv","r"))==NULL)printf("Problema al abrir fichero"); //Apertura
+	
+	RECOGER(fich);//Hacemos la llamada a la funcion que nos almacena todos los datos del archivo en la memoria del ordenador
+	
+	
+	
+	printf("--------------------------------------------------------MENU--------------------------------------------------------\n");
+    printf("1) Buscador de datos.\n");
+    printf("2) Calculos estadisticos.\n");
+    printf("3) \n");
+    printf("A donde quiere acceder?\n");
+    scanf("%i", &tecla);
+    switch(tecla)
+    {
+    	case 1:
+    		int x;
+    		printf("A que tipo de generacion quiere acceder?\n");
+    		for(i=0;i<17;i++)
+    		{
+    			printf("%i) %s\n", i+1 ,numdatos[i].tipo);
+			}
+			scanf("%i", &x);
+			for(i=0;i<=17;i++)
+			{
+				if(x == i)
+			{
+				printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 años(24 datos en total)\n");
+				printf("Elija la posicion del valor deseado:\t");
+				scanf("%i", &j);
+				printf("%.15lf GWh",numdatos[i-1].dato[j-1]);
+			}
+			}
+			
+    		break;
+    	case 2:
+    		printf("");
+    		break;
+	}
+}
+
+void RECOGER(FILE *fich)
 {
 	//Primero hay que contar la cantidad de lineas que tenemos.
 	//La cantidad de lineas "n" sera la dimension de nuestro vector de estructuras "lin" cada elemento de este vector tendra una linea.
 	lin *numlineas; //El puntero de estructuras que cambiaremos a vector con dimension n.
-	FILE *fich;
 	int n=0,i=0,j=0,k=0,numcomas=0,q=0,d=0,l=0,m=0;
-	char c;
-	datos numdatos[17];
-	if((fich=fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv","r"))==NULL)printf("Problema al abrir fichero"); //Apertura
 	
 	while(!feof(fich))
 	{
@@ -116,18 +155,12 @@ int main()
 	}
 	
 	//Comprobacion
-	for(i=0;i<17;i++)
+	
+	/*for(i=0;i<17;i++)
 	{
 		for(j=0;j<24;j++)
 		{
 			printf("El dato %i del tipo %i en numeros reales es %f",j+1,i+1,numdatos[i].dato[j]);
     	}
-	}
-
-	
-
+	}*/
 }
-
-
-
-
