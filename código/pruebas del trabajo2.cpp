@@ -1,4 +1,4 @@
-//La idea es guardar cada una de las lineas en una cadena de caracteres y trabajar con ella
+//La idea es guardar cada una de las lineas en una cadena de caracteres y trabajar con solo las cadenas
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -17,8 +17,8 @@ typedef struct
 
 struct extra
 {
-	char cardato[50];
-}extradatos[408];
+	char cardato[30];//El numero de caracteres que permite la cadena cardato
+}extradatos[408];//La dimension es 408 numero que corresponde al numero total de datos que hay, obtenido multiplicando 17*24
 
 //void DATOS(char *,float *);
 
@@ -46,12 +46,13 @@ int main()
 	for(i=0;i<n;i++)
 	{
 		fgets(numlineas[i].lineas,sizeof(numlineas[i].lineas),fich);//Esto copia cada fila en cada elemento
-		//Lo que pasa es que el fgets tambien copia el \n asi que hay que cambiarlo por un , para cerrar la linea
+		//Lo que pasa es que el fgets tambien copia el '\n' asi que hay que cambiarlo por un , para cerrar la linea
 		numlineas[i].lineas[strlen(numlineas[i].lineas)-1]=',';
 		//Hay que cerrar la cadena obviamente se añade un '\0'
 		numlineas[i].lineas[strlen(numlineas[i].lineas)]='\0';
 	}
-	fclose(fich);
+	fclose(fich);//Cerramos fichero ya que ya no vamos a hacer nada con él
+	
 	//Se ve si hemos copiado bien el archivo entero
 	/*for(i=0;i<n;i++)
 	{
@@ -82,25 +83,6 @@ int main()
 				//printf("\nEn la linea %i la primera coma se encuentra en la posicion %i",i,j);
 				//Ahora copiamos en la segunda estructura el nombre del tipo correspondiente
 				memcpy(numdatos[k].tipo,numlineas[i].lineas,j*sizeof(char));
-			}
-		}
-	}
-	
-	//Ver si los nombres de los tipos estan bien copiados 
-	/*for(i=0;i<17;i++)
-	{
-		printf("\n%s",numdatos[i].tipo);
-	}*/
-	
-	//Ahora copiamos los datos de cada tipo en CARACTERES en otras cadenas.
-	for(i=5,k=0;i<n;i++,k++)
-	{
-		for(j=0,numcomas=0;numcomas<1;j++)
-		{
-			if(numlineas[i].lineas[j]==',')
-			{
-				numcomas++;
-				//printf("\nEn la linea %i la primera coma se encuentra en la posicion %i",i,j);
 				q=j;
 				for(m=0;m<24;m++)
 				{
@@ -116,12 +98,13 @@ int main()
 						q++;											//La posicion de la coma está indicada por la q esta sigue la cadena copiada
 						//printf("\t%s\t",extradatos[l].cardato);
 					}
-					l++;		
+					l++;			
 				}
 			}
 		}
 	}
-	
+
+	//Tranformamos los datos de caracteres a floats(numeros reales aptos para hacer calculos)
 	k=0;
 	for(i=0;i<17;i++)
 	{
@@ -131,42 +114,18 @@ int main()
 			k++;
 		}
 	}
-	while(c='s')
-	{
-		printf("Quiere entrar en menu de encontrar datos? escriba s o n\n");
-		scanf("%c",&c);
-		if(c=='s')
-		{
-			printf("Menu de encontrar datos que dato desea\nTipo de generacion(en numero):");
-			scanf("%i",&i);
-			printf("Numero de dato:");
-			scanf("%i",&j);
-			printf("El dato pedido es %.15f\n",numdatos[i-1].dato[j-1]);
-		}	
-	}
-
+	
+	//Comprobacion
 	for(i=0;i<17;i++)
 	{
 		for(j=0;j<24;j++)
 		{
-			printf("El dato %i del tipo  en numeros reales es %f",numdatos[i].dato[j]);
+			printf("El dato %i del tipo %i en numeros reales es %f",j+1,i+1,numdatos[i].dato[j]);
     	}
 	}
 
-	//Ahora tenemos que cambiar los datos a numeros real
 	
-		
-	/*for(i=5;i<n;i++)
-	{
-		DATOS(numlineas[i].lineas,numdatos[i].dato);
-	}
-}
-void DATOS(char *numlineas,float *numdatos)
-{
-	for()*/
-	
-	
-	
+
 }
 
 
