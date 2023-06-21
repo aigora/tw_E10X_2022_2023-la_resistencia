@@ -24,6 +24,9 @@ void RECOGER(FILE *);
 int MOSTRARTIPOS(int );
 int CALCULOESTAD(int);
 int BUSCARDATO(int,int);
+void MENU1();
+void MENU2();
+void MENU3();
 float media(int,int);
 float varianza(int);
 float POT(float,int);
@@ -40,70 +43,7 @@ int main()
 	RECOGER(fich);//Hacemos la llamada a la funcion que nos almacena todos los datos del archivo en la memoria del ordenador
 	
 	//EL menu con sus llamadas a funciones que harán lo pedido
-	printf("--------------------------------------------------------MENU--------------------------------------------------------\n");
-    printf("1) Buscador de datos.\n");
-    printf("2) Calculos estadisticos.\n");
-    printf("3) \n");
-    printf("A donde quiere acceder?\n");
-    scanf("%i", &tecla);
-    switch(tecla)
-    {
-    	case 1:
-    		printf("A que tipo de generacion quiere acceder?\n");
-    		MOSTRARTIPOS(0);
-			scanf("%i", &x);
-			printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 años(24 datos en total)\n");
-			printf("Elija la posicion del valor deseado:\t");
-			scanf("%i", &j);
-			BUSCARDATO(x,j);		
-    		break;
-    	case 2:
-    		printf("Que calculo desea?\n");
-    		x=CALCULOESTAD(x);
-			if(x==1)
-			{
-				printf("De que año desea calcular medias? 1 para el primero(2021) 2 para el segundo(2022):\n");
-				scanf("%i",&e);
-				while(e==1)
-				{
-					printf("De que tipo de generacion quiere calcular la media?:\n");
-					MOSTRARTIPOS(0);
-					scanf("%i",&y);
-					printf("La media anual deseada es %f",media(1,y));
-					printf("\nDesea calcular otra media de 2021? 1 para si, 2 para calcular medias del 2022 y cualquier otro numero para otros calculos:\n");
-					scanf("%i",&e);
-				}
-				while(e==2)
-				{
-					printf("De que tipo de generacion quiere calcular la media?:\n");
-					MOSTRARTIPOS(0);
-					scanf("%i",&y);
-					printf("La media anual deseada es %f",media(2,y));
-					printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
-					scanf("%i",&e);
-				}
-			}
-			//else if(x==2)printf("La mediana anual deseada es %f",mediana(x));
-			else if(x==3)
-			{
-				printf("De que año desea calcularla? 1 para el primero(2021) 2 para el segundo(2022):\n");
-				scanf("%i",&e);
-				while(e==1)
-				{
-					printf("La varianza anual deseada es %f\n",varianza(1));
-					printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
-					scanf("%i",&e);
-				}
-				while(e==2)
-				{
-					printf("La varianza anual deseada es %f\n",varianza(2));
-					printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
-					scanf("%i",&e);
-				}
-			}
-			//else if(x==4)printf("El maximo anual es %f y el minimo es %f",max(x),min(x));
-    		break;
-	}
+	MENU1();
 }
 
 void RECOGER(FILE *fich)//funcion que recoge los datos del archivo y los mete en la memoria del programa
@@ -203,6 +143,100 @@ void RECOGER(FILE *fich)//funcion que recoge los datos del archivo y los mete en
 			printf("El dato %i del tipo %i en numeros reales es %f",j+1,i+1,numdatos[i].dato[j]);
     	}
 	}*/
+}
+
+void MENU1()
+{
+	int menu1,i=0,j=0,x=0,e=0,y=0;
+	int regresar = 0;
+	while (menu1 != 4)
+	{
+		printf("--------------------------------------------------------MENU--------------------------------------------------------\n");
+        printf("1) Buscador de datos.\n");
+        printf("2) Calculos estadisticos.\n");
+        printf("3) Ordenacion de datos\n");
+        printf("4) Salir\n");
+        printf("A donde quiere acceder?\n");
+        scanf("%i", &menu1);
+        switch(menu1)
+        {
+    	    case 1:
+    	    	while (!regresar)
+    	    	{
+    	    		MENU2();
+				}		
+    		    break;
+    	    case 2:
+    	    	while (!regresar)
+    	    	{
+    	    		MENU3();
+				}
+    		    break;
+	}
+	}
+	
+}
+
+void MENU2()
+{
+	int menu1,i=0,j=0,x=0,e=0,y=0;
+	int regresar = 0;
+	printf("A que tipo de generacion quiere acceder?\n");
+    MOSTRARTIPOS(0);
+    scanf("%i", &x);
+	printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 años(24 datos en total)\n");
+	printf("Elija la posicion del valor deseado:\t");
+	scanf("%i\n", &j);
+	BUSCARDATO(x,j);
+}
+
+void MENU3()
+{
+	int menu1,i=0,j=0,x=0,e=0,y=0;
+	int regresar = 0;
+	printf("Que calculo desea?\n");
+    x=CALCULOESTAD(x);
+	if(x==1)
+	{
+		printf("De que año desea calcular medias? 1 para el primero(2021) 2 para el segundo(2022):\n");
+		scanf("%i",&e);
+		while(e==1)
+	    {
+	        printf("De que tipo de generacion quiere calcular la media?:\n");
+	        MOSTRARTIPOS(0);
+	        scanf("%i",&y);
+            printf("La media anual deseada es %f",media(1,y));
+	        printf("\nDesea calcular otra media de 2021? 1 para si, 2 para calcular medias del 2022 y cualquier otro numero para otros calculos:\n");
+	        scanf("%i",&e);
+	    }
+	    while(e==2)
+	    {
+		    printf("De que tipo de generacion quiere calcular la media?:\n");
+		    MOSTRARTIPOS(0);
+		    scanf("%i",&y);
+		    printf("La media anual deseada es %f",media(2,y));
+		    printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
+	        scanf("%i",&e);
+	    }  
+	    }
+	//else if(x==2)printf("La mediana anual deseada es %f",mediana(x));
+	else if(x==3)
+	{
+	printf("De que año desea calcularla? 1 para el primero(2021) 2 para el segundo(2022):\n");
+	scanf("%i",&e);
+	    while(e==1)
+	    {
+		    printf("La varianza anual deseada es %f\n",varianza(1));
+	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
+		    scanf("%i",&e);
+ 	    }
+		while(e==2)
+		{
+			printf("La varianza anual deseada es %f\n",varianza(2));
+		    printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
+			scanf("%i",&e);
+		}
+	}
 }
 
 int BUSCARDATO(int tipo, int numdato)//Funcion que busca el dato deseado
