@@ -87,13 +87,13 @@ int main()
 				while(e==1)
 				{
 					printf("La media anual deseada es %f",media(1));
-					printf("\nDesea calcular otra media de 2021? 1 para si, cualquier otro numero para no:\n");
+					printf("\nDesea calcular otra media de 2021? 1 para si, 2 para calcular medias del 2022 y cualquier otro numero para otros calculos:\n");
 					scanf("%i",&e);
 				}
 				while(e==2)
 				{
 					printf("La media anual deseada es %f",media(2));
-					printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no:\n");
+					printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
 					scanf("%i",&e);
 				}
 			}
@@ -231,7 +231,7 @@ float media(int r)
 			for(i=0;i<12;i++)
 			{
 				media+=numdatos[x-1].dato[i];
-				printf("%f\t",media);
+				//printf("%f\t",media);
 			}	
 	}
 	else if(r==2)
@@ -239,7 +239,7 @@ float media(int r)
 		for(i=12;i<24;i++)
 			{
 				media+=numdatos[x-1].dato[i];
-				printf("%f\t",media);
+				//printf("%f\t",media);
 			}
 	}
 	media/=12;
