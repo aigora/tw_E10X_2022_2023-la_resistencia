@@ -1,401 +1,249 @@
-/**/
+//La idea es guardar cada una de las lineas en una cadena de caracteres y trabajar con solo las cadenas
 
-
-#include <stdio.h>
+#include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 
-
 typedef struct
 {
-	char linea[400];
-}lineas;
+	char lineas[500];
+}lin;
 
-typedef struct
+struct datos
 {
-	char tipo[30];
-}tipos;
+	char tipo[35];
+	double dato[24];
+}numdatos[17];
 
-typedef struct
+struct extra
 {
-	char num1[30],num2[30],num3[30],num4[30]
-	    ,num5[30],num6[30],num7[30],num8[30]
-		,num9[30],num10[30],num11[30],num12[30]
-		,num13[30],num14[30],num15[30],num16[30]
-		,num17[30],num18[30],num19[30],num20[30]
-		,num21[30],num22[30],num23[30],num24[30];
-    double numero[24];
-}datos;
+	char cardato[30];//El numero de caracteres que permite la cadena cardato
+}extradatos[408];//La dimension es 408 numero que corresponde al numero total de datos que hay, obtenido multiplicando 17*24
 
-void lectura_datos();
-float media();
-float moda();
-float mediana();
-float maximo();
-float minimo();
-float varianza();
-float desviacion_tipica();
-float buscar_dato(int x, int j);
+void RECOGER(FILE *);
+int BUSCARDATO(int,int);
+float media(int);
+//float mediana(int);
+//float desviacion(int);
+//float max(int);
+//float min(int);
 
 int main()
 {
-	lineas c[22];
-	tipos t[22];
-	datos n[22];
-	int i = 0, j = 0, k = 0;
-	FILE *pf, *pl;
-	pf = fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv","r");
-	if (pf == NULL)
-    {
-        printf("Error al abrir el fichero.\n");
-        return -1;
-    }
+	int tecla,i=0,j=0,x=0,e=0;
+	FILE *fich;
+	if((fich=fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv","r"))==NULL)printf("Problema al abrir fichero"); //Apertura
 	
-	int contador = 0;
-
-    while (fgets(c[i].linea, sizeof(c[i].linea), pf) != NULL) 
-	{
-        contador++;
-
-        if (contador >= 5) 
-		{
-            //printf("%s\n", c[i].linea);
-            fscanf(pf,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,]"
-			          ",%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,]"
-					  ",%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]",t[i].tipo,
-			          n[i].num1,n[i].num2,n[i].num3,n[i].num4,n[i].num5,n[i].num6
-					 ,n[i].num7,n[i].num8,n[i].num9,n[i].num10,n[i].num11,n[i].num12
-					 ,n[i].num13,n[i].num14,n[i].num15,n[i].num16,n[i].num17,n[i].num18
-					 ,n[i].num19,n[i].num20,n[i].num21,n[i].num22,n[i].num23,n[i].num24);
-            
-            i++;
-        }
-    }
-    /*for(i=0;i<5;i++)
-    {
-    	printf("%s:%s,%s,%s,%s,%s,%s,%s,%s,%s,%s"
-		       ",%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s"
-			   ",%s,%s,%s\n", t[i].tipo,n[i].num1
-			   ,n[i].num2,n[i].num3,n[i].num4,n[i].num5
-			   ,n[i].num6,n[i].num7,n[i].num8,n[i].num9
-			   ,n[i].num10,n[i].num11,n[i].num12,n[i].num13
-			   ,n[i].num14,n[i].num15,n[i].num16,n[i].num17
-			   ,n[i].num18,n[i].num19,n[i].num20,n[i].num21
-			   ,n[i].num22,n[i].num23,n[i].num24);
-	}*/
-	for(i=0;i<=17;i++)
-	{
-		for(j=0;j<24;j++)
-		{
-			if(j == 0)
-			{
-				n[i].numero[j] = atof(n[i].num1);
-			}
-			else if(j == 1)
-			{
-				n[i].numero[j] = atof(n[i].num2);
-			}
-			else if(j == 2)
-			{
-				n[i].numero[j] = atof(n[i].num3);
-			}
-			else if(j == 3)
-			{
-				n[i].numero[j] = atof(n[i].num4);
-			}
-			else if(j == 4)
-			{
-				n[i].numero[j] = atof(n[i].num5);
-			}
-			else if(j == 5)
-			{
-				n[i].numero[j] = atof(n[i].num6);
-			}
-			else if(j == 6)
-			{
-				n[i].numero[j] = atof(n[i].num7);
-			}
-			else if(j == 7)
-			{
-				n[i].numero[j] = atof(n[i].num8);
-			}
-			else if(j == 8)
-			{
-				n[i].numero[j] = atof(n[i].num9);
-			}
-			else if(j == 9)
-			{
-				n[i].numero[j] = atof(n[i].num10);
-			}
-			else if(j == 10)
-			{
-				n[i].numero[j] = atof(n[i].num11);
-			}
-			else if(j == 11)
-			{
-				n[i].numero[j] = atof(n[i].num12);
-			}
-			else if(j == 12)
-			{
-				n[i].numero[j] = atof(n[i].num13);
-			}
-			else if(j == 13)
-			{
-				n[i].numero[j] = atof(n[i].num14);
-			}
-			else if(j == 14)
-			{
-				n[i].numero[j] = atof(n[i].num15);
-			}
-			else if(j == 15)
-			{
-				n[i].numero[j] = atof(n[i].num16);
-			}
-			else if(j == 16)
-			{
-				n[i].numero[j] = atof(n[i].num17);
-			}
-			else if(j == 17)
-			{
-				n[i].numero[j] = atof(n[i].num18);
-			}
-			else if(j == 18)
-			{
-				n[i].numero[j] = atof(n[i].num19);
-			}
-			else if(j == 19)
-			{
-				n[i].numero[j] = atof(n[i].num20);
-			}
-			else if(j == 20)
-			{
-				n[i].numero[j] = atof(n[i].num21);
-			}
-			else if(j == 21)
-			{
-				n[i].numero[j] = atof(n[i].num22);
-			}
-			else if(j == 22)
-			{
-				n[i].numero[j] = atof(n[i].num23);
-			}
-			else if(j == 23)
-			{
-				n[i].numero[j] = atof(n[i].num24);
-			}
-			
-		}
-		
-	}
-
-    fclose(pf);
+	RECOGER(fich);//Hacemos la llamada a la funcion que nos almacena todos los datos del archivo en la memoria del ordenador
 	
-	
-	int tecla;
-	int x;
-	
-    printf("--------------------------------------------------------MENU--------------------------------------------------------\n");
+	//EL menu con sus llamadas a funciones que harán lo pedido
+	printf("--------------------------------------------------------MENU--------------------------------------------------------\n");
     printf("1) Buscador de datos.\n");
     printf("2) Calculos estadisticos.\n");
-    printf("3) Salir\n");
+    printf("3) \n");
     printf("A donde quiere acceder?\n");
     scanf("%i", &tecla);
-    
     switch(tecla)
     {
     	case 1:
     		printf("A que tipo de generacion quiere acceder?\n");
-            for(i=0;i<17;i++)
-            {
-    	        printf("%i) %s\n", i+1 ,t[i].tipo);
-	        }
-	        scanf("%i", &x);
-	        printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 años(24 datos en total)\n");
+    		for(i=0;i<17;i++)
+    		{
+    			printf("%i) %s\n", i+1 ,numdatos[i].tipo);
+			}
+			scanf("%i", &x);
+			printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 años(24 datos en total)\n");
 			printf("Elija la posicion del valor deseado:\t");
 			scanf("%i", &j);
-    		buscar_dato(x,j);
-			
+			BUSCARDATO(x,j);		
     		break;
     	case 2:
-    		printf("");
+    		printf("Que calculo desea?\n");
+    		for(i=0;i<4;i++)
+    		{
+    			printf("%i)",i+1);
+    			if(i==0)
+				{
+    				printf("Calculo de media anual.\n");	
+				}
+				else if(i==1)
+				{
+					printf("Calculo de mediana anual.\n");
+				}
+				else if(i==2)
+				{
+					printf("Calculo de desviacion tipica anual.\n");
+				}
+				else if(i==3)
+				{
+					printf("Calculo del maximo y minimo anual.\n");
+				}
+			}
+			scanf("%i",&x);
+			if(x==1)
+			{
+				printf("De que año desea calcular medias? 1 para el primero(2021) 2 para el segundo(2022):\n");
+				scanf("%i",&e);
+				while(e==1)
+				{
+					printf("La media anual deseada es %f",media(1));
+					printf("\nDesea calcular otra media de 2021? 1 para si, cualquier otro numero para no:\n");
+					scanf("%i",&e);
+				}
+				while(e==2)
+				{
+					printf("La media anual deseada es %f",media(2));
+					printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no:\n");
+					scanf("%i",&e);
+				}
+			}
+			//else if(x==2)printf("La mediana anual deseada es %f",mediana(x));
+			//else if(x==3)printf("La desviacion tipica anual deseada es %f",desviacion(x));
+			//else if(x==4)printf("El maximo anual es %f y el minimo es %f",max(x),min(x));
     		break;
-    	case 3:
-    		char respuesta[5];
-		    printf("Estas seguro de que quieres salir del programa?(si/no)");
-			scanf("%s", &respuesta);
-			break;
 	}
-    
-    
-    
-    
-    
-
-	
-	return 0;
 }
 
-void lectura_datos()
+void RECOGER(FILE *fich)
 {
-	lineas c[22];
-	tipos t[22];
-	datos n[22];
-	int i = 0, j = 0, k = 0;
-	FILE *pf;
-	pf = fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv","r");
-	if (pf == NULL)
-    {
-        printf("Error al abrir el fichero.\n");
-        return;
-    }
+	//Primero hay que contar la cantidad de lineas que tenemos.
+	//La cantidad de lineas "n" sera la dimension de nuestro vector de estructuras "lin" cada elemento de este vector tendra una linea.
+	lin *numlineas; //El puntero de estructuras que cambiaremos a vector con dimension n.
+	int n=0,i=0,j=0,k=0,numcomas=0,q=0,d=0,l=0,m=0;
 	
-	int contador = 0;
-
-    while (fgets(c[i].linea, sizeof(c[i].linea), pf) != NULL) 
+	while(!feof(fich))
 	{
-        contador++;
-
-        if (contador >= 5) 
-		{
-            //printf("%s\n", c[i].linea);
-            fscanf(pf,"%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,]"
-			          ",%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,]"
-					  ",%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]",t[i].tipo,
-			          n[i].num1,n[i].num2,n[i].num3,n[i].num4,n[i].num5,n[i].num6
-					 ,n[i].num7,n[i].num8,n[i].num9,n[i].num10,n[i].num11,n[i].num12
-					 ,n[i].num13,n[i].num14,n[i].num15,n[i].num16,n[i].num17,n[i].num18
-					 ,n[i].num19,n[i].num20,n[i].num21,n[i].num22,n[i].num23,n[i].num24);
-            
-            i++;
-        }
-    }
-    /*for(i=0;i<5;i++)
-    {
-    	printf("%s:%s,%s,%s,%s,%s,%s,%s,%s,%s,%s"
-		       ",%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s"
-			   ",%s,%s,%s\n", t[i].tipo,n[i].num1
-			   ,n[i].num2,n[i].num3,n[i].num4,n[i].num5
-			   ,n[i].num6,n[i].num7,n[i].num8,n[i].num9
-			   ,n[i].num10,n[i].num11,n[i].num12,n[i].num13
-			   ,n[i].num14,n[i].num15,n[i].num16,n[i].num17
-			   ,n[i].num18,n[i].num19,n[i].num20,n[i].num21
-			   ,n[i].num22,n[i].num23,n[i].num24);
+		if(fgetc(fich)=='\n') n++;
+	}
+	//printf("El numero total de lineas en el archivo es %i",n);
+	//Nos da el valor n igual a 22.
+	numlineas=(lin*)malloc(n*sizeof(lin));//El puntero lo hemos cambiado a un vector con dimension "n".
+	rewind(fich);
+	//Ahora copiamos en cada elemento de numlineas una cadena(linea).
+	for(i=0;i<n;i++)
+	{
+		fgets(numlineas[i].lineas,sizeof(numlineas[i].lineas),fich);//Esto copia cada fila en cada elemento
+		//Lo que pasa es que el fgets tambien copia el '\n' asi que hay que cambiarlo por un , para cerrar la linea
+		numlineas[i].lineas[strlen(numlineas[i].lineas)-1]=',';
+		//Hay que cerrar la cadena obviamente se añade un '\0'
+		numlineas[i].lineas[strlen(numlineas[i].lineas)]='\0';
+	}
+	fclose(fich);//Cerramos fichero ya que ya no vamos a hacer nada con él
+	
+	//Se ve si hemos copiado bien el archivo entero
+	/*for(i=0;i<n;i++)
+	{
+		printf("%s",numlineas[i].lineas);
 	}*/
-	for(i=0;i<=17;i++)
+	
+	//Pero solo nos interesa desde la linea que empiezan los tipos de datos(linea 6)
+	/*for(i=6;i<n;i++)
+	{
+		printf("\n%s",numlineas[i].lineas);
+	}*/
+	
+	
+	
+	/*Lo siguente que tenemos que hacer es ordenar los nombres de los tipos en la segunda estructura 
+	y cambiar los numeros de caracteres a floats(numeros reales)*/
+	
+	
+	//Para ello encontramos la coma en cada cadena
+	//Al mismo tiempo lo copiamos
+	for(i=5,k=0;i<n;i++,k++)
+	{
+		for(j=0,numcomas=0;numcomas<1;j++)
+		{
+			if(numlineas[i].lineas[j]==',')
+			{
+				numcomas++;
+				//printf("\nEn la linea %i la primera coma se encuentra en la posicion %i",i,j);
+				//Ahora copiamos en la segunda estructura el nombre del tipo correspondiente
+				memcpy(numdatos[k].tipo,numlineas[i].lineas,j*sizeof(char));
+				q=j;
+				for(m=0;m<24;m++)
+				{
+					q++;
+					//printf("Valor de q= %i",q);
+					//printf("\t%c\t",numlineas[5].lineas[11]);
+					d=0;
+					while(numlineas[i].lineas[q]!=',')//***Aqui es donde lo copiamos***//
+					{
+						extradatos[l].cardato[d]=numlineas[i].lineas[q];/*Se copia cada numero que esta entre comas
+																		desde el primer coma hasta el último*/
+						d++;											//La d sirve para la posicion en la cadena en la que se copia el numero
+						q++;											//La posicion de la coma está indicada por la q esta sigue la cadena copiada
+						//printf("\t%s\t",extradatos[l].cardato);
+					}
+					l++;			
+				}
+			}
+		}
+	}
+
+	//Tranformamos los datos de caracteres a floats(numeros reales aptos para hacer calculos)
+	k=0;
+	for(i=0;i<17;i++)
 	{
 		for(j=0;j<24;j++)
 		{
-			if(j == 0)
-			{
-				n[i].numero[j] = atof(n[i].num1);
-			}
-			else if(j == 1)
-			{
-				n[i].numero[j] = atof(n[i].num2);
-			}
-			else if(j == 2)
-			{
-				n[i].numero[j] = atof(n[i].num3);
-			}
-			else if(j == 3)
-			{
-				n[i].numero[j] = atof(n[i].num4);
-			}
-			else if(j == 4)
-			{
-				n[i].numero[j] = atof(n[i].num5);
-			}
-			else if(j == 5)
-			{
-				n[i].numero[j] = atof(n[i].num6);
-			}
-			else if(j == 6)
-			{
-				n[i].numero[j] = atof(n[i].num7);
-			}
-			else if(j == 7)
-			{
-				n[i].numero[j] = atof(n[i].num8);
-			}
-			else if(j == 8)
-			{
-				n[i].numero[j] = atof(n[i].num9);
-			}
-			else if(j == 9)
-			{
-				n[i].numero[j] = atof(n[i].num10);
-			}
-			else if(j == 10)
-			{
-				n[i].numero[j] = atof(n[i].num11);
-			}
-			else if(j == 11)
-			{
-				n[i].numero[j] = atof(n[i].num12);
-			}
-			else if(j == 12)
-			{
-				n[i].numero[j] = atof(n[i].num13);
-			}
-			else if(j == 13)
-			{
-				n[i].numero[j] = atof(n[i].num14);
-			}
-			else if(j == 14)
-			{
-				n[i].numero[j] = atof(n[i].num15);
-			}
-			else if(j == 15)
-			{
-				n[i].numero[j] = atof(n[i].num16);
-			}
-			else if(j == 16)
-			{
-				n[i].numero[j] = atof(n[i].num17);
-			}
-			else if(j == 17)
-			{
-				n[i].numero[j] = atof(n[i].num18);
-			}
-			else if(j == 18)
-			{
-				n[i].numero[j] = atof(n[i].num19);
-			}
-			else if(j == 19)
-			{
-				n[i].numero[j] = atof(n[i].num20);
-			}
-			else if(j == 20)
-			{
-				n[i].numero[j] = atof(n[i].num21);
-			}
-			else if(j == 21)
-			{
-				n[i].numero[j] = atof(n[i].num22);
-			}
-			else if(j == 22)
-			{
-				n[i].numero[j] = atof(n[i].num23);
-			}
-			else if(j == 23)
-			{
-				n[i].numero[j] = atof(n[i].num24);
-			}
-			
+			numdatos[i].dato[j]=atof(extradatos[k].cardato);
+			k++;
 		}
-		
 	}
+	
+	//Comprobacion
+	
+	/*for(i=0;i<17;i++)
+	{
+		for(j=0;j<24;j++)
+		{
+			printf("El dato %i del tipo %i en numeros reales es %f",j+1,i+1,numdatos[i].dato[j]);
+    	}
+	}*/
 }
 
-float buscar_dato(int x, int j)
+int BUSCARDATO(int tipo, int numdato)
 {
-	datos n[22];
 	int i;
 	for(i=0;i<=17;i++)
-		{
-			if(x == i)
 			{
-				printf("%.15lf GWh",n[i-1].numero[j-1]);
+				if(i == tipo)
+				{
+					printf("%.15lf GWh",numdatos[i-1].dato[numdato-1]);
+				}
 			}
-		}
+		return 1;
+}
+
+float media(int r)
+{
+	int i=0,x=0;
+	float media=0;
+	printf("De que tipo de generacion quiere calcular la media?:\n");
+	for(i=0;i<17;i++)
+    {
+    	printf("%i) %s\n", i+1 ,numdatos[i].tipo);
+	}
+	scanf("%i",&x);
+	if(r==1)
+	{
+			for(i=0;i<12;i++)
+			{
+				media+=numdatos[x-1].dato[i];
+				//printf("%f\t",media);
+			}	
+	}
+	else if(r==2)
+	{
+		for(i=12;i<24;i++)
+			{
+				media+=numdatos[x-1].dato[i];
+				//printf("%f\t",media);
+			}
+	}
+	media/=12;
+	return media;
+	
+	
 }
