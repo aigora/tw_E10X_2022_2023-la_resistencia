@@ -21,17 +21,17 @@ struct extra
 }extradatos[408];//La dimension es 408 numero que corresponde al numero total de datos que hay, obtenido multiplicando 17*24
 
 void RECOGER(FILE *);
+int BUSCARDATO(int,int);
 
 int main()
 {
-	int tecla,n=0,i=0,j=0,k=0,numcomas=0,q=0,d=0,l=0,m=0;
+	int tecla,i=0,j=0,x=0;
 	FILE *fich;
 	if((fich=fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv","r"))==NULL)printf("Problema al abrir fichero"); //Apertura
 	
 	RECOGER(fich);//Hacemos la llamada a la funcion que nos almacena todos los datos del archivo en la memoria del ordenador
 	
-	
-	
+	//EL menu con sus llamadas a funciones que harán lo pedido
 	printf("--------------------------------------------------------MENU--------------------------------------------------------\n");
     printf("1) Buscador de datos.\n");
     printf("2) Calculos estadisticos.\n");
@@ -41,24 +41,16 @@ int main()
     switch(tecla)
     {
     	case 1:
-    		int x;
     		printf("A que tipo de generacion quiere acceder?\n");
     		for(i=0;i<17;i++)
     		{
     			printf("%i) %s\n", i+1 ,numdatos[i].tipo);
 			}
 			scanf("%i", &x);
-			for(i=0;i<=17;i++)
-			{
-				if(x == i)
-			{
-				printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 años(24 datos en total)\n");
-				printf("Elija la posicion del valor deseado:\t");
-				scanf("%i", &j);
-				printf("%.15lf GWh",numdatos[i-1].dato[j-1]);
-			}
-			}
-			
+			printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 años(24 datos en total)\n");
+			printf("Elija la posicion del valor deseado:\t");
+			scanf("%i", &j);
+			BUSCARDATO(x,j);		
     		break;
     	case 2:
     		printf("");
@@ -164,3 +156,47 @@ void RECOGER(FILE *fich)
     	}
 	}*/
 }
+
+int BUSCARDATO(int tipo, int numdato)
+{
+	int i;
+	for(i=0;i<=17;i++)
+			{
+				if(i == tipo)
+				{
+					printf("%.15lf GWh",numdatos[i-1].dato[numdato-1]);
+				}
+			}
+		return 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
