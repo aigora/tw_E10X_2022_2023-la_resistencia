@@ -161,6 +161,7 @@ void MENU1()
         switch(menu1)
         {
     	    case 1:
+    	    	regresar = 0;
     	    	while (!regresar)
     	    	{
     	    		MENU2();
@@ -179,15 +180,63 @@ void MENU1()
 
 void MENU2()
 {
-	int menu1,i=0,j=0,x=0,e=0,y=0;
-	int regresar = 0;
-	printf("A que tipo de generacion quiere acceder?\n");
-    MOSTRARTIPOS(0);
-    scanf("%i", &x);
-	printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 años(24 datos en total)\n");
-	printf("Elija la posicion del valor deseado:\t");
-	scanf("%i\n", &j);
-	BUSCARDATO(x,j);
+	int menu1,menu2,i=0,j=0,x=0,e=0,y=0;
+	int regresar = 0, volver = 0;
+	while(menu2 != 18)
+	{
+		printf("\nA que tipo de generacion quiere acceder?\n");
+        MOSTRARTIPOS(0);
+        printf("----> Volver(18)\n");
+        scanf("%i", &x);
+        switch(x)
+        {
+    	    case 1:
+    	    case 2:
+    	    case 3:
+    	    case 4:
+    	    case 5:
+    	    case 6:
+    	    case 7:
+    	    case 8:
+    	    case 9:
+    	    case 10:
+    	    case 11:
+    	    case 12:
+    	    case 13:
+    	    case 14:
+    	    case 15:
+    	    case 16:
+    	    case 17:
+    		regresar = 0;
+    		printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 años(24 datos en total)\n");
+	        printf("Elija la posicion del valor deseado:\n");
+	        scanf("%i", &j);
+	        BUSCARDATO(x,j);
+	        printf("\nDesea buscar otro numero(1) o quiere volver(2)?");
+	        scanf("%i",&i);
+	        switch(i)
+	        {
+		        case 1:
+			        MENU2();
+			        break;
+		        case 2:
+		            regresar = 1;
+			        break;
+		        default:
+		            printf("Opción no válida. Por favor, seleccione una opción válida.\n");
+                    break;		
+	        }
+    	case 18:
+    		regresar = 1;
+    		break;
+    	default:
+    		printf("Opción no válida. Por favor, seleccione una opción válida.\n");
+            break;
+    		
+			
+	}
+	}
+	
 }
 
 void MENU3()
