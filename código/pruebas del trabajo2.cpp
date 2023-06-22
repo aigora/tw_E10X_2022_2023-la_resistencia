@@ -33,6 +33,8 @@ float POT(float,int);
 float mediana(int);
 float max(int);
 float min(int);
+int MENU_ORDENAR();
+void ordenar(int, int,int);
 
 int main()
 {
@@ -173,6 +175,8 @@ float MENU_PRINCIPAL()
     	    	return 0;
     		    break;
     		case 3:
+    			MENU_ORDENAR();
+    			return 0;
 			    break;    
     		case 4:
     			printf("Hasta pronto!");
@@ -357,6 +361,43 @@ int MENU_CALCULOS()
 	}
 }
 
+int MENU_ORDENAR()
+{
+	int menu1,menu2,i=0,j=0,x=0,e=0,y=0;
+	int regresar = 0, volver = 0;
+	printf("------------------------------------------------------ORDENAR------------------------------------------------------");
+	printf("\nA que tipo de generacion quiere acceder?\n");
+    MOSTRARTIPOS(0);
+    printf("----> Volver(18)\n");
+    scanf("%i", &menu2);
+    if(menu2 >=1 && menu2<=17)
+    {
+    	printf("Que año le interesa? 2021(1) o 2022(2):\n");
+    	scanf("%i",&e);
+    	printf("Como desea ordenar la generacion? Mayor a menor (1) o Menor a mayor(2)?:\n");
+    	scanf("%i",&j);
+	    ordenar(menu2,j,e);
+	    printf("\nDesea ordenar otravez?(1) o desea volver al menu principal(2)?");
+	    scanf("%i",&i);
+	    if(i == 1)
+	    {
+	    	MENU_ORDENAR();
+	    	return 0;
+		}
+		else if(i == 2)
+		{
+			MENU_PRINCIPAL();
+			return 0;
+		}
+	}
+	else
+	{
+		printf("\nBoton incorrecto\n");
+		MENU_ORDENAR();
+		return 0;
+	}
+}
+
 int BUSCARDATO(int tipo, int numdato)//Funcion que busca el dato deseado
 {
 	int i;
@@ -402,11 +443,11 @@ float mediana(int r)//Funcion que calcula la mediana
 	scanf("%i",&x);
 	if(r==1)
 	{
-		mediana=numdatos[x-1].dato[6]+numdatos[x-1].dato[7];
+		mediana=numdatos[x-1].dato[5]+numdatos[x-1].dato[6];
 	}
 	else if(r==2)
 	{
-		mediana=numdatos[x-1].dato[18]+numdatos[x-1].dato[19];
+		mediana=numdatos[x-1].dato[17]+numdatos[x-1].dato[18];
 	}
 	return mediana/2;
 }
@@ -536,6 +577,95 @@ float min(int r)//Fumcion que calcula el minimo
 			}
 		}
 		return MIN[12];//DEVOLVER ELEMENTO 12
+	}
+}
+
+void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
+{
+	int i,j;
+	float V1[24],aux;
+	
+	for(i=0;i<24;i++)
+	{
+		V1[i]=numdatos[tipo-1].dato[i];
+	}
+	if(r==1)
+	{
+		if(forma == 1)
+		{
+			for(i=0;i<12;i++)
+			{
+				for(j=0;j<11;j++)
+				{
+					if(V1[j]<V1[j+1])
+					{			  	  
+						aux=V1[j];
+						V1[j]=V1[j+1];
+						V1[j+1]=aux;
+					}
+				}
+			}
+		}	
+		else if(forma == 2)
+		{
+			for(i=0;i<12;i++)
+			{
+				for(j=0;j<11;j++)
+				{
+					if(V1[j]>V1[j+1])
+					{			  	  
+						aux=V1[j];
+						V1[j]=V1[j+1];
+						V1[j+1]=aux;
+					}
+				}
+			}
+		}
+		
+		printf("La generacion ordenada por la forma deseada es:\n");
+		for(i=0;i<12;i++)
+		{
+		 	printf("%.3f\n",V1[i]);
+		}
+	}
+	if(r==2)
+	{
+		if(forma == 1)
+		{
+			for(i=0;i<12;i++)
+			{
+				for(j=12;j<23;j++)
+				{
+					if(V1[j]<V1[j+1])
+					{			  	  
+						aux=V1[j];
+						V1[j]=V1[j+1];
+						V1[j+1]=aux;
+					}
+				}
+			}
+		}	
+		else if(forma == 2)
+		{
+			for(i=0;i<12;i++)
+			{
+				for(j=12;j<23;j++)
+				{
+					if(V1[j]>V1[j+1])
+					{			  	  
+						aux=V1[j];
+						V1[j]=V1[j+1];
+						V1[j+1]=aux;
+					}
+				}
+			}
+		}
+		
+		printf("La generacion ordenada por la forma deseada es:\n");
+		for(i=12;i<24;i++)
+		{
+		 	printf("%.3f\n",V1[i]);
+		}
 	}
 }
 
