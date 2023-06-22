@@ -1,4 +1,4 @@
- //La idea es guardar cada una de las lineas en una cadena de caracteres y trabajar con solo las cadenas
+//La idea es guardar cada una de las lineas en una cadena de caracteres y trabajar con solo las cadenas
 
 #include<stdio.h>
 #include<stdlib.h>
