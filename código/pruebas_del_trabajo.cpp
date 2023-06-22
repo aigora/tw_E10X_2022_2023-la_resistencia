@@ -238,7 +238,7 @@ int MENU_CALCULOS()
 	        printf("De que tipo de generacion quiere calcular la media?:\n");
 	        MOSTRARTIPOS(0);
 	        scanf("%i",&y);
-            printf("La media del año 2021 es %f",media(1,y));
+            printf("La media del año 2021 es %f GWh",media(1,y));
 	        printf("\nDesea calcular otra media de 2021? 1 para si, 2 para calcular medias del 2022 y cualquier otro numero para otros calculos:\n");
 	        scanf("%i",&e);
 	        if(e != 1 && e != 2)
@@ -252,7 +252,7 @@ int MENU_CALCULOS()
 		    printf("De que tipo de generacion quiere calcular la media?:\n");
 		    MOSTRARTIPOS(0);
 		    scanf("%i",&y);
-		    printf("La media del año 2022 es %f",media(2,y));
+		    printf("La media del año 2022 es %f GWh",media(2,y));
 		    printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
 	        scanf("%i",&e);
 	        if(e != 1 && e != 2)
@@ -268,7 +268,7 @@ int MENU_CALCULOS()
 	    scanf("%i",&e);
 	    while(e==1)
 	    {
-		    printf("La mediana del año 2021 es %f\n",mediana(1));
+		    printf("La mediana del año 2021 es %f GWh\n",mediana(1));
 	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
 		    scanf("%i",&e);
 		    if(e != 1 && e != 2)
@@ -279,7 +279,7 @@ int MENU_CALCULOS()
  	    }
 		while(e==2)
 		{
-			printf("La mediana del año 2022 es %f\n",mediana(2));
+			printf("La mediana del año 2022 es %f GWh\n",mediana(2));
 	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
 		    scanf("%i",&e);
 		    if(e != 1 && e != 2)
@@ -295,7 +295,7 @@ int MENU_CALCULOS()
 	scanf("%i",&e);
 	    while(e==1)
 	    {
-		    printf("La varianza del año 2021 es %f\n",varianza(1));
+		    printf("La varianza del año 2021 es %f GWh\n",varianza(1));
 	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
 		    scanf("%i",&e);
 		    if(e != 1 && e != 2)
@@ -306,7 +306,7 @@ int MENU_CALCULOS()
  	    }
 		while(e==2)
 		{
-			printf("La varianza del año 2022 es %f\n",varianza(2));
+			printf("La varianza del año 2022 es %f GWh\n",varianza(2));
 		    printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
 			scanf("%i",&e);
 			if(e != 1 && e != 2)
