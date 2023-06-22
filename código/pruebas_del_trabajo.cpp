@@ -24,9 +24,9 @@ void RECOGER(FILE *);
 int MOSTRARTIPOS(int );
 int CALCULOESTAD(int);
 int BUSCARDATO(int,int);
-void MENU1();
-void MENU2();
-void MENU3();
+void MENU_PRINCIPAL();
+void MENU_DATOS();
+void MENU_CALCULOS();
 float media(int,int);
 float varianza(int);
 float POT(float,int);
@@ -43,7 +43,7 @@ int main()
 	RECOGER(fich);//Hacemos la llamada a la funcion que nos almacena todos los datos del archivo en la memoria del ordenador
 	
 	//EL menu con sus llamadas a funciones que har?n lo pedido
-	MENU1();
+	MENU_PRINCIPAL();
 }
 
 void RECOGER(FILE *fich)//funcion que recoge los datos del archivo y los mete en la memoria del programa
@@ -145,10 +145,9 @@ void RECOGER(FILE *fich)//funcion que recoge los datos del archivo y los mete en
 	}*/
 }
 
-void MENU1()
+void MENU_PRINCIPAL()
 {
 	int menu1,i=0,j=0,x=0,e=0,y=0;
-	int regresar = 0;
 	while (menu1 != 4)
 	{
 		printf("--------------------------------------------------------MENU--------------------------------------------------------\n");
@@ -162,19 +161,13 @@ void MENU1()
         switch(menu1)
         {
     	    case 1:
-    	    	regresar = 0;
-    	    	while (!regresar)
-    	    	{
-    	    		MENU2();			
-    		    break;
-    		    }
+    	    	MENU_DATOS();			
+                break;
     	    case 2:
-    	    	regresar = 0;
-    	    	while (!regresar)
-    	    	{
-    	    		MENU3();
-				}
+    	    	MENU_CALCULOS();
     		    break;
+    		case 3:
+			    break;    
     		case 4:
     			printf("Hasta pronto!");
 			    break;    
@@ -182,65 +175,49 @@ void MENU1()
 	}
 }
 
-void MENU2()
+void MENU_DATOS()
 {
 	int menu1,menu2,i=0,j=0,x=0,e=0,y=0;
 	int regresar = 0, volver = 0;
+	printf("------------------------------------------------------BUSCADOR------------------------------------------------------");
 	printf("\nA que tipo de generacion quiere acceder?\n");
     MOSTRARTIPOS(0);
     printf("----> Volver(18)\n");
     scanf("%i", &menu2);
-    switch(menu2)
+    if(menu2 >=1 && menu2<=17)
     {
-    	case 1:
-    	case 2:
-    	case 3:
-    	case 4:
-    	case 5:
-    	case 6:
-    	case 7:
-    	case 8:
-    	case 9:
-    	case 10:
-    	case 11:
-    	case 12:
-    	case 13:
-    	case 14:
-    	case 15:
-    	case 16:
-    	case 17:
-    		regresar = 0;
-    	    printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 a?os(24 datos en total)\n");
-	        printf("Elija la posicion del valor deseado:\n");
-	        scanf("%i", &j);
-	        BUSCARDATO(menu2,j);
-	        printf("\nDesea buscar otro numero(1) o quiere volver(2)?");
-	        scanf("%i",&i);
-	    case 18:
-		    regresar = 1;
-			break;    
-	}
-    /*if(menu2 == 18)
-    {
-        regresar = 1;
-	}
-	else
-	{
-		regresar = 0;
+        regresar = 0;
     	printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 a?os(24 datos en total)\n");
 	    printf("Elija la posicion del valor deseado:\n");
 	    scanf("%i", &j);
 	    BUSCARDATO(menu2,j);
-	    printf("\nDesea buscar otro numero(1) o quiere volver(2)?");
+	    printf("\nDesea buscar otro numero(1) o quiere volver al menu principal(2)?");
 	    scanf("%i",&i);
-	}*/
+	    if(i == 1)
+	    {
+	    	MENU_DATOS();
+		}
+		else if(i == 2)
+		{
+			MENU_PRINCIPAL();
+		}
+	}
+	else if(menu2 == 18)
+	{
+		MENU_PRINCIPAL();
+	}
+	else
+	{
+		printf("Boton incorrecto");
+		MENU_DATOS();
+	}
 }
 
-void MENU3()
+void MENU_CALCULOS()
  {
 	int menu1,i=0,j=0,x=0,e=0,y=0;
-	int regresar = 0;
-	printf("Que calculo desea?\n");
+	printf("------------------------------------------------------CALCULOS------------------------------------------------------");
+	printf("\nQue calculo desea?\n");
     x=CALCULOESTAD(x);
 	if(x==1)
 	{
@@ -254,6 +231,10 @@ void MENU3()
             printf("La media anual deseada es %f",media(1,y));
 	        printf("\nDesea calcular otra media de 2021? 1 para si, 2 para calcular medias del 2022 y cualquier otro numero para otros calculos:\n");
 	        scanf("%i",&e);
+	        if(e != 1 && e != 2)
+			{
+				MENU_CALCULOS();
+			}
 	    }
 	    while(e==2)
 	    {
@@ -263,6 +244,10 @@ void MENU3()
 		    printf("La media anual deseada es %f",media(2,y));
 		    printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
 	        scanf("%i",&e);
+	        if(e != 1 && e != 2)
+			{
+				MENU_CALCULOS();
+			}
 	    }  
 	    }
 	//else if(x==2)printf("La mediana anual deseada es %f",mediana(x));
@@ -275,13 +260,25 @@ void MENU3()
 		    printf("La varianza anual deseada es %f\n",varianza(1));
 	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
 		    scanf("%i",&e);
+		    if(e != 1 && e != 2)
+			{
+				MENU_CALCULOS();
+			}
  	    }
 		while(e==2)
 		{
 			printf("La varianza anual deseada es %f\n",varianza(2));
 		    printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
 			scanf("%i",&e);
+			if(e != 1 && e != 2)
+			{
+				MENU_CALCULOS();
+			}
 		}
+	}
+	else if(x == 5)
+	{
+		MENU_PRINCIPAL();
 	}
 }
 
@@ -374,7 +371,7 @@ float POT(float base,int potencia)//Funcion creada para calcular potencias de nu
 int CALCULOESTAD(int x)//Esta funcion sirve para elegir que calculo estadistico se quiere acceder
 {
 	int i;
-		for(i=0;i<4;i++)
+		for(i=0;i<5;i++)
     		{
     			printf("%i)",i+1);
     			if(i==0)
@@ -392,6 +389,10 @@ int CALCULOESTAD(int x)//Esta funcion sirve para elegir que calculo estadistico 
 				else if(i==3)
 				{
 					printf("Calculo del maximo y minimo anual.\n");
+				}
+				else if(i==4)
+				{
+					printf("---->Volver(5)");
 				}
 			}
 		scanf("%i",&x);
