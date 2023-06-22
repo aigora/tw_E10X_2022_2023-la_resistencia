@@ -317,26 +317,3 @@ int CALCULOESTAD(int x)//Esta funcion sirve para elegir que calculo estadistico 
 		scanf("%i",&x);
 		return x;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

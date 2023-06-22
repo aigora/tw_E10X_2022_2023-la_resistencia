@@ -24,9 +24,9 @@ void RECOGER(FILE *);
 int MOSTRARTIPOS(int );
 int CALCULOESTAD(int);
 int BUSCARDATO(int,int);
-void MENU_PRINCIPAL();
-void MENU_DATOS();
-void MENU_CALCULOS();
+float MENU_PRINCIPAL();
+int MENU_DATOS();
+int MENU_CALCULOS();
 float media(int,int);
 float varianza(int);
 float POT(float,int);
@@ -145,37 +145,43 @@ void RECOGER(FILE *fich)//funcion que recoge los datos del archivo y los mete en
 	}*/
 }
 
-void MENU_PRINCIPAL()
+float MENU_PRINCIPAL()
 {
-	int menu1,i=0,j=0,x=0,e=0,y=0;
-	while (menu1 != 4)
+	int menu1=4,i=0,j=0,x=0,e=0,y=0;
+	do
 	{
-		printf("--------------------------------------------------------MENU--------------------------------------------------------\n");
-        printf("1) Buscador de datos.\n");
-        printf("2) Calculos estadisticos.\n");
-        printf("3) Ordenacion de datos\n");
-        printf("4) Salir\n");
-        printf("A donde quiere acceder?\n");
-        scanf("%i", &menu1);
-        
+		if(menu1==4)
+		{
+			printf("--------------------------------------------------------MENU--------------------------------------------------------\n");
+        	printf("1) Buscador de datos.\n");
+        	printf("2) Calculos estadisticos.\n");
+        	printf("3) Ordenacion de datos\n");
+        	printf("4) Salir\n");
+        	printf("A donde quiere acceder?\n");
+        	scanf("%i", &menu1);
+		}
         switch(menu1)
         {
     	    case 1:
-    	    	MENU_DATOS();			
+    	    	MENU_DATOS();
+				return 0;			
                 break;
     	    case 2:
     	    	MENU_CALCULOS();
+    	    	return 0;
     		    break;
     		case 3:
 			    break;    
     		case 4:
     			printf("Hasta pronto!");
-			    break;    
+			    break;   
 		}
-	}
+	}while(menu1!=4);
+	
+	return 0;
 }
 
-void MENU_DATOS()
+int MENU_DATOS()
 {
 	int menu1,menu2,i=0,j=0,x=0,e=0,y=0;
 	int regresar = 0, volver = 0;
@@ -196,24 +202,28 @@ void MENU_DATOS()
 	    if(i == 1)
 	    {
 	    	MENU_DATOS();
+	    	return 0;
 		}
 		else if(i == 2)
 		{
 			MENU_PRINCIPAL();
+			return 0;
 		}
 	}
 	else if(menu2 == 18)
 	{
 		MENU_PRINCIPAL();
+		return 0;
 	}
 	else
 	{
 		printf("Boton incorrecto");
 		MENU_DATOS();
+		return 0;
 	}
 }
 
-void MENU_CALCULOS()
+int MENU_CALCULOS()
  {
 	int menu1,i=0,j=0,x=0,e=0,y=0;
 	printf("------------------------------------------------------CALCULOS------------------------------------------------------");
@@ -234,6 +244,7 @@ void MENU_CALCULOS()
 	        if(e != 1 && e != 2)
 			{
 				MENU_CALCULOS();
+				return 0;
 			}
 	    }
 	    while(e==2)
@@ -247,6 +258,7 @@ void MENU_CALCULOS()
 	        if(e != 1 && e != 2)
 			{
 				MENU_CALCULOS();
+				return 0;
 			}
 	    }  
 	    }
@@ -263,6 +275,7 @@ void MENU_CALCULOS()
 		    if(e != 1 && e != 2)
 			{
 				MENU_CALCULOS();
+				return 0;
 			}
  	    }
 		while(e==2)
@@ -273,12 +286,14 @@ void MENU_CALCULOS()
 			if(e != 1 && e != 2)
 			{
 				MENU_CALCULOS();
+				return 0;
 			}
 		}
 	}
 	else if(x == 5)
 	{
 		MENU_PRINCIPAL();
+		return 0;
 	}
 }
 
