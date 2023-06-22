@@ -31,8 +31,10 @@ float media(int,int);
 float varianza(int);
 float POT(float,int);
 float mediana(int);
-//float max(int);
-//float min(int);
+float max(int);
+float min(int);
+int MENU_ORDENAR();
+void ordenar(int, int,int);
 
 int main()
 {
@@ -41,6 +43,8 @@ int main()
 	if((fich=fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv","r"))==NULL)printf("Problema al abrir fichero"); //Apertura
 	
 	RECOGER(fich);//Hacemos la llamada a la funcion que nos almacena todos los datos del archivo en la memoria del ordenador
+	
+	fclose(fich);//Se cierra el fichero ya que no necesitamos trabajar mas con el, tenemos ya los datos en nuestra memoria
 	
 	//EL menu con sus llamadas a funciones que har?n lo pedido
 	MENU_PRINCIPAL();
@@ -171,6 +175,8 @@ float MENU_PRINCIPAL()
     	    	return 0;
     		    break;
     		case 3:
+    			MENU_ORDENAR();
+    			return 0;
 			    break;    
     		case 4:
     			printf("Hasta pronto!");
@@ -226,10 +232,11 @@ int MENU_DATOS()
 int MENU_CALCULOS()
  {
 	int menu1,i=0,j=0,x=0,e=0,y=0;
+	float M,m;
 	printf("------------------------------------------------------CALCULOS------------------------------------------------------");
 	printf("\nQue calculo desea?\n");
     x=CALCULOESTAD(x);
-	if(x==1)//Media
+	if(x==1)
 	{
 		printf("De que a?o desea calcular medias? 1 para el primero(2021) 2 para el segundo(2022):\n");
 		scanf("%i",&e);
@@ -238,7 +245,7 @@ int MENU_CALCULOS()
 	        printf("De que tipo de generacion quiere calcular la media?:\n");
 	        MOSTRARTIPOS(0);
 	        scanf("%i",&y);
-            printf("La media del año 2021 es %f GWh",media(1,y));
+            printf("La media anual deseada es %f",media(1,y));
 	        printf("\nDesea calcular otra media de 2021? 1 para si, 2 para calcular medias del 2022 y cualquier otro numero para otros calculos:\n");
 	        scanf("%i",&e);
 	        if(e != 1 && e != 2)
@@ -252,7 +259,7 @@ int MENU_CALCULOS()
 		    printf("De que tipo de generacion quiere calcular la media?:\n");
 		    MOSTRARTIPOS(0);
 		    scanf("%i",&y);
-		    printf("La media del año 2022 es %f GWh",media(2,y));
+		    printf("La media anual deseada es %f",media(2,y));
 		    printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
 	        scanf("%i",&e);
 	        if(e != 1 && e != 2)
@@ -262,13 +269,13 @@ int MENU_CALCULOS()
 			}
 	    }  
 	    }
-	else if(x==2)//Mediana
+	else if(x==2)
 	{
 		printf("De que a?o desea calcularla? 1 para el primero(2021) 2 para el segundo(2022):\n");
-	    scanf("%i",&e);
+		scanf("%i",&e);
 	    while(e==1)
 	    {
-		    printf("La mediana del año 2021 es %f GWh\n",mediana(1));
+		    printf("La mediana anual deseada es %f\n",mediana(1));
 	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
 		    scanf("%i",&e);
 		    if(e != 1 && e != 2)
@@ -279,34 +286,7 @@ int MENU_CALCULOS()
  	    }
 		while(e==2)
 		{
-			printf("La mediana del año 2022 es %f GWh\n",mediana(2));
-	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
-		    scanf("%i",&e);
-		    if(e != 1 && e != 2)
-			{
-				MENU_CALCULOS();
-				return 0;
-			}
-		}
-	} 
-	else if(x==3)//Varianza
-	{
-	printf("De que a?o desea calcularla? 1 para el primero(2021) 2 para el segundo(2022):\n");
-	scanf("%i",&e);
-	    while(e==1)
-	    {
-		    printf("La varianza del año 2021 es %f GWh\n",varianza(1));
-	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
-		    scanf("%i",&e);
-		    if(e != 1 && e != 2)
-			{
-				MENU_CALCULOS();
-				return 0;
-			}
- 	    }
-		while(e==2)
-		{
-			printf("La varianza del año 2022 es %f GWh\n",varianza(2));
+			printf("La mediana anual deseada es %f\n",mediana(2));
 		    printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
 			scanf("%i",&e);
 			if(e != 1 && e != 2)
@@ -316,9 +296,104 @@ int MENU_CALCULOS()
 			}
 		}
 	}
-	else if(x == 5)//Volver al menu
+	else if(x==3)
+	{
+	printf("De que a?o desea calcularla? 1 para el primero(2021) 2 para el segundo(2022):\n");
+	scanf("%i",&e);
+	    while(e==1)
+	    {
+		    printf("La varianza anual deseada es %f\n",varianza(1));
+	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
+		    scanf("%i",&e);
+		    if(e != 1 && e != 2)
+			{
+				MENU_CALCULOS();
+				return 0;
+			}
+ 	    }
+		while(e==2)
+		{
+			printf("La varianza anual deseada es %f\n",varianza(2));
+		    printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
+			scanf("%i",&e);
+			if(e != 1 && e != 2)
+			{
+				MENU_CALCULOS();
+				return 0;
+			}
+		}
+	}
+	else if(x==4)
+	{
+		printf("De que a?o desea calcular el maximo y el minimo? 1 para el primero(2021) 2 para el segundo(2022):\n");
+		scanf("%i",&e);
+	    while(e==1)
+	    {
+	    	M=max(1);
+	    	m=min(1);
+		    printf("El maximo anual es %f y el minimo es %f\n",M,m);
+	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
+		    scanf("%i",&e);
+		    if(e != 1 && e != 2)
+			{
+				MENU_CALCULOS();
+				return 0;
+			}
+ 	    }
+		while(e==2)
+		{
+			M=max(2);
+	    	m=min(2);
+			printf("El maximo anual es %f y el minimo es %f\n",M,m);
+		    printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
+			scanf("%i",&e);
+			if(e != 1 && e != 2)
+			{
+				MENU_CALCULOS();
+				return 0;
+			}
+		}
+	}
+	else if(x == 5)
 	{
 		MENU_PRINCIPAL();
+		return 0;
+	}
+}
+
+int MENU_ORDENAR()
+{
+	int menu1,menu2,i=0,j=0,x=0,e=0,y=0;
+	int regresar = 0, volver = 0;
+	printf("------------------------------------------------------ORDENAR------------------------------------------------------");
+	printf("\nA que tipo de generacion quiere acceder?\n");
+    MOSTRARTIPOS(0);
+    printf("----> Volver(18)\n");
+    scanf("%i", &menu2);
+    if(menu2 >=1 && menu2<=17)
+    {
+    	printf("Que año le interesa? 2021(1) o 2022(2):\n");
+    	scanf("%i",&e);
+    	printf("Como desea ordenar la generacion? Mayor a menor (1) o Menor a mayor(2)?:\n");
+    	scanf("%i",&j);
+	    ordenar(menu2,j,e);
+	    printf("\nDesea ordenar otravez?(1) o desea volver al menu principal(2)?");
+	    scanf("%i",&i);
+	    if(i == 1)
+	    {
+	    	MENU_ORDENAR();
+	    	return 0;
+		}
+		else if(i == 2)
+		{
+			MENU_PRINCIPAL();
+			return 0;
+		}
+	}
+	else
+	{
+		printf("\nBoton incorrecto\n");
+		MENU_ORDENAR();
 		return 0;
 	}
 }
@@ -359,6 +434,24 @@ float media(int r,int y)//Funcion que calcula la media de lo deseado
 	return media/12;
 }
 
+float mediana(int r)//Funcion que calcula la mediana
+{
+	int x;
+	float mediana;
+	printf("De que tipo de generacion quiere calcular la mediana?:\n");
+	MOSTRARTIPOS(0);
+	scanf("%i",&x);
+	if(r==1)
+	{
+		mediana=numdatos[x-1].dato[5]+numdatos[x-1].dato[6];
+	}
+	else if(r==2)
+	{
+		mediana=numdatos[x-1].dato[17]+numdatos[x-1].dato[18];
+	}
+	return mediana/2;
+}
+
 float varianza(int r)//Funcion que calcula la varianza de lo deseado
 {
 	int i=0,x=0;
@@ -386,23 +479,194 @@ float varianza(int r)//Funcion que calcula la varianza de lo deseado
 	return varianza/12;
 }
 
-float mediana(int r)//Funcion para calcular la mediana de cualquier generacion
+float max(int r)//Funcion que calcula el maximo
 {
-	int i=0,x=0;
-	float resultado;
-	printf("De que tipo de generacion quiere calcular la mediana?:\n");
+	int x,i,j;
+	float MAX[24],aux=0;
+	printf("De que tipo de generacion quiere calcular el maximo?:\n");
 	MOSTRARTIPOS(0);
 	scanf("%i",&x);
+	
 	if(r==1)
 	{
-		resultado = (numdatos[x-1].dato[5] + numdatos[x-1].dato[6])/2;	
+		for(i=0;i<12;i++)
+		{
+			MAX[i]=numdatos[x-1].dato[i];//Lo copiamos en un vector para facilitar el trabajo y no tener que pensar en estructuras
+		}
+		for(i=0;i<12;i++)//Vamos a organizar el vector tal que el maximo sea el primer elemento
+		{				//El primer for es para hacer la comparacion entre numeros 12 veces
+			for(j=0;j<11;j++)//Este for compara cada elemento con su siguiente
+			{	
+				if(MAX[j]<MAX[j+1])//Si el anterior es menor que su siguiente se cambian de posicion
+				{			  	  //Tal que quedaria el minimo ultimo y el maximo primero
+					aux=MAX[j];
+					MAX[j]=MAX[j+1];
+					MAX[j+1]=aux;
+				}
+			}
+		}
+		return MAX[0];//Devolvemos simplemente el primer elemento(el maximo)
 	}
 	else if(r==2)
 	{
-	    resultado = (numdatos[x-1].dato[17] + numdatos[x-1].dato[18])/2;
-			
+		for(i=12;i<24;i++)
+		{
+			MAX[i]=numdatos[x-1].dato[i];
+		}
+		printf("El dato 12 =%f",numdatos[x-1].dato[12]);
+		for(i=0;i<12;i++)
+		{
+			for(j=12;j<23;j++)//Para el segundo año hacemos lo mismo pero hay que hacerlo desde el dato 12
+			{	
+				if(MAX[j]<MAX[j+1])
+				{
+					aux=MAX[j];
+					MAX[j]=MAX[j+1];
+					MAX[j+1]=aux;
+				}
+			}
+		}
+		return MAX[12];//Pero hay que devolver el elemento 12
 	}
-	return resultado;
+}
+
+float min(int r)//Funcion que calcula el minimo
+{
+	int x,i,j;
+	float MIN[24],aux=0;
+	printf("De que tipo de generacion quiere calcular el minimo?:\n");
+	MOSTRARTIPOS(0);
+	scanf("%i",&x);
+	
+	if(r==1)
+	{
+		for(i=0;i<12;i++)
+		{
+			MIN[i]=numdatos[x-1].dato[i];
+		}
+		for(i=0;i<12;i++)
+		{
+			for(j=0;j<11;j++)
+			{	
+				if(MIN[j]>MIN[j+1])//En el minimo es hacer lo mismo que en el maximo pero con > en vez de <
+				{			  	  
+					aux=MIN[j];
+					MIN[j]=MIN[j+1];
+					MIN[j+1]=aux;
+				}
+			}
+		}
+		return MIN[0];
+	}
+	else if(r==2)
+	{
+		for(i=12;i<24;i++)
+		{
+			MIN[i]=numdatos[x-1].dato[i];
+		}
+		for(i=0;i<12;i++)
+		{
+			for(j=12;j<23;j++)//Para el segundo año hacemos lo mismo pero hay que hacerlo desde el dato 12
+			{	
+				if(MIN[j]>MIN[j+1])
+				{
+					aux=MIN[j];
+					MIN[j]=MIN[j+1];
+					MIN[j+1]=aux;
+				}
+			}
+		}
+		return MIN[12];//DEVOLVER ELEMENTO 12
+	}
+}
+
+void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
+{
+	int i,j;
+	float V1[24],aux;
+	
+	for(i=0;i<24;i++)
+	{
+		V1[i]=numdatos[tipo-1].dato[i];
+	}
+	if(r==1)
+	{
+		if(forma == 1)
+		{
+			for(i=0;i<12;i++)
+			{
+				for(j=0;j<11;j++)
+				{
+					if(V1[j]<V1[j+1])
+					{			  	  
+						aux=V1[j];
+						V1[j]=V1[j+1];
+						V1[j+1]=aux;
+					}
+				}
+			}
+		}	
+		else if(forma == 2)
+		{
+			for(i=0;i<12;i++)
+			{
+				for(j=0;j<11;j++)
+				{
+					if(V1[j]>V1[j+1])
+					{			  	  
+						aux=V1[j];
+						V1[j]=V1[j+1];
+						V1[j+1]=aux;
+					}
+				}
+			}
+		}
+		
+		printf("La generacion ordenada por la forma deseada es:\n");
+		for(i=0;i<12;i++)
+		{
+		 	printf("%.3f\n",V1[i]);
+		}
+	}
+	if(r==2)
+	{
+		if(forma == 1)
+		{
+			for(i=0;i<12;i++)
+			{
+				for(j=12;j<23;j++)
+				{
+					if(V1[j]<V1[j+1])
+					{			  	  
+						aux=V1[j];
+						V1[j]=V1[j+1];
+						V1[j+1]=aux;
+					}
+				}
+			}
+		}	
+		else if(forma == 2)
+		{
+			for(i=0;i<12;i++)
+			{
+				for(j=12;j<23;j++)
+				{
+					if(V1[j]>V1[j+1])
+					{			  	  
+						aux=V1[j];
+						V1[j]=V1[j+1];
+						V1[j+1]=aux;
+					}
+				}
+			}
+		}
+		
+		printf("La generacion ordenada por la forma deseada es:\n");
+		for(i=12;i<24;i++)
+		{
+		 	printf("%.3f\n",V1[i]);
+		}
+	}
 }
 
 int MOSTRARTIPOS(int t)//Para no repetir el mostrado de los tipos de generacion que hay para escoger uno, he hecho una funcion
@@ -452,7 +716,7 @@ int CALCULOESTAD(int x)//Esta funcion sirve para elegir que calculo estadistico 
 				}
 				else if(i==4)
 				{
-					printf("---->Volver(5)\n");
+					printf("Volver al menu principal.\n");
 				}
 			}
 		scanf("%i",&x);
