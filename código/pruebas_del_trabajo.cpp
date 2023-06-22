@@ -1,4 +1,4 @@
- //La idea es guardar cada una de las lineas en una cadena de caracteres y trabajar con solo las cadenas
+//La idea es guardar cada una de las lineas en una cadena de caracteres y trabajar con solo las cadenas
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -234,7 +234,7 @@ void MENU2()
             break;
     		
 			
-	}
+		}
 	}
 	
 }
@@ -267,7 +267,7 @@ void MENU3()
 		    printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
 	        scanf("%i",&e);
 	    }  
-	    }
+	}
 	//else if(x==2)printf("La mediana anual deseada es %f",mediana(x));
 	else if(x==3)
 	{
@@ -359,6 +359,7 @@ int MOSTRARTIPOS(int t)//Para no repetir el mostrado de los tipos de generacion 
     	printf("%i) %s\n", i+1 ,numdatos[i].tipo);
 	}
 	return 1;
+
 }
 
 float POT(float base,int potencia)//Funcion creada para calcular potencias de numeros enteros con cualquier tipo de base
@@ -396,7 +397,7 @@ int CALCULOESTAD(int x)//Esta funcion sirve para elegir que calculo estadistico 
 				{
 					printf("Calculo del maximo y minimo anual.\n");
 				}
-			}
+			} 
 		scanf("%i",&x);
 		return x;
 }
