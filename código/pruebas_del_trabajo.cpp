@@ -279,9 +279,14 @@ int MENU_CALCULOS()
 				    return 0;
 			    }
 			}
+			else if(y == 18)
+			{
+				MENU_CALCULOS();
+				return 0;
+			}
 			else
 			{
-				while(y < 1 && y > 17)
+				while(y > 17)
 				{
 					printf("Boton incorrecto\n");
 					printf("Vuelva a intentarlo\n");
@@ -298,21 +303,49 @@ int MENU_CALCULOS()
 			            }
 					}
 				}
-			}
-            
+			} 
 	    }
 	    while(e==2)
 	    {
-		    printf("De que tipo de generacion quiere calcular la media?:\n");
-		    MOSTRARTIPOS(0);
-		    scanf("%i",&y);
-		    printf("La media en 2022 es %f GWh",media(2,y));
-		    printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
-	        scanf("%i",&e);
-	        if(e != 1 && e != 2)
+			printf("De que tipo de generacion quiere calcular la media?:\n");
+	        MOSTRARTIPOS(0);
+	        printf("----> Volver(18)\n");
+	        scanf("%i",&y);
+	        if(y >= 1 && y <= 17)
+	        {
+	        	printf("La media en 2022 es %f GWh",media(2,y));
+	            printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
+	            scanf("%i",&e);
+	            if(e != 1 && e != 2)
+			    {
+				    MENU_CALCULOS();
+				    return 0;
+			    }
+			}
+			else if(y == 18)
 			{
 				MENU_CALCULOS();
 				return 0;
+			}
+			else
+			{
+				while(y > 17)
+				{
+					printf("Boton incorrecto\n");
+					printf("Vuelva a intentarlo\n");
+					scanf("%i", &y);
+					if(y >= 1 && y <= 17)
+					{
+						printf("La media en 2022 es %f GWh",media(2,y));
+	                    printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
+	                    scanf("%i",&e);
+	                    if(e != 1 && e != 2)
+			            {
+				            MENU_CALCULOS();
+				            return 0;
+			            }
+					}
+				}
 			}
 	    }
 		while(e != 1 && e != 2)
@@ -324,7 +357,7 @@ int MENU_CALCULOS()
 	}  
 	else if(x==2)
 	{
-		printf("De que a?o desea calcularla? 1 para el primero(2021) 2 para el segundo(2022):\n");
+		printf("De que a?o desea calcular la mediana? 1 para el primero(2021) 2 para el segundo(2022):\n");
 		scanf("%i",&e);
 	    while(e==1)
 	    {
@@ -351,8 +384,36 @@ int MENU_CALCULOS()
 		while(e != 1 && e != 2)
 		{
 		    printf("\nBoton incorrecto\n");
-		    MENU_CALCULOS();
-			return 0;
+		    printf("Vuelve a pulsar\n");
+		    scanf("%i", &e);
+		    if(e == 1)
+		    {
+		    	while(e==1)
+	            {
+		            printf("La mediana en 2021 es %f GWh\n",mediana(1));
+	                printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
+		            scanf("%i",&e);
+		            if(e != 1 && e != 2)
+			        {
+				        MENU_CALCULOS();
+				        return 0;
+			        }
+ 	            }
+			}
+			else if(e == 2)
+			{
+				while(e==2)
+		        {
+			        printf("La mediana en 2022 es %f GWh\n",mediana(2));
+		            printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
+			        scanf("%i",&e);
+			        if(e != 1 && e != 2)
+			        {
+				        MENU_CALCULOS();
+				        return 0;
+			        }
+		        }
+			}
 	    }
 	}
 	else if(x==3)
@@ -384,8 +445,36 @@ int MENU_CALCULOS()
 		while(e != 1 && e != 2)
 		{
 		    printf("\nBoton incorrecto\n");
-		    MENU_CALCULOS();
-		    return 0;
+		    printf("Vuelva a pulsar\n");
+		    scanf("%i", &e);
+		    if(e == 1)
+		    {
+		    	while(e==1)
+	            {
+		            printf("La varianza en 2021 es %f GWh\n",varianza(1));
+	                printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
+		            scanf("%i",&e);
+		            if(e != 1 && e != 2)
+			        {
+				        MENU_CALCULOS();
+				        return 0;
+			        }
+ 	            }
+			}
+			else if(e == 2)
+			{
+				while(e==2)
+		        {
+			        printf("La varianza en 2022 es %f GWh\n",varianza(2));
+		            printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
+			        scanf("%i",&e);
+			        if(e != 1 && e != 2)
+			        {
+				        MENU_CALCULOS();
+				        return 0;
+			        }
+		        }
+			}
 	    }
 	}
 	else if(x==4)
@@ -416,6 +505,44 @@ int MENU_CALCULOS()
 			{
 				MENU_CALCULOS();
 				return 0;
+			}
+		}
+		while(e != 1 && e != 2)
+		{
+			printf("\nBoton incorrecto\n");
+		    printf("Vuelva a pulsar\n");
+		    scanf("%i", &e);
+		    if(e == 1)
+		    {
+		    	while(e==1)
+	            {
+	    	        M=max(1);
+	    	        m=min(1);
+		            printf("El maximo en 2021 es %f GWh y el minimo es %f GWh\n",M,m);
+	                printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
+		            scanf("%i",&e);
+		            if(e != 1 && e != 2)
+			        {
+				        MENU_CALCULOS();
+				        return 0;
+			        }
+ 	            }
+			}
+			else if(e == 2)
+			{
+				while(e==2)
+		        {
+			        M=max(2);
+	    	        m=min(2);
+			        printf("El maximo en 2022 es %f GWh y el minimo es %f GWh\n",M,m);
+		            printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
+			        scanf("%i",&e);
+			        if(e != 1 && e != 2)
+			        {
+				        MENU_CALCULOS();
+				        return 0;
+			        }
+		        }
 			}
 		}
 	}
@@ -618,6 +745,7 @@ float mediana(int r)//Funcion que calcula la mediana
 	float mediana;
 	printf("De que tipo de generacion quiere calcular la mediana?:\n");
 	MOSTRARTIPOS(0);
+	printf("----> Volver(18)");
 	scanf("%i",&x);
 	if(r==1)
 	{
@@ -626,6 +754,23 @@ float mediana(int r)//Funcion que calcula la mediana
 	else if(r==2)
 	{
 		mediana=numdatos[x-1].dato[17]+numdatos[x-1].dato[18];
+	}
+	else
+	{
+		while(r != 1 && r != 2)
+		{
+			printf("Boton incorrecto\n");
+			printf("Vuelve a pulsar\n");
+			scanf("%i", &r);
+			if(r == 1)
+			{
+				mediana=numdatos[x-1].dato[5]+numdatos[x-1].dato[6];
+			}
+			else if(r == 2)
+			{
+				mediana=numdatos[x-1].dato[17]+numdatos[x-1].dato[18];
+			}
+		}
 	}
 	return mediana/2;
 }
