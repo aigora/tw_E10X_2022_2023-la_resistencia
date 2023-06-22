@@ -30,7 +30,7 @@ int MENU_CALCULOS();
 float media(int,int);
 float varianza(int);
 float POT(float,int);
-//float mediana(int);
+float mediana(int);
 //float max(int);
 //float min(int);
 
@@ -229,7 +229,7 @@ int MENU_CALCULOS()
 	printf("------------------------------------------------------CALCULOS------------------------------------------------------");
 	printf("\nQue calculo desea?\n");
     x=CALCULOESTAD(x);
-	if(x==1)
+	if(x==1)//Media
 	{
 		printf("De que a?o desea calcular medias? 1 para el primero(2021) 2 para el segundo(2022):\n");
 		scanf("%i",&e);
@@ -238,7 +238,7 @@ int MENU_CALCULOS()
 	        printf("De que tipo de generacion quiere calcular la media?:\n");
 	        MOSTRARTIPOS(0);
 	        scanf("%i",&y);
-            printf("La media anual deseada es %f",media(1,y));
+            printf("La media del año 2021 es %f",media(1,y));
 	        printf("\nDesea calcular otra media de 2021? 1 para si, 2 para calcular medias del 2022 y cualquier otro numero para otros calculos:\n");
 	        scanf("%i",&e);
 	        if(e != 1 && e != 2)
@@ -252,7 +252,7 @@ int MENU_CALCULOS()
 		    printf("De que tipo de generacion quiere calcular la media?:\n");
 		    MOSTRARTIPOS(0);
 		    scanf("%i",&y);
-		    printf("La media anual deseada es %f",media(2,y));
+		    printf("La media del año 2022 es %f",media(2,y));
 		    printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
 	        scanf("%i",&e);
 	        if(e != 1 && e != 2)
@@ -262,14 +262,13 @@ int MENU_CALCULOS()
 			}
 	    }  
 	    }
-	//else if(x==2)printf("La mediana anual deseada es %f",mediana(x));
-	else if(x==3)
+	else if(x==2)//Mediana
 	{
-	printf("De que a?o desea calcularla? 1 para el primero(2021) 2 para el segundo(2022):\n");
-	scanf("%i",&e);
+		printf("De que a?o desea calcularla? 1 para el primero(2021) 2 para el segundo(2022):\n");
+	    scanf("%i",&e);
 	    while(e==1)
 	    {
-		    printf("La varianza anual deseada es %f\n",varianza(1));
+		    printf("La mediana del año 2021 es %f\n",mediana(1));
 	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
 		    scanf("%i",&e);
 		    if(e != 1 && e != 2)
@@ -280,7 +279,34 @@ int MENU_CALCULOS()
  	    }
 		while(e==2)
 		{
-			printf("La varianza anual deseada es %f\n",varianza(2));
+			printf("La mediana del año 2022 es %f\n",mediana(2));
+	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
+		    scanf("%i",&e);
+		    if(e != 1 && e != 2)
+			{
+				MENU_CALCULOS();
+				return 0;
+			}
+		}
+	} 
+	else if(x==3)//Varianza
+	{
+	printf("De que a?o desea calcularla? 1 para el primero(2021) 2 para el segundo(2022):\n");
+	scanf("%i",&e);
+	    while(e==1)
+	    {
+		    printf("La varianza del año 2021 es %f\n",varianza(1));
+	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
+		    scanf("%i",&e);
+		    if(e != 1 && e != 2)
+			{
+				MENU_CALCULOS();
+				return 0;
+			}
+ 	    }
+		while(e==2)
+		{
+			printf("La varianza del año 2022 es %f\n",varianza(2));
 		    printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
 			scanf("%i",&e);
 			if(e != 1 && e != 2)
@@ -290,7 +316,7 @@ int MENU_CALCULOS()
 			}
 		}
 	}
-	else if(x == 5)
+	else if(x == 5)//Volver al menu
 	{
 		MENU_PRINCIPAL();
 		return 0;
@@ -360,6 +386,25 @@ float varianza(int r)//Funcion que calcula la varianza de lo deseado
 	return varianza/12;
 }
 
+float mediana(int r)//Funcion para calcular la mediana de cualquier generacion
+{
+	int i=0,x=0;
+	float resultado;
+	printf("De que tipo de generacion quiere calcular la mediana?:\n");
+	MOSTRARTIPOS(0);
+	scanf("%i",&x);
+	if(r==1)
+	{
+		resultado = (numdatos[x-1].dato[5] + numdatos[x-1].dato[6])/2;	
+	}
+	else if(r==2)
+	{
+	    resultado = (numdatos[x-1].dato[17] + numdatos[x-1].dato[18])/2;
+			
+	}
+	return resultado;
+}
+
 int MOSTRARTIPOS(int t)//Para no repetir el mostrado de los tipos de generacion que hay para escoger uno, he hecho una funcion
 {
 	int i;
@@ -407,7 +452,7 @@ int CALCULOESTAD(int x)//Esta funcion sirve para elegir que calculo estadistico 
 				}
 				else if(i==4)
 				{
-					printf("---->Volver(5)");
+					printf("---->Volver(5)\n");
 				}
 			}
 		scanf("%i",&x);
