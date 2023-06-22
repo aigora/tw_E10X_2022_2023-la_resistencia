@@ -43,8 +43,8 @@ int main()
 	printf("--------------------------------------------------------MENU--------------------------------------------------------\n");
     printf("1) Buscador de datos.\n");
     printf("2) Calculos estadisticos.\n");
-    printf("3) \n");
-    printf("A donde quiere acceder?\n");
+    printf("3) Ordenar datos.");
+    printf("\nA donde quiere acceder?\n");
     scanf("%i", &tecla);
     switch(tecla)
     {
