@@ -182,7 +182,8 @@ float MENU_PRINCIPAL()
 			    break;    
     			case 4:
     				printf("Hasta pronto!");
-			    break;   
+    				return 0;
+			    break; 
 			}	
 		}
 		else{
@@ -202,7 +203,7 @@ int MENU_DATOS()
 	printf("------------------------------------------------------BUSCADOR------------------------------------------------------");
 	printf("\nA que tipo de generacion quiere acceder?\n");
     MOSTRARTIPOS(0);
-    printf("----> Volver(18)\n");
+    printf("\n---> Para volver la menu principal pulsa 0 <---\n");
     scanf("%i", &menu2);
     if(menu2 >=1 && menu2<=17)
     {
@@ -285,7 +286,7 @@ int MENU_DATOS()
 		}
 	    
 	}
-	else if(menu2 == 18)
+	else if(menu2 == 0)
 	{
 		MENU_PRINCIPAL();
 		return 0;
@@ -313,6 +314,7 @@ int MENU_CALCULOS()
 	    {
 	        printf("De que tipo de generacion quiere calcular la media?:\n");
 	        MOSTRARTIPOS(0);
+	        printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
 	        scanf("%i",&y);
 	        if(y >= 1 && y <= 17)
 	        {
@@ -325,7 +327,7 @@ int MENU_CALCULOS()
 				    return 0;
 			    }
 			}
-			else if(y == 18)
+			else if(y == 0)
 			{
 				MENU_CALCULOS();
 				return 0;
@@ -355,7 +357,7 @@ int MENU_CALCULOS()
 	    {
 			printf("De que tipo de generacion quiere calcular la media?:\n");
 	        MOSTRARTIPOS(0);
-	        printf("----> Volver(18)\n");
+	        printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
 	        scanf("%i",&y);
 	        if(y >= 1 && y <= 17)
 	        {
@@ -368,7 +370,7 @@ int MENU_CALCULOS()
 				    return 0;
 			    }
 			}
-			else if(y == 18)
+			else if(y == 0)
 			{
 				MENU_CALCULOS();
 				return 0;
@@ -397,8 +399,49 @@ int MENU_CALCULOS()
 		while(e != 1 && e != 2)
 		{
 		    printf("\nBoton incorrecto\n");
-		    MENU_CALCULOS();
-		    return 0;
+		    printf("De que a?o desea calcular medias? 1 para el primero(2021) 2 para el segundo(2022):\n");
+			scanf("%i",&e);
+			if(e==1)
+			{
+				printf("De que tipo de generacion quiere calcular la media?:\n");
+	        	MOSTRARTIPOS(0);
+	        	printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
+	        	scanf("%i",&y);
+	        	if(y==0)
+	        	{
+	        		MENU_CALCULOS();
+					return 0;
+				}
+				else if(y>=1 && y<=17)
+				{
+					printf("La media en 2022 es %f GWh",media(1,y));
+					printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
+	                scanf("%i",&e);
+					if(e!=2)
+			        {
+				       MENU_CALCULOS();
+				       return 0;
+			        }
+				}
+			}
+			else if(e==2)
+			{
+				printf("De que tipo de generacion quiere calcular la media?:\n");
+	        	MOSTRARTIPOS(0);
+	        	printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
+	        	scanf("%i",&y);
+	        	if(y==0)
+	        	{
+	        		MENU_CALCULOS();
+					return 0;
+				}
+				else if(y>=1 && y<=17)
+				{
+					   printf("La media en 2022 es %f GWh\n",media(2,y));
+				       MENU_CALCULOS();
+				       return 0;
+				}
+			}
 	    }
 	}  
 	else if(x==2)
@@ -514,7 +557,7 @@ int MENU_CALCULOS()
 			        printf("La varianza en 2022 es %f GWh\n",varianza(2));
 		            printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
 			        scanf("%i",&e);
-			        if(e != 1 && e != 2)
+			        if(e!=2)
 			        {
 				        MENU_CALCULOS();
 				        return 0;
@@ -789,36 +832,48 @@ float mediana(int r)//Funcion que calcula la mediana
 {
 	int x;
 	float mediana;
-	printf("De que tipo de generacion quiere calcular la mediana?:\n");
-	MOSTRARTIPOS(0);
-	printf("----> Volver(18)");
-	scanf("%i",&x);
-	if(r==1)
+		printf("De que tipo de generacion quiere calcular la mediana?:\n");
+		MOSTRARTIPOS(0);
+		printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
+		scanf("%i",&x);	
+	if(x>=1 && x<=17)
 	{
-		mediana=numdatos[x-1].dato[5]+numdatos[x-1].dato[6];
+			    if(r == 1)
+				{
+					mediana=numdatos[x-1].dato[5]+numdatos[x-1].dato[6];
+					return mediana/2;
+				}
+				else if(r == 2)
+				{
+					mediana=numdatos[x-1].dato[17]+numdatos[x-1].dato[18];
+					return mediana/2;
+				}
 	}
-	else if(r==2)
+	else if(x==0)
 	{
-		mediana=numdatos[x-1].dato[17]+numdatos[x-1].dato[18];
+		MENU_CALCULOS();
+		return 0;
 	}
 	else
 	{
-		while(r != 1 && r != 2)
+		while(x<1 || x>17)
 		{
 			printf("Boton incorrecto\n");
 			printf("Vuelve a pulsar\n");
-			scanf("%i", &r);
-			if(r == 1)
-			{
-				mediana=numdatos[x-1].dato[5]+numdatos[x-1].dato[6];
-			}
-			else if(r == 2)
-			{
-				mediana=numdatos[x-1].dato[17]+numdatos[x-1].dato[18];
-			}
+			scanf("%i",&x);
 		}
-	}
-	return mediana/2;
+		 if(r == 1)
+		{
+			mediana=numdatos[x-1].dato[5]+numdatos[x-1].dato[6];
+			return mediana/2;
+		}
+		else if(r == 2)
+		{
+			mediana=numdatos[x-1].dato[17]+numdatos[x-1].dato[18];
+			return mediana/2;
+		}
+	}	
+
 }
 
 float varianza(int r)//Funcion que calcula la varianza de lo deseado
@@ -828,24 +883,39 @@ float varianza(int r)//Funcion que calcula la varianza de lo deseado
 	float varianza=0;
 	printf("De que tipo de generacion quiere calcular la varianza?:\n");
 	MOSTRARTIPOS(0);
+	printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
 	scanf("%i",&x);
-	if(r==1)
+	if(x == 0)
 	{
+		MENU_CALCULOS();
+		return 0;
+	}
+	else if(x>=1 && x<=17)
+	{
+		if(r==1)
+		{
 			m=media(1,x);
 			for(i=0;i<12;i++)
 			{
 				varianza+=POT((numdatos[x-1].dato[i]-m),2);
 			}
-	}
-	else if(r==2)
-	{
+		}
+		else if(r==2)
+		{
 			m=media(1,x);
 			for(i=12;i<24;i++)
 			{
 				varianza+=POT((numdatos[x-1].dato[i]-m),2);
 			}
+		}
+	return varianza/12;	
 	}
-	return varianza/12;
+	else
+	{
+		printf("Boton incorrecto, vuelve a intentarlo\n");
+		MENU_CALCULOS();
+		return 0;
+	}
 }
 
 float max(int r)//Funcion que calcula el maximo
@@ -882,7 +952,6 @@ float max(int r)//Funcion que calcula el maximo
 		{
 			MAX[i]=numdatos[x-1].dato[i];
 		}
-		printf("El dato 12 =%f",numdatos[x-1].dato[12]);
 		for(i=0;i<12;i++)
 		{
 			for(j=12;j<23;j++)//Para el segundo año hacemos lo mismo pero hay que hacerlo desde el dato 12
