@@ -49,7 +49,7 @@ int main()
 	ESCRIBIR(fich2);
 	fclose(fich2);
 	//EL menu con sus llamadas a funciones que har?n lo pedido
-	//MENU_PRINCIPAL();
+	MENU_PRINCIPAL();
 }
 
 void RECOGER(FILE *fich)//funcion que recoge los datos del archivo y los mete en la memoria del programa
@@ -161,35 +161,22 @@ void ESCRIBIR(FILE *fich)
 	fputc('\n',fich);
 	for(j=0,k=0;j<17;j++,k++)
 	{
-		fprintf(fich,"%s,",numdatos[k].tipo);
-		fprintf(fich,"%f,",media(i,j));
-		i++;
-		fprintf(fich,"%f,",media(i,j));
-		i--;
-		fprintf(fich,"%f,",mediana(i,j));
-		i++;
-		fprintf(fich,"%f,",mediana(i,j));
-		i--;
-		fprintf(fich,"%f,",varianza(i,j));
-		i++;
-		fprintf(fich,"%f,",varianza(i,j));
-		i--;
-		fprintf(fich,"%f   %f,",max(i,j),min(i,j));
-		i++;
-		fprintf(fich,"%f   %f,",max(i,j),min(i,j));
-		i--;
-		fputc('\n',fich);
+		for(i=1;i<3;i++)
+		{
+			
+		}
+		
 	}
 }
 
-/*float MENU_PRINCIPAL()
+float MENU_PRINCIPAL()
 {
 	int menu1=4,i=0,j=0,x=0,e=0,y=0;
 	do
 	{
 		if(menu1==4)
 		{
-			printf("--------------------------------------------------------MENU--------------------------------------------------------\n");
+			printf("--------------------------------------------------------MENU PRINCIPAL----------------------------------------------------\n");
         	printf("1) Buscador de datos.\n");
         	printf("2) Calculos estadisticos.\n");
         	printf("3) Ordenacion de datos\n");
@@ -217,7 +204,7 @@ void ESCRIBIR(FILE *fich)
     				printf("Hasta pronto!");
     				return 0;
 			    break; 
-			}	
+			}
 		}
 		else{
 				printf("Opcion incorrecta, vuelva a intentarlo porfavor\n");
@@ -225,28 +212,28 @@ void ESCRIBIR(FILE *fich)
 				return 0;
 			}
 	}while(menu1!=4);
-	
 	return 0;
 }
 
 int MENU_DATOS()
 {
-	int menu1,menu2,i=0,j=0,x=1,e=0,y=0;
+	int menu2,i=0,j=0,x=1,e=0,y=0;
 	int regresar = 0, volver = 0;
-	printf("------------------------------------------------------BUSCADOR------------------------------------------------------");
+	printf("-------------------------------------------------MENU PRINCIPAL>>BUSCADOR DATO------------------------------------------------------");
+	printf("\nTipos de generaciones a elegir");
+	MOSTRARTIPOS(0);
 	printf("\nA que tipo de generacion quiere acceder?\n");
-    MOSTRARTIPOS(0);
     printf("\n---> Para volver la menu principal pulsa 0 <---\n");
     scanf("%i", &menu2);
     if(menu2 >=1 && menu2<=17)
     {
-    	printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 a?os(24 datos en total)\n");
+    	printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 anios(24 datos en total)\n");
 	    printf("Elija la posicion del valor deseado:\n");
 	    scanf("%i", &j);
 	    if(j >= 1 && j <= 24)
 	    {
 	    	BUSCARDATO(menu2,j);
-	        printf("\nDesea buscar otro numero(1) o quiere volver al menu principal(2)?");
+	        printf("\nQuiere buscar otra vez? \nPulsa 1 para si pulsa 2 para no:");
 	        scanf("%i",&i);
 	        if(i == 1)
 	        {
