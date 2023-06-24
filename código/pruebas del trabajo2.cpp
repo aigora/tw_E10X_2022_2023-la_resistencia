@@ -23,23 +23,22 @@ struct extra
 void RECOGER(FILE *);
 void ESCRIBIR(FILE *);
 int MOSTRARTIPOS(int );
-int CALCULOESTAD(int);
+//int CALCULOESTAD(int);
 int BUSCARDATO(int,int);
 float MENU_PRINCIPAL();
 int MENU_DATOS();
-int MENU_CALCULOS();
+//int MENU_CALCULOS();
 float media(int,int);
 float varianza(int,int);
 float POT(float,int);
 float mediana(int,int);
 float max(int,int);
 float min(int,int);
-int MENU_ORDENAR();
-void ordenar(int, int,int);
+//int MENU_ORDENAR();
+//void ordenar(int, int,int);
 
 int main()
 {
-	int tecla,i=0,j=0,x=0,e=0,y=0;
 	FILE *fich;
 	FILE *fich2;
 	if((fich=fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv","r"))==NULL)printf("Problema al abrir primer fichero"); //Apertura
@@ -161,12 +160,25 @@ void ESCRIBIR(FILE *fich)
 	fputc('\n',fich);
 	for(j=0,k=0;j<17;j++,k++)
 	{
-		for(i=1;i<3;i++)
-		{
-			
-		}
-		
-	}
+		fprintf(fich,"%s,",numdatos[k].tipo);
+		fprintf(fich,"%f,",media(i,j));
+		i++;
+		fprintf(fich,"%f,",media(i,j));
+		i--;
+		fprintf(fich,"%f,",mediana(i,j));
+		i++;
+		fprintf(fich,"%f,",mediana(i,j));
+		i--;
+		fprintf(fich,"%f,",varianza(i,j));
+		i++;
+		fprintf(fich,"%f,",varianza(i,j));
+		i--;
+		fprintf(fich,"%f   %f,",max(i,j),min(i,j));
+		i++;
+		fprintf(fich,"%f   %f,",max(i,j),min(i,j));
+		i--;
+		fputc('\n',fich);
+ 	}
 }
 
 float MENU_PRINCIPAL()
@@ -176,12 +188,12 @@ float MENU_PRINCIPAL()
 	{
 		if(menu1==4)
 		{
-			printf("--------------------------------------------------------MENU PRINCIPAL----------------------------------------------------\n");
+			printf("---------------------------------------------------MENU PRINCIPAL---------------------------------------------------\n");
         	printf("1) Buscador de datos.\n");
         	printf("2) Calculos estadisticos.\n");
         	printf("3) Ordenacion de datos\n");
         	printf("4) Salir\n");
-        	printf("A donde quiere acceder?\n");
+        	printf("A donde quiere acceder? ");
         	scanf("%i", &menu1);
 		}
 		if(menu1>=1 && menu1<=4)
@@ -193,11 +205,11 @@ float MENU_PRINCIPAL()
 					return 0;			
                 break;
     	    	case 2:
-    	    		MENU_CALCULOS();
+    	    		//MENU_CALCULOS();
     	    		return 0;
     		    break;
     			case 3:
-    				MENU_ORDENAR();
+    				//MENU_ORDENAR();
     				return 0;
 			    break;    
     			case 4:
@@ -217,109 +229,48 @@ float MENU_PRINCIPAL()
 
 int MENU_DATOS()
 {
-	int menu2,i=0,j=0,x=1,e=0,y=0;
+	int menu,i=0,j=0;
 	int regresar = 0, volver = 0;
-	printf("-------------------------------------------------MENU PRINCIPAL>>BUSCADOR DATO------------------------------------------------------");
-	printf("\nTipos de generaciones a elegir");
+	printf("-------------------------------------------MENU PRINCIPAL>>BUSCADOR DATO--------------------------------------------");
+	printf("\nTipos de generaciones a elegir\n");
 	MOSTRARTIPOS(0);
-	printf("\nA que tipo de generacion quiere acceder?\n");
-    printf("\n---> Para volver la menu principal pulsa 0 <---\n");
-    scanf("%i", &menu2);
-    if(menu2 >=1 && menu2<=17)
+	printf("\n---> Para volver la menu principal pulsa 0 <---\n");
+    printf("A que tipo de generacion quiere acceder? ");
+    scanf("%i", &menu);
+    if(menu>0 && menu<18)
     {
     	printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 anios(24 datos en total)\n");
-	    printf("Elija la posicion del valor deseado:\n");
+	    printf("Elija la posicion del valor deseado: ");
 	    scanf("%i", &j);
-	    if(j >= 1 && j <= 24)
+	    if(j > 0 && j < 25)
 	    {
-	    	BUSCARDATO(menu2,j);
-	        printf("\nQuiere buscar otra vez? \nPulsa 1 para si pulsa 2 para no:");
-	        scanf("%i",&i);
-	        if(i == 1)
-	        {
-	    	    MENU_DATOS();
-	    	    return 0;
-		    }
-		    else if(i == 2)
-		    {
-			    MENU_PRINCIPAL();
-			    return 0;
-		    }
-		    while(i!=1 && i!=2)
-		    {
-		    	printf("Boton incorrecto\n");
-			    printf("Vuelva a pulsar\n");
-			    scanf("%i",&i);
-			    if(i == 1)
-	        	{
-	    	    	MENU_DATOS();
-	    	    	return 0;
-		   		}
-		    else if(i == 2)
-		    	{
-			    	MENU_PRINCIPAL();
-			    	return 0;
-		    	}
-			}
+	    	BUSCARDATO(menu,j);
+	    	MENU_DATOS();
+	    	return 0;
 		}
 		else
 		{
-			do
-			{
-				printf("Boton incorrecto\n");
-			    printf("Vuelva a pulsar\n");
-			    scanf("%i", &j);
-			    if(j >= 1 && j <= 24)
-			    {
-			    	BUSCARDATO(menu2,j);
-			    	printf("\nDesea buscar otro numero(1) o quiere volver al menu principal(2)?");
-	        		scanf("%i",&x);
-	        		if(x == 1)
-	        		{
-	    	    		MENU_DATOS();
-	    	    		return 0;
-		    		}
-		    		else if(x == 2)
-		   	 		{
-			    		MENU_PRINCIPAL();
-			    		return 0;
-		    		}
-		    		
-				}
-				while(x != 1 && x != 2)
-				{
-		    		printf("Boton incorrecto\n");
-			    	printf("Vuelva a pulsar\n");
-			    	scanf("%i",&x);
-			    	if(x == 1)
-	        		{
-	    	    		MENU_DATOS();
-	    	    		return 0;
-		    		}
-		    		else if(x == 2)
-		   	 		{
-			    		MENU_PRINCIPAL();
-			    		return 0;
-		    		}
-				}
-			}while(j <= 1 || j >= 24);
+			printf("\nBoton incorrecto\n");
+			printf("Vuelva a intentarlo\n");
+			MENU_DATOS();
+			return 0;
 		}
-	    
 	}
-	else if(menu2 == 0)
+	else if(menu==0)
 	{
 		MENU_PRINCIPAL();
 		return 0;
 	}
 	else
 	{
-		printf("Boton incorrecto\n");
+		printf("\nBoton incorrecto\n");
+		printf("Vuelva a intentarlo\n");
 		MENU_DATOS();
 		return 0;
 	}
 }
 
-int MENU_CALCULOS()
+/*int MENU_CALCULOS()
 {
 	int menu1,i=0,j=0,x=0,e=0,y=0;
 	float M,m;
@@ -667,8 +618,8 @@ int MENU_CALCULOS()
 		return 0;
 	}
 }
-
-int MENU_ORDENAR()
+*/
+/*int MENU_ORDENAR()
 {
 	int menu1,menu2,i=0,j=0,x=0,e=0,y=0;
 	int regresar = 0, volver = 0;
@@ -811,7 +762,7 @@ int MENU_ORDENAR()
 		return 0;
 	}
 }
-
+*/
 int BUSCARDATO(int tipo, int numdato)//Funcion que busca el dato deseado
 {
 	int i;
@@ -819,12 +770,12 @@ int BUSCARDATO(int tipo, int numdato)//Funcion que busca el dato deseado
 			{
 				if(i == tipo)
 				{
-					printf("El dato deseado es %.15lf GWh",numdatos[i-1].dato[numdato-1]);
+					printf("\tEl dato deseado es %.15lf GWh\n",numdatos[i-1].dato[numdato-1]);
 				}
 			}
 		return 1;
 }
-*/
+
 float media(int r,int y)//Funcion que calcula la media de lo deseado
 {
 	int i=0;
@@ -1154,17 +1105,16 @@ void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 		}
 	}
 }
-
+*/
 int MOSTRARTIPOS(int t)//Para no repetir el mostrado de los tipos de generacion que hay para escoger uno, he hecho una funcion
 {
 	int i;
 	for(i=0;i<17;i++)
     {
-    	printf("%i) %s\n", i+1 ,numdatos[i].tipo);
+    	printf("\t%i) %s\n", i+1 ,numdatos[i].tipo);
 	}
 	return 1;
 }
-*/
 
 float POT(float base,int potencia)//Funcion creada para calcular potencias de numeros enteros con cualquier tipo de base
 {
