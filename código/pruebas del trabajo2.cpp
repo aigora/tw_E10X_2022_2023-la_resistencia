@@ -21,6 +21,7 @@ struct extra
 }extradatos[408];//La dimension es 408 numero que corresponde al numero total de datos que hay, obtenido multiplicando 17*24
 
 void RECOGER(FILE *);
+void ESCRIBIR(FILE *);
 int MOSTRARTIPOS(int );
 int CALCULOESTAD(int);
 int BUSCARDATO(int,int);
@@ -28,11 +29,11 @@ float MENU_PRINCIPAL();
 int MENU_DATOS();
 int MENU_CALCULOS();
 float media(int,int);
-float varianza(int);
+float varianza(int,int);
 float POT(float,int);
-float mediana(int);
-float max(int);
-float min(int);
+float mediana(int,int);
+float max(int,int);
+float min(int,int);
 int MENU_ORDENAR();
 void ordenar(int, int,int);
 
@@ -40,14 +41,15 @@ int main()
 {
 	int tecla,i=0,j=0,x=0,e=0,y=0;
 	FILE *fich;
-	if((fich=fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv","r"))==NULL)printf("Problema al abrir fichero"); //Apertura
-	
+	FILE *fich2;
+	if((fich=fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv","r"))==NULL)printf("Problema al abrir primer fichero"); //Apertura
 	RECOGER(fich);//Hacemos la llamada a la funcion que nos almacena todos los datos del archivo en la memoria del ordenador
-	
 	fclose(fich);//Se cierra el fichero ya que no necesitamos trabajar mas con el, tenemos ya los datos en nuestra memoria
-	
+	if((fich2=fopen("Calculos_estadisticos.csv","w"))==NULL)printf("Problema al abrir segundo fichero"); //Apertura del fichero para escribir
+	ESCRIBIR(fich2);
+	fclose(fich2);
 	//EL menu con sus llamadas a funciones que har?n lo pedido
-	MENU_PRINCIPAL();
+	//MENU_PRINCIPAL();
 }
 
 void RECOGER(FILE *fich)//funcion que recoge los datos del archivo y los mete en la memoria del programa
@@ -149,7 +151,38 @@ void RECOGER(FILE *fich)//funcion que recoge los datos del archivo y los mete en
 	}*/
 }
 
-float MENU_PRINCIPAL()
+void ESCRIBIR(FILE *fich)
+{
+	int i=1,j=0,k=0;
+	fprintf(fich,"Generación,Media anio 1,Media anio 2,");
+	fprintf(fich,"Mediana anio 1,Mediana anio 2,");
+	fprintf(fich,"Varianza anio 1,Varianza anio 2,");
+	fprintf(fich,"Maximo Minimo anio 1,Maximo Minimo anio 2,");
+	fputc('\n',fich);
+	for(j=0,k=0;j<17;j++,k++)
+	{
+		fprintf(fich,"%s,",numdatos[k].tipo);
+		fprintf(fich,"%f,",media(i,j));
+		i++;
+		fprintf(fich,"%f,",media(i,j));
+		i--;
+		fprintf(fich,"%f,",mediana(i,j));
+		i++;
+		fprintf(fich,"%f,",mediana(i,j));
+		i--;
+		fprintf(fich,"%f,",varianza(i,j));
+		i++;
+		fprintf(fich,"%f,",varianza(i,j));
+		i--;
+		fprintf(fich,"%f   %f,",max(i,j),min(i,j));
+		i++;
+		fprintf(fich,"%f   %f,",max(i,j),min(i,j));
+		i--;
+		fputc('\n',fich);
+	}
+}
+
+/*float MENU_PRINCIPAL()
 {
 	int menu1=4,i=0,j=0,x=0,e=0,y=0;
 	do
@@ -300,7 +333,7 @@ int MENU_DATOS()
 }
 
 int MENU_CALCULOS()
- {
+{
 	int menu1,i=0,j=0,x=0,e=0,y=0;
 	float M,m;
 	printf("------------------------------------------------------CALCULOS------------------------------------------------------");
@@ -804,7 +837,7 @@ int BUSCARDATO(int tipo, int numdato)//Funcion que busca el dato deseado
 			}
 		return 1;
 }
-
+*/
 float media(int r,int y)//Funcion que calcula la media de lo deseado
 {
 	int i=0;
@@ -813,7 +846,7 @@ float media(int r,int y)//Funcion que calcula la media de lo deseado
 	{
 			for(i=0;i<12;i++)
 			{
-				media+=numdatos[y-1].dato[i];
+				media+=numdatos[y].dato[i];
 				//printf("%f\t",media);
 			}	
 	}
@@ -821,22 +854,32 @@ float media(int r,int y)//Funcion que calcula la media de lo deseado
 	{
 		for(i=12;i<24;i++)
 			{
-				media+=numdatos[y-1].dato[i];
+				media+=numdatos[y].dato[i];
 				//printf("%f\t",media);
 			}
 	}
 	return media/12;
 }
 
-float mediana(int r)//Funcion que calcula la mediana
+float mediana(int r,int x)//Funcion que calcula la mediana
 {
-	int x;
 	float mediana;
-		printf("De que tipo de generacion quiere calcular la mediana?:\n");
-		MOSTRARTIPOS(0);
-		printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
-		scanf("%i",&x);	
-	if(x>=1 && x<=17)
+	if(r == 1)
+	{
+		mediana=numdatos[x].dato[5]+numdatos[x].dato[6];
+		return mediana/2;
+	}
+	else if(r == 2)
+	{
+		mediana=numdatos[x].dato[17]+numdatos[x].dato[18];
+		return mediana/2;
+	}
+
+		//printf("De que tipo de generacion quiere calcular la mediana?:\n");
+		//MOSTRARTIPOS(0);
+		//printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
+		//scanf("%i",&x);	
+	/*if(x>=1 && x<=17)
 	{
 			    if(r == 1)
 				{
@@ -872,16 +915,34 @@ float mediana(int r)//Funcion que calcula la mediana
 			mediana=numdatos[x-1].dato[17]+numdatos[x-1].dato[18];
 			return mediana/2;
 		}
-	}	
+	}*/	
 
 }
 
-float varianza(int r)//Funcion que calcula la varianza de lo deseado
+float varianza(int r,int x)//Funcion que calcula la varianza de lo deseado
 {
-	int i=0,x=0;
+	int i=0;
 	float m;
 	float varianza=0;
-	printf("De que tipo de generacion quiere calcular la varianza?:\n");
+	if(r==1)
+	{
+			m=media(1,x);
+			for(i=0;i<12;i++)
+			{
+					varianza+=POT((numdatos[x].dato[i]-m),2);
+			}
+			return varianza/12;
+	}
+	else if(r==2)
+	{
+			m=media(2,x);
+			for(i=0;i<12;i++)
+			{
+					varianza+=POT((numdatos[x].dato[i]-m),2);
+			}
+			return varianza/12;
+	}
+	/*printf("De que tipo de generacion quiere calcular la varianza?:\n");
 	MOSTRARTIPOS(0);
 	printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
 	scanf("%i",&x);
@@ -915,22 +976,22 @@ float varianza(int r)//Funcion que calcula la varianza de lo deseado
 		printf("Boton incorrecto, vuelve a intentarlo\n");
 		MENU_CALCULOS();
 		return 0;
-	}
+	}*/
 }
 
-float max(int r)//Funcion que calcula el maximo
+float max(int r,int x)//Funcion que calcula el maximo
 {
-	int x,i,j;
+	int i,j;
 	float MAX[24],aux=0;
-	printf("De que tipo de generacion quiere calcular el maximo?:\n");
-	MOSTRARTIPOS(0);
-	scanf("%i",&x);
+	//printf("De que tipo de generacion quiere calcular el maximo?:\n");
+	//MOSTRARTIPOS(0);
+	//scanf("%i",&x);
 	
 	if(r==1)
 	{
 		for(i=0;i<12;i++)
 		{
-			MAX[i]=numdatos[x-1].dato[i];//Lo copiamos en un vector para facilitar el trabajo y no tener que pensar en estructuras
+			MAX[i]=numdatos[x].dato[i];//Lo copiamos en un vector para facilitar el trabajo y no tener que pensar en estructuras
 		}
 		for(i=0;i<12;i++)//Vamos a organizar el vector tal que el maximo sea el primer elemento
 		{				//El primer for es para hacer la comparacion entre numeros 12 veces
@@ -950,7 +1011,7 @@ float max(int r)//Funcion que calcula el maximo
 	{
 		for(i=12;i<24;i++)
 		{
-			MAX[i]=numdatos[x-1].dato[i];
+			MAX[i]=numdatos[x].dato[i];
 		}
 		for(i=0;i<12;i++)
 		{
@@ -968,19 +1029,19 @@ float max(int r)//Funcion que calcula el maximo
 	}
 }
 
-float min(int r)//Funcion que calcula el minimo
+float min(int r,int x)//Funcion que calcula el minimo
 {
-	int x,i,j;
+	int i,j;
 	float MIN[24],aux=0;
-	printf("De que tipo de generacion quiere calcular el minimo?:\n");
-	MOSTRARTIPOS(0);
-	scanf("%i",&x);
+	//printf("De que tipo de generacion quiere calcular el minimo?:\n");
+	//MOSTRARTIPOS(0);
+	//scanf("%i",&x);
 	
 	if(r==1)
 	{
 		for(i=0;i<12;i++)
 		{
-			MIN[i]=numdatos[x-1].dato[i];
+			MIN[i]=numdatos[x].dato[i];
 		}
 		for(i=0;i<12;i++)
 		{
@@ -1000,7 +1061,7 @@ float min(int r)//Funcion que calcula el minimo
 	{
 		for(i=12;i<24;i++)
 		{
-			MIN[i]=numdatos[x-1].dato[i];
+			MIN[i]=numdatos[x].dato[i];
 		}
 		for(i=0;i<12;i++)
 		{
@@ -1017,7 +1078,7 @@ float min(int r)//Funcion que calcula el minimo
 		return MIN[12];//DEVOLVER ELEMENTO 12
 	}
 }
-
+/*
 void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 {
 	int i,j;
@@ -1116,6 +1177,7 @@ int MOSTRARTIPOS(int t)//Para no repetir el mostrado de los tipos de generacion 
 	}
 	return 1;
 }
+*/
 
 float POT(float base,int potencia)//Funcion creada para calcular potencias de numeros enteros con cualquier tipo de base
 {
@@ -1129,7 +1191,7 @@ float POT(float base,int potencia)//Funcion creada para calcular potencias de nu
 	}
 	return base;
 }
-
+/*
 int CALCULOESTAD(int x)//Esta funcion sirve para elegir que calculo estadistico se quiere acceder
 {
 	int i;
@@ -1160,3 +1222,4 @@ int CALCULOESTAD(int x)//Esta funcion sirve para elegir que calculo estadistico 
 		scanf("%i",&x);
 		return x;
 }
+*/
