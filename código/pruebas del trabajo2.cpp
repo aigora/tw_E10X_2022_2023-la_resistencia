@@ -23,19 +23,19 @@ struct extra
 void RECOGER(FILE *);
 void ESCRIBIR(FILE *);
 int MOSTRARTIPOS(int );
-//int CALCULOESTAD(int);
+int CALCULOESTAD();
 int BUSCARDATO(int,int);
 float MENU_PRINCIPAL();
 int MENU_DATOS();
-//int MENU_CALCULOS();
+int MENU_CALCULOS();
 float media(int,int);
 float varianza(int,int);
 float POT(float,int);
 float mediana(int,int);
 float max(int,int);
 float min(int,int);
-//int MENU_ORDENAR();
-//void ordenar(int, int,int);
+int MENU_ORDENAR();
+void ordenar(int, int,int);
 
 int main()
 {
@@ -205,11 +205,11 @@ float MENU_PRINCIPAL()
 					return 0;			
                 break;
     	    	case 2:
-    	    		//MENU_CALCULOS();
+    	    		MENU_CALCULOS();
     	    		return 0;
     		    break;
     			case 3:
-    				//MENU_ORDENAR();
+    				MENU_ORDENAR();
     				return 0;
 			    break;    
     			case 4:
@@ -270,341 +270,179 @@ int MENU_DATOS()
 	}
 }
 
-/*int MENU_CALCULOS()
+int MENU_CALCULOS()
 {
 	int menu1,i=0,j=0,x=0,e=0,y=0;
 	float M,m;
-	printf("------------------------------------------------------CALCULOS------------------------------------------------------");
-	printf("\nQue calculo desea?\n");
-    x=CALCULOESTAD(x);
+	printf("--------------------------------------------------MENU PRINCIPAL>>CALCULOS------------------------------------------------------");
+    x=CALCULOESTAD();
 	if(x==1)
 	{
-		printf("De que a?o desea calcular medias? 1 para el primero(2021) 2 para el segundo(2022):\n");
+		printf("\nDe que anio desea calcular medias? 1 para el primero(2021) o 2 para el segundo(2022): ");
 		scanf("%i",&e);
-		while(e==1)
+		if(e==1)
 	    {
-	        printf("De que tipo de generacion quiere calcular la media?:\n");
-	        MOSTRARTIPOS(0);
-	        printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
-	        scanf("%i",&y);
-	        if(y >= 1 && y <= 17)
-	        {
-	        	printf("La media en 2021 es %f GWh",media(1,y));
-	            printf("\nDesea calcular otra media de 2021? 1 para si, 2 para calcular medias del 2022 y cualquier otro numero para otros calculos:\n");
-	            scanf("%i",&e);
-	            if(e != 1 && e != 2)
-			    {
-				    MENU_CALCULOS();
-				    return 0;
-			    }
-			}
-			else if(y == 0)
-			{
-				MENU_CALCULOS();
-				return 0;
-			}
+	       	printf("Tipos de generacion a elegir:\n");
+	       	MOSTRARTIPOS(0);
+	       	printf("Que generacion desea? ");
+	       	scanf("%i",&y);
+	        if(y>0 && y<18)
+	        	{
+	        		printf("La media deseada es %f GWh",media(1,y));
+	            
+				}
 			else
-			{
-				while(y > 17)
 				{
 					printf("Boton incorrecto\n");
 					printf("Vuelva a intentarlo\n");
-					scanf("%i", &y);
-					if(y >= 1 && y <= 17)
-					{
-						printf("La media en 2021 es %f GWh",media(1,y));
-	                    printf("\nDesea calcular otra media de 2021? 1 para si, 2 para calcular medias del 2022 y cualquier otro numero para otros calculos:\n");
-	                    scanf("%i",&e);
-	                    if(e != 1 && e != 2)
-			            {
-				            MENU_CALCULOS();
-				            return 0;
-			            }
-					}
-				}
-			} 
+					MENU_CALCULOS();
+					return 0;
+	    		}
 	    }
-	    while(e==2)
+	    else if(e==2)
 	    {
-			printf("De que tipo de generacion quiere calcular la media?:\n");
+			printf("Tipos de generacion a elegir:\n");
 	        MOSTRARTIPOS(0);
-	        printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
+	        printf("Que generacion desea? ");
 	        scanf("%i",&y);
-	        if(y >= 1 && y <= 17)
+	        if(y >0 && y <18)
 	        {
-	        	printf("La media en 2022 es %f GWh",media(2,y));
-	            printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
-	            scanf("%i",&e);
-	            if(e != 1 && e != 2)
-			    {
-				    MENU_CALCULOS();
-				    return 0;
-			    }
-			}
-			else if(y == 0)
-			{
-				MENU_CALCULOS();
-				return 0;
+	        	printf("La media deseada es %f GWh",media(2,y));
 			}
 			else
 			{
-				while(y > 17)
-				{
-					printf("Boton incorrecto\n");
-					printf("Vuelva a intentarlo\n");
-					scanf("%i", &y);
-					if(y >= 1 && y <= 17)
-					{
-						printf("La media en 2022 es %f GWh",media(2,y));
-	                    printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
-	                    scanf("%i",&e);
-	                    if(e != 1 && e != 2)
-			            {
-				            MENU_CALCULOS();
-				            return 0;
-			            }
-					}
-				}
-			}
-	    }
-		while(e != 1 && e != 2)
-		{
-		    printf("\nBoton incorrecto\n");
-		    printf("De que a?o desea calcular medias? 1 para el primero(2021) 2 para el segundo(2022):\n");
-			scanf("%i",&e);
-			if(e==1)
-			{
-				printf("De que tipo de generacion quiere calcular la media?:\n");
-	        	MOSTRARTIPOS(0);
-	        	printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
-	        	scanf("%i",&y);
-	        	if(y==0)
-	        	{
-	        		MENU_CALCULOS();
-					return 0;
-				}
-				else if(y>=1 && y<=17)
-				{
-					printf("La media en 2022 es %f GWh",media(1,y));
-					printf("\nDesea calcular otra media de 2022? 2 para si, cualquier otro numero para no y calcular otros calculos:\n");
-	                scanf("%i",&e);
-					if(e!=2)
-			        {
-				       MENU_CALCULOS();
-				       return 0;
-			        }
-				}
-			}
-			else if(e==2)
-			{
-				printf("De que tipo de generacion quiere calcular la media?:\n");
-	        	MOSTRARTIPOS(0);
-	        	printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
-	        	scanf("%i",&y);
-	        	if(y==0)
-	        	{
-	        		MENU_CALCULOS();
-					return 0;
-				}
-				else if(y>=1 && y<=17)
-				{
-					   printf("La media en 2022 es %f GWh\n",media(2,y));
-				       MENU_CALCULOS();
-				       return 0;
-				}
-			}
-	    }
-	}  
+				printf("Boton incorrecto\n");
+				printf("Vuelva a intentarlo\n");
+				MENU_CALCULOS();
+				return 0;
+	    	}		
+	    }	
+	}
 	else if(x==2)
 	{
-		printf("De que a?o desea calcular la mediana? 1 para el primero(2021) 2 para el segundo(2022):\n");
+		printf("\nDe que anio desea calcular medianas? 1 para el primero(2021) o 2 para el segundo(2022): ");
 		scanf("%i",&e);
-	    while(e==1)
+		if(e==1)
 	    {
-		    printf("La mediana en 2021 es %f GWh\n",mediana(1));
-	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
-		    scanf("%i",&e);
-		    if(e != 1 && e != 2)
-			{
-				MENU_CALCULOS();
-				return 0;
-			}
- 	    }
-		while(e==2)
-		{
-			printf("La mediana en 2022 es %f GWh\n",mediana(2));
-		    printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
-			scanf("%i",&e);
-			if(e != 1 && e != 2)
-			{
-				MENU_CALCULOS();
-				return 0;
-			}
-		}
-		while(e != 1 && e != 2)
-		{
-		    printf("\nBoton incorrecto\n");
-		    printf("Vuelve a pulsar\n");
-		    scanf("%i", &e);
-		    if(e == 1)
-		    {
-		    	while(e==1)
-	            {
-		            printf("La mediana en 2021 es %f GWh\n",mediana(1));
-	                printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
-		            scanf("%i",&e);
-		            if(e != 1 && e != 2)
-			        {
-				        MENU_CALCULOS();
-				        return 0;
-			        }
- 	            }
-			}
-			else if(e == 2)
-			{
-				while(e==2)
-		        {
-			        printf("La mediana en 2022 es %f GWh\n",mediana(2));
-		            printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
-			        scanf("%i",&e);
-			        if(e != 1 && e != 2)
-			        {
-				        MENU_CALCULOS();
-				        return 0;
-			        }
-		        }
-			}
+	       	printf("Tipos de generacion a elegir:\n");
+	       	MOSTRARTIPOS(0);
+	       	printf("Que generacion desea? ");
+	       	scanf("%i",&y);
+	        if(y>0 && y<18)
+	        	{
+	        		printf("La media deseada es %f GWh",media(1,y));
+	            
+				}
+			else
+				{
+					printf("Boton incorrecto\n");
+					printf("Vuelva a intentarlo\n");
+					MENU_CALCULOS();
+					return 0;
+	    		}
 	    }
+	    else if(e==2)
+	    {
+			printf("Tipos de generacion a elegir:\n");
+	        MOSTRARTIPOS(0);
+	        printf("Que generacion desea? ");
+	        scanf("%i",&y);
+	        if(y >0 && y <18)
+	        {
+	        	printf("La mediana deseada es %f GWh",media(2,y));
+			}
+			else
+			{
+				printf("Boton incorrecto\n");
+				printf("Vuelva a intentarlo\n");
+				MENU_CALCULOS();
+				return 0;
+	    	}		
+	    }	
 	}
 	else if(x==3)
 	{
-	printf("De que a?o desea calcularla? 1 para el primero(2021) 2 para el segundo(2022):\n");
-	scanf("%i",&e);
-	    while(e==1)
+		printf("\nDe que anio desea calcular la varianza? 1 para el primero(2021) o 2 para el segundo(2022): ");
+		scanf("%i",&e);
+		if(e==1)
 	    {
-		    printf("La varianza en 2021 es %f GWh\n",varianza(1));
-	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
-		    scanf("%i",&e);
-		    if(e != 1 && e != 2)
-			{
-				MENU_CALCULOS();
-				return 0;
-			}
- 	    }
-		while(e==2)
-		{
-			printf("La varianza en 2022 es %f GWh\n",varianza(2));
-		    printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
-			scanf("%i",&e);
-			if(e != 1 && e != 2)
-			{
-				MENU_CALCULOS();
-				return 0;
-			}
-		}
-		while(e != 1 && e != 2)
-		{
-		    printf("\nBoton incorrecto\n");
-		    printf("Vuelva a pulsar\n");
-		    scanf("%i", &e);
-		    if(e == 1)
-		    {
-		    	while(e==1)
-	            {
-		            printf("La varianza en 2021 es %f GWh\n",varianza(1));
-	                printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
-		            scanf("%i",&e);
-		            if(e != 1 && e != 2)
-			        {
-				        MENU_CALCULOS();
-				        return 0;
-			        }
- 	            }
-			}
-			else if(e == 2)
-			{
-				while(e==2)
-		        {
-			        printf("La varianza en 2022 es %f GWh\n",varianza(2));
-		            printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
-			        scanf("%i",&e);
-			        if(e!=2)
-			        {
-				        MENU_CALCULOS();
-				        return 0;
-			        }
-		        }
-			}
+	       	printf("Tipos de generacion a elegir:\n");
+	       	MOSTRARTIPOS(0);
+	       	printf("Que generacion desea? ");
+	       	scanf("%i",&y);
+	        if(y>0 && y<18)
+	        	{
+	        		printf("La media deseada es %f GWh",media(1,y));
+	            
+				}
+			else
+				{
+					printf("Boton incorrecto\n");
+					printf("Vuelva a intentarlo\n");
+					MENU_CALCULOS();
+					return 0;
+	    		}
 	    }
+	    else if(e==2)
+	    {
+			printf("Tipos de generacion a elegir:\n");
+	        MOSTRARTIPOS(0);
+	        printf("Que generacion desea? ");
+	        scanf("%i",&y);
+	        if(y >0 && y <18)
+	        {
+	        	printf("La media deseada es %f GWh",media(2,y));
+			}
+			else
+			{
+				printf("Boton incorrecto\n");
+				printf("Vuelva a intentarlo\n");
+				MENU_CALCULOS();
+				return 0;
+	    	}		
+	    }	
 	}
 	else if(x==4)
 	{
-		printf("De que a?o desea calcular el maximo y el minimo? 1 para el primero(2021) 2 para el segundo(2022):\n");
+		printf("\nDe que anio desea calcular el maximo y el minimo? 1 para el primero(2021) o 2 para el segundo(2022): ");
 		scanf("%i",&e);
-	    while(e==1)
+		if(e==1)
 	    {
-	    	M=max(1);
-	    	m=min(1);
-		    printf("El maximo en 2021 es %f GWh y el minimo es %f GWh\n",M,m);
-	        printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
-		    scanf("%i",&e);
-		    if(e != 1 && e != 2)
+	       	printf("Tipos de generacion a elegir:\n");
+	       	MOSTRARTIPOS(0);
+	       	printf("Que generacion desea? ");
+	       	scanf("%i",&y);
+	        if(y>0 && y<18)
+	        	{
+	        		printf("La media deseada es %f GWh",media(1,y));
+	            
+				}
+			else
+				{
+					printf("Boton incorrecto\n");
+					printf("Vuelva a intentarlo\n");
+					MENU_CALCULOS();
+					return 0;
+	    		}
+	    }
+	    else if(e==2)
+	    {
+			printf("Tipos de generacion a elegir:\n");
+	        MOSTRARTIPOS(0);
+	        printf("Que generacion desea? ");
+	        scanf("%i",&y);
+	        if(y >0 && y <18)
+	        {
+	        	printf("La media deseada es %f GWh",media(2,y));
+			}
+			else
 			{
+				printf("Boton incorrecto\n");
+				printf("Vuelva a intentarlo\n");
 				MENU_CALCULOS();
 				return 0;
-			}
- 	    }
-		while(e==2)
-		{
-			M=max(2);
-	    	m=min(2);
-			printf("El maximo en 2022 es %f GWh y el minimo es %f GWh\n",M,m);
-		    printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
-			scanf("%i",&e);
-			if(e != 1 && e != 2)
-			{
-				MENU_CALCULOS();
-				return 0;
-			}
-		}
-		while(e != 1 && e != 2)
-		{
-			printf("\nBoton incorrecto\n");
-		    printf("Vuelva a pulsar\n");
-		    scanf("%i", &e);
-		    if(e == 1)
-		    {
-		    	while(e==1)
-	            {
-	    	        M=max(1);
-	    	        m=min(1);
-		            printf("El maximo en 2021 es %f GWh y el minimo es %f GWh\n",M,m);
-	                printf("\nDesea calcular otra vez de 2021? 1 para si, 2 para calcular del 2022 y cualquier otro numero para otros calculos:\n");
-		            scanf("%i",&e);
-		            if(e != 1 && e != 2)
-			        {
-				        MENU_CALCULOS();
-				        return 0;
-			        }
- 	            }
-			}
-			else if(e == 2)
-			{
-				while(e==2)
-		        {
-			        M=max(2);
-	    	        m=min(2);
-			        printf("El maximo en 2022 es %f GWh y el minimo es %f GWh\n",M,m);
-		            printf("\nDesea calcular otra vez de 2022? 2 para si y cualquier otro numero para otros calculos:\n");
-			        scanf("%i",&e);
-			        if(e != 1 && e != 2)
-			        {
-				        MENU_CALCULOS();
-				        return 0;
-			        }
-		        }
-			}
-		}
+	    	}		
+	    }
 	}
 	else if(x == 5)
 	{
@@ -614,155 +452,63 @@ int MENU_DATOS()
 	else
 	{
 		printf("Boton incorrecto\n");
+		printf("Vuelva a intentarlo\n");
 		MENU_CALCULOS();
 		return 0;
 	}
 }
-*/
-/*int MENU_ORDENAR()
+
+int MENU_ORDENAR()
 {
-	int menu1,menu2,i=0,j=0,x=0,e=0,y=0;
-	int regresar = 0, volver = 0;
-	printf("------------------------------------------------------ORDENAR------------------------------------------------------");
-	printf("\nA que tipo de generacion quiere acceder?\n");
+	int menu,i=0,j=0;
+	printf("----------------------------------------------MENU PRINCIPAL>>ORDENAR-----------------------------------------------");
+	printf("\nTipos de generacion a acceder:\n");
     MOSTRARTIPOS(0);
-    printf("----> Volver(18)\n");
-    scanf("%i", &menu2);
-    if(menu2 >=1 && menu2<=17)
-    {
-    	printf("Que año le interesa? 2021(1) o 2022(2):\n");
-    	scanf("%i",&e);
-    	if(e == 1 || e == 2)
+    printf("\n---> Para volver la menu principal pulsa 0 <---\n");
+    printf("Que generacion desea? ");
+    scanf("%i", &menu);
+    if(menu>0 && menu<18)
     	{
-    		printf("Como desea ordenar la generacion? Mayor a menor (1) o Menor a mayor(2)?:\n");
-    	    scanf("%i",&j);
-    	    if(j == 1 || j == 2)
-    	    {
-    		    ordenar(menu2,j,e);
-	            printf("\nDesea ordenar otravez?(1) o desea volver al menu principal(2)?");
-	            scanf("%i",&i);
-	            if(i == 1)
-	            {
-	    	        MENU_ORDENAR();
-	    	        return 0;
-		        }
-		        else if(i == 2)
-		        {
-			        MENU_PRINCIPAL();
-			        return 0;
-		        }
-		        else
-		        {
-			        while(i != 1 && i!=2)
-			        {
-				        printf("\nBoton incorrecto\n");
-				        printf("Vuelva a pulsar\n");
-				        scanf("%i", &i);
-				        if(i == 1)
-				        {
-					        MENU_ORDENAR();
-					        return 0;
-				        }
-				        else if(i == 2)
-				        {
-				    	    MENU_PRINCIPAL();
-					        return 0;
-					    }
-			        }
-		        }
-		    }
-		    else
-		    {
-			    printf("\nBoton incorrecto\n");
-			    printf("Vuelva a pulsar\n");
-			    scanf("%i", &j);
-			    if(j == 1)
-				{
-					ordenar(menu2,j,e);
-					printf("\nDesea ordenar otravez?(1) o desea volver al menu principal(2)?");
-	                scanf("%i",&i);
-	                if(i == 1)
-	                {
-	    	            MENU_ORDENAR();
-	    	            return 0;
-		            }
-		            else if(i == 2)
-		            {
-			            MENU_PRINCIPAL();
-			            return 0;
-		            }
-		            else
-		            {
-			            while(i != 1 && i!=2)
-			            {
-				            printf("\nBoton incorrecto\n");
-				            printf("Vuelva a pulsar\n");
-				            scanf("%i", &i);
-				            if(i == 1)
-				            {
-					            MENU_ORDENAR();
-					            return 0;
-				            }
-				            else if(i == 2)
-				            {
-				    	        MENU_PRINCIPAL();
-					            return 0;
-					        }
-			            }
-		            }
+    		printf("Que anio le interesa? 2021(1) o 2022(2): ");
+    		scanf("%i",&i);
+    		if(i == 1 || i == 2)
+    			{
+    				printf("Como desea ordenar la generacion? Mayor a menor (1) o Menor a mayor(2)?: ");
+    	    		scanf("%i",&j);
+    	    		if(j == 1 || j == 2)
+    	    			{
+    		    			ordenar(menu,j,i);
+    		    			MENU_ORDENAR();
+    		    			return 0;
+						}
+		    		else
+		    			{
+			   				printf("\nOpcion incorrecta\n");
+			    			printf("Vuelva a intentarlo\n");
+			    			MENU_ORDENAR();
+			    			return 0;
+						}   
 				}
-				else if(j == 2)
+			else
 				{
-				    ordenar(menu2,j,e);
-				    ordenar(menu2,j,e);
-					printf("\nDesea ordenar otravez?(1) o desea volver al menu principal(2)?");
-	                scanf("%i",&i);
-	                if(i == 1)
-	                {
-	    	            MENU_ORDENAR();
-	    	            return 0;
-		            }
-		            else if(i == 2)
-		            {
-			            MENU_PRINCIPAL();
-			            return 0;
-		            }
-		            else
-		            {
-			            while(i != 1 && i!=2)
-			            {
-				            printf("\nBoton incorrecto\n");
-				            printf("Vuelva a pulsar\n");
-				            scanf("%i", &i);
-				            if(i == 1)
-				            {
-					            MENU_ORDENAR();
-					            return 0;
-				            }
-				            else if(i == 2)
-				            {
-				    	        MENU_PRINCIPAL();
-					            return 0;
-					        }
-			            }
-		            }
+					printf("\nOpcion incorrecta\n");
+					MENU_ORDENAR();
+					return 0;
 				}
-		    }
 		}
-		else
+	else if(menu==0)
 		{
-			printf("\nBoton incorrecto\n");
-			MENU_ORDENAR();
-		}    
-	}
+			MENU_PRINCIPAL();
+			return 0;
+		}	
 	else
-	{
-		printf("\nBoton incorrecto\n");
-		MENU_ORDENAR();
-		return 0;
-	}
+		{
+			printf("\nOpcion incorrecta\n");
+			MENU_ORDENAR();
+			return 0;
+		}	
 }
-*/
+
 int BUSCARDATO(int tipo, int numdato)//Funcion que busca el dato deseado
 {
 	int i;
@@ -1016,7 +762,7 @@ float min(int r,int x)//Funcion que calcula el minimo
 		return MIN[12];//DEVOLVER ELEMENTO 12
 	}
 }
-/*
+
 void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 {
 	int i,j;
@@ -1062,7 +808,7 @@ void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 		printf("La generacion ordenada por la forma deseada es:\n");
 		for(i=0;i<12;i++)
 		{
-		 	printf("%.3f\n",V1[i]);
+		 	printf("\t%.3f\n",V1[i]);
 		}
 	}
 	if(r==2)
@@ -1101,11 +847,11 @@ void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 		printf("La generacion ordenada por la forma deseada es:\n");
 		for(i=12;i<24;i++)
 		{
-		 	printf("%.3f\n",V1[i]);
+		 	printf("\t%.3f\n",V1[i]);
 		}
 	}
 }
-*/
+
 int MOSTRARTIPOS(int t)//Para no repetir el mostrado de los tipos de generacion que hay para escoger uno, he hecho una funcion
 {
 	int i;
@@ -1128,10 +874,11 @@ float POT(float base,int potencia)//Funcion creada para calcular potencias de nu
 	}
 	return base;
 }
-/*
-int CALCULOESTAD(int x)//Esta funcion sirve para elegir que calculo estadistico se quiere acceder
+
+int CALCULOESTAD()//Esta funcion sirve para elegir que calculo estadistico se quiere acceder
 {
-	int i;
+	int i,x;
+	printf("\tDistintos calculos a elegir:\n");
 		for(i=0;i<5;i++)
     		{
     			printf("%i)",i+1);
@@ -1156,7 +903,7 @@ int CALCULOESTAD(int x)//Esta funcion sirve para elegir que calculo estadistico 
 					printf("Volver al menu principal.\n");
 				}
 			}
+		printf("\tQue desea? ");
 		scanf("%i",&x);
 		return x;
 }
-*/
