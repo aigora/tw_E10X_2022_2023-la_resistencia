@@ -175,10 +175,85 @@ void ESCRIBIR(FILE *fich)
 		i--;
 		fprintf(fich,"%f   %f,",max(i,j),min(i,j));
 		i++;
-		fprintf(fich,"%f   %f,",max(i,j),min(i,j));
+		fprintf(fich,"%f   %f",max(i,j),min(i,j));
 		i--;
 		fputc('\n',fich);
  	}
+}
+
+float RECOGER2(int estad,int anio,int gener)
+{
+	int n=0,i=0,j=0,k=0,f=0;
+	char c, rescarac[50];
+	lin *recoger=NULL;
+	FILE *fich=NULL;
+	if((fich=fopen("Calculos_estadisticos.csv","r"))==NULL)printf("Problema al abrir el fichero 3 para recoger el fichero de calculos\n");
+	//Se sabe que tenemos 17 generaciones
+	//En nuestro archivo que almacena los calculos hay 18 filas
+	recoger=(lin*)malloc(18*sizeof(lin));//El puntero lo hemos cambiado a un vector con dimension "18".
+	rewind(fich);
+	for(i=0;i<18;i++)
+	{
+		fgets(recoger[i].lineas,sizeof(recoger[i].lineas),fich);//Esto copia cada fila en cada elemento
+		//Se aniade una coma al final para cerrar la columna
+		recoger[i].lineas[strlen(recoger[i].lineas)-1]=',';
+		//Hay que cerrar la cadena obviamente se a?ade un '\0'
+		recoger[i].lineas[strlen(recoger[i].lineas)]='\0';
+	}
+	printf("%s",recoger[gener].lineas);
+	fclose(fich);
+	if(estad==1)
+	{
+		i=1;
+		f=2;
+		printf("\nLa media deseada es ");	
+	}
+	else if(estad==2)
+	{
+		i=3;
+		f=4;
+		printf("\nLa mediana deseada es ");
+	}
+	else if(estad==3)
+	{
+		i=5;
+		f=6;
+		printf("\nLa varianza deseada es ");
+	}
+	else if(estad==4)
+	{
+		i=7;
+		f=8;
+		printf("\nEl maximo y el minimo deseados son ");
+	}
+	if(anio==2)
+		{
+			i++;
+			f++;
+		}
+	while(n!=i)
+		{	
+			if(recoger[gener].lineas[k]==',')
+				{
+					n++;
+				}
+			k++;
+		}
+	n=0;
+	while(n!=f)
+		{
+			if(recoger[gener].lineas[j]==',')
+				{
+					n++;
+				}
+			j++;
+		}
+	for(i=k,n=0;i<j;i++,n++)
+		{
+			rescarac[n]=recoger[gener].lineas[i];
+		}
+	rescarac[n-1]='\0';
+	printf("%s",rescarac);
 }
 
 float MENU_PRINCIPAL()
@@ -274,7 +349,7 @@ int MENU_CALCULOS()
 {
 	int menu1,i=0,j=0,x=0,e=0,y=0;
 	float M,m;
-	printf("--------------------------------------------------MENU PRINCIPAL>>CALCULOS------------------------------------------------------");
+	printf("\n----------------------------------------------MENU PRINCIPAL>>CALCULOS----------------------------------------------\n");
     x=CALCULOESTAD();
 	if(x==1)
 	{
@@ -288,8 +363,9 @@ int MENU_CALCULOS()
 	       	scanf("%i",&y);
 	        if(y>0 && y<18)
 	        	{
-	        		printf("La media deseada es %f GWh",media(1,y));
-	            
+	        		RECOGER2(x,e,y);
+	            	MENU_CALCULOS();
+	            	return 0;
 				}
 			else
 				{
@@ -307,7 +383,9 @@ int MENU_CALCULOS()
 	        scanf("%i",&y);
 	        if(y >0 && y <18)
 	        {
-	        	printf("La media deseada es %f GWh",media(2,y));
+	        	RECOGER2(x,e,y);
+	        	MENU_CALCULOS();
+	            return 0;
 			}
 			else
 			{
@@ -330,8 +408,9 @@ int MENU_CALCULOS()
 	       	scanf("%i",&y);
 	        if(y>0 && y<18)
 	        	{
-	        		printf("La media deseada es %f GWh",media(1,y));
-	            
+	        		RECOGER2(x,e,y);
+	            	MENU_CALCULOS();
+	            	return 0;
 				}
 			else
 				{
@@ -349,7 +428,9 @@ int MENU_CALCULOS()
 	        scanf("%i",&y);
 	        if(y >0 && y <18)
 	        {
-	        	printf("La mediana deseada es %f GWh",media(2,y));
+	        	RECOGER2(x,e,y);
+	            MENU_CALCULOS();
+	            return 0;
 			}
 			else
 			{
@@ -372,8 +453,9 @@ int MENU_CALCULOS()
 	       	scanf("%i",&y);
 	        if(y>0 && y<18)
 	        	{
-	        		printf("La media deseada es %f GWh",media(1,y));
-	            
+	        		RECOGER2(x,e,y);
+	            	MENU_CALCULOS();
+	            	return 0;
 				}
 			else
 				{
@@ -391,7 +473,9 @@ int MENU_CALCULOS()
 	        scanf("%i",&y);
 	        if(y >0 && y <18)
 	        {
-	        	printf("La media deseada es %f GWh",media(2,y));
+	        	RECOGER2(x,e,y);
+	            MENU_CALCULOS();
+	            return 0;
 			}
 			else
 			{
@@ -414,8 +498,9 @@ int MENU_CALCULOS()
 	       	scanf("%i",&y);
 	        if(y>0 && y<18)
 	        	{
-	        		printf("La media deseada es %f GWh",media(1,y));
-	            
+	        		RECOGER2(x,e,y);
+	        		MENU_CALCULOS();
+	            	return 0;
 				}
 			else
 				{
@@ -433,7 +518,9 @@ int MENU_CALCULOS()
 	        scanf("%i",&y);
 	        if(y >0 && y <18)
 	        {
-	        	printf("La media deseada es %f GWh",media(2,y));
+	        	RECOGER2(x,e,y);
+	        	MENU_CALCULOS();
+	           	return 0;
 			}
 			else
 			{
@@ -878,32 +965,32 @@ float POT(float base,int potencia)//Funcion creada para calcular potencias de nu
 int CALCULOESTAD()//Esta funcion sirve para elegir que calculo estadistico se quiere acceder
 {
 	int i,x;
-	printf("\tDistintos calculos a elegir:\n");
+	printf("Distintos calculos a elegir:\n");
 		for(i=0;i<5;i++)
     		{
     			printf("%i)",i+1);
     			if(i==0)
 				{
-    				printf("Calculo de media anual.\n");	
+    				printf("\tCalculo de media anual.\n");	
 				}
 				else if(i==1)
 				{
-					printf("Calculo de mediana anual.\n");
+					printf("\tCalculo de mediana anual.\n");
 				}
 				else if(i==2)
 				{
-					printf("Calculo de varianza anual.\n");
+					printf("\tCalculo de varianza anual.\n");
 				}
 				else if(i==3)
 				{
-					printf("Calculo del maximo y minimo anual.\n");
+					printf("\tCalculo del maximo y minimo anual.\n");
 				}
 				else if(i==4)
 				{
-					printf("Volver al menu principal.\n");
+					printf("\tVolver al menu principal.\n");
 				}
 			}
-		printf("\tQue desea? ");
+		printf("Que desea? ");
 		scanf("%i",&x);
 		return x;
 }
