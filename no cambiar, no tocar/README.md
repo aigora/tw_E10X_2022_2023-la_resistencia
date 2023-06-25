@@ -1,0 +1,19 @@
+# [Trabajo de grupo]
+
+El trabajo consiste en manipular datos extraídos de archivos csv y hacer uso de ellos en operaciones breves.
+Al abrir el programa te encontrarás con un menú por el que podrás navegar con toda la libertad del mundo
+realizando cálculos estadísticos, búsqueda de datos específicos y ordenación de datos. 
+
+## Integrantes del equipo
+
+·Lucas van Tatenhove
+·Adrian Suruianu
+·Darío Sirera
+·Pedro Seguí
+
+## Objetivos del trabajo
+
+·Leer y guardar correctamente los datos del archivo csv en un vector de estructuras.
+·Creación de un menú por el que se puede navegar libremente.
+·Uso de funciones para facilitar la programación del menú y realizar un int main lo más corto posible.
+·Crear un fichero aparte a gusto del usuario
