@@ -560,7 +560,7 @@ int MENU_CALCULOS()
 			return 0;
 		}
 	}
-	else if(x == 5)
+	else if(x == 0)
 	{
 		MENU_PRINCIPAL();
 		return 0;

@@ -293,11 +293,12 @@ float MENU_PRINCIPAL()
 			    break; 
 			}
 		}
-		else{
-				printf("Opcion incorrecta, vuelva a intentarlo porfavor\n");
-				MENU_PRINCIPAL();
-				return 0;
-			}
+		else
+		{
+			printf("Opcion incorrecta, vuelva a intentarlo porfavor\n");
+			MENU_PRINCIPAL();
+			return 0;
+		}
 	}while(menu1!=4);
 	return 0;
 }
@@ -310,7 +311,7 @@ int MENU_DATOS()
 	printf("\nTipos de generaciones a elegir\n");
 	MOSTRARTIPOS(0);
 	printf("\n---> Para volver la menu principal pulsa 0 <---\n");
-    printf("A que tipo de generacion quiere acceder? ");
+    printf("\nA que tipo de generacion quiere acceder? ");
     scanf("%i", &menu);
     if(menu>0 && menu<18)
     {
@@ -394,7 +395,14 @@ int MENU_CALCULOS()
 				MENU_CALCULOS();
 				return 0;
 	    	}		
-	    }	
+	    }
+		else
+	    {
+	    	printf("Boton incorrecto\n");
+			printf("Vuelva a intentarlo\n");
+			MENU_CALCULOS();
+			return 0;
+		}	
 	}
 	else if(x==2)
 	{
@@ -439,7 +447,14 @@ int MENU_CALCULOS()
 				MENU_CALCULOS();
 				return 0;
 	    	}		
-	    }	
+	    }
+		else
+	    {
+	    	printf("Boton incorrecto\n");
+			printf("Vuelva a intentarlo\n");
+			MENU_CALCULOS();
+			return 0;
+		}	
 	}
 	else if(x==3)
 	{
@@ -484,7 +499,14 @@ int MENU_CALCULOS()
 				MENU_CALCULOS();
 				return 0;
 	    	}		
-	    }	
+	    }
+		else
+	    {
+	    	printf("Boton incorrecto\n");
+			printf("Vuelva a intentarlo\n");
+			MENU_CALCULOS();
+			return 0;
+		}	
 	}
 	else if(x==4)
 	{
@@ -530,8 +552,15 @@ int MENU_CALCULOS()
 				return 0;
 	    	}		
 	    }
+	    else
+	    {
+	    	printf("Boton incorrecto\n");
+			printf("Vuelva a intentarlo\n");
+			MENU_CALCULOS();
+			return 0;
+		}
 	}
-	else if(x == 5)
+	else if(x == 0)
 	{
 		MENU_PRINCIPAL();
 		return 0;
@@ -552,7 +581,7 @@ int MENU_ORDENAR()
 	printf("\nTipos de generacion a acceder:\n");
     MOSTRARTIPOS(0);
     printf("\n---> Para volver la menu principal pulsa 0 <---\n");
-    printf("Que generacion desea? ");
+    printf("\nQue generacion desea? ");
     scanf("%i", &menu);
     if(menu>0 && menu<18)
     	{
@@ -966,7 +995,7 @@ int CALCULOESTAD()//Esta funcion sirve para elegir que calculo estadistico se qu
 {
 	int i,x;
 	printf("Distintos calculos a elegir:\n");
-		for(i=0;i<5;i++)
+		for(i=0;i<4;i++)
     		{
     			printf("%i)",i+1);
     			if(i==0)
@@ -985,12 +1014,9 @@ int CALCULOESTAD()//Esta funcion sirve para elegir que calculo estadistico se qu
 				{
 					printf("\tCalculo del maximo y minimo anual.\n");
 				}
-				else if(i==4)
-				{
-					printf("\tVolver al menu principal.\n");
-				}
 			}
-		printf("Que desea? ");
+		printf("\n---> Para volver la menu principal pulsa 0 <---\n");	
+		printf("\nQue desea? ");
 		scanf("%i",&x);
 		return x;
 }
