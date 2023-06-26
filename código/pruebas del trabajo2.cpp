@@ -258,7 +258,7 @@ float RECOGER2(int estad,int anio,int gener)
 
 float MENU_PRINCIPAL()
 {
-	int menu1=4,i=0,j=0,x=0,e=0,y=0;
+	int menu1=4, i=0,j=0,x=0,e=0,y=0;
 	do
 	{
 		if(menu1==4)
@@ -582,9 +582,13 @@ int MENU_ORDENAR()
     MOSTRARTIPOS(0);
     printf("\n---> Para volver la menu principal pulsa 0 <---\n");
     printf("\nQue generacion desea? ");
-    scanf("%i", &menu);
+    fflush(stdin);
+    scanf("%c", &menu[0]);
+    if(menu[0]>47 && menu[0]<58 )
+    
     if(menu>0 && menu<18)
     	{
+    		resp=atoi(menu);
     		printf("Que anio le interesa? 2021(1) o 2022(2): ");
     		scanf("%i",&i);
     		if(i == 1 || i == 2)
