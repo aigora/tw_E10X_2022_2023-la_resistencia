@@ -4,102 +4,95 @@
 #include<stdlib.h>
 #include<string.h>
 
-typedef struct
+typedef struct//Esta estructura sirve para almacenar cada una de las lineas de nuestro archivo csv
 {
 	char lineas[500];
 }lin;
 
-struct datos
+struct datos//Estructura definitiva que tendrá almacenada el nombre del tipo de generacion y sus correspondientes 24 datos 12 por cada anio(2021 y 2022)
 {
 	char tipo[35];
 	double dato[24];
 }numdatos[17];
 
-struct extra
+struct extra//Estructura destinada para guardar cada uno de los datos en caracteres para despues convertirlos en numeros reales(floats)
 {
 	char cardato[30];//El numero de caracteres que permite la cadena cardato
 }extradatos[408];//La dimension es 408 numero que corresponde al numero total de datos que hay, obtenido multiplicando 17*24
 
-void RECOGER(FILE *);
-void ESCRIBIR(FILE *);
-int MOSTRARTIPOS(int );
-int CALCULOESTAD();
-int BUSCARDATO(int,int);
-float MENU_PRINCIPAL();
-int MENU_DATOS();
-int MENU_CALCULOS();
-float media(int,int);
+void RECOGER(FILE *);//Funcion que recoge los datos del archivo principal y los almacena en la memoria del ordenador con la ayuda de las estructuras
+void ESCRIBIR(FILE *);//Funcion destinada a escribir en otro archivo csv que hemos llamado calculos_estadisticos, almacena los calculos que se utilizaran
+float RECOGER2(int,int,int)//Funcion que recogera el calculo deseado del archivo calculos
+int MOSTRARTIPOS(int);//Funcion que nos muestra los tipos de generacion a elegir
+int CALCULOESTAD();//Funcion que nos muestra los calculos estadisticos que el programa puede calcular
+int BUSCARDATO(int,int);//Esta funcion busca el calculos deseado por el usuario
+float MENU_PRINCIPAL();//El menu principal que contiene las acciones principales que puede realizar el programa
+int MENU_DATOS();//Una de las acciones es buscar un dato, esta funcion muestra el menu destinado a buscar con sus preguntas 
+int MENU_CALCULOS();//Otra de las acciones es calcular unas estadisticas, este es el menu
+float media(int,int);//Calcula medias de la generacion deseada
 float varianza(int,int);
-float POT(float,int);
+float POT(float,int);//Una funcion destinada a calcular potencias(elevar numeros), NO perimte raices de ningun tipo pero no es necesario para este programa
 float mediana(int,int);
 float max(int,int);
 float min(int,int);
-int MENU_ORDENAR();
-void ordenar(int, int,int);
+int MENU_ORDENAR();//La ultima accion es ordenar de mayor a menor o vice versa los datos de una generacion, este es el menu
+void ordenar(int, int,int);//Esta funcion ordena los datos
+int verificar_char(char c, int *resultado);//Esta funcion nos sirve para verificar si el usuario ha tecleado un numero o una letra
+int pregunta_calculos(int);//Para facilitar el menu de calculos metemos gran parte de sus preguntas en una funcion
 
 int main()
 {
-	FILE *fich;
-	FILE *fich2;
+	FILE *fich;//fichero para recoger
+	FILE *fich2;//fichero para escribir
 	if((fich=fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv","r"))==NULL)printf("Problema al abrir primer fichero"); //Apertura
-	RECOGER(fich);//Hacemos la llamada a la funcion que nos almacena todos los datos del archivo en la memoria del ordenador
+	RECOGER(fich);//Llamada a la funcion que nos almacena los datos
 	fclose(fich);//Se cierra el fichero ya que no necesitamos trabajar mas con el, tenemos ya los datos en nuestra memoria
 	if((fich2=fopen("Calculos_estadisticos.csv","w"))==NULL)printf("Problema al abrir segundo fichero"); //Apertura del fichero para escribir
-	ESCRIBIR(fich2);
-	fclose(fich2);
-	//EL menu con sus llamadas a funciones que har?n lo pedido
+	ESCRIBIR(fich2);//Se escribe en el nuevo archivo
+	fclose(fich2);//Se cierra no lo necesitamos mas
 	MENU_PRINCIPAL();
 }
 
-void RECOGER(FILE *fich)//funcion que recoge los datos del archivo y los mete en la memoria del programa
+void RECOGER(FILE *fich)
 {
 	//Primero hay que contar la cantidad de lineas que tenemos.
-	//La cantidad de lineas "n" sera la dimension de nuestro vector de estructuras "lin" cada elemento de este vector tendra una linea.
+	//La cantidad de lineas "n" sera la dimension de nuestro vector de estructuras "lin" cada elemento de este vector tendra una linea
 	lin *numlineas; //El puntero de estructuras que cambiaremos a vector con dimension n.
 	int n=0,i=0,j=0,k=0,numcomas=0,q=0,d=0,l=0,m=0;
-	
 	while(!feof(fich))
 	{
 		if(fgetc(fich)=='\n') n++;
 	}
 	//printf("El numero total de lineas en el archivo es %i",n);
-	//Nos da el valor n igual a 22.
-	numlineas=(lin*)malloc(n*sizeof(lin));//El puntero lo hemos cambiado a un vector con dimension "n".
-	rewind(fich);
+	//Nos da el valor n igual a 22
+	numlineas=(lin*)malloc(n*sizeof(lin));//El puntero lo hemos cambiado a un vector con dimension "n" de tipo lin para que sea de estructuras
+	rewind(fich);//es importante mover el vector hacia el principio otra vez ya que hemos leido y lo hemos dejado alfinal al hacerlo
 	//Ahora copiamos en cada elemento de numlineas una cadena(linea).
 	for(i=0;i<n;i++)
 	{
 		fgets(numlineas[i].lineas,sizeof(numlineas[i].lineas),fich);//Esto copia cada fila en cada elemento
-		//Lo que pasa es que el fgets tambien copia el '\n' asi que hay que cambiarlo por un , para cerrar la linea
+		//Lo que pasa es que el fgets tambien copia el '\n' asi que hay que cambiarlo por un ',' para cerrar la linea en el archivo ya que es csv
 		numlineas[i].lineas[strlen(numlineas[i].lineas)-1]=',';
-		//Hay que cerrar la cadena obviamente se a?ade un '\0'
+		//Hay que cerrar la cadena, se aniade un '\0' al final
 		numlineas[i].lineas[strlen(numlineas[i].lineas)]='\0';
 	}
-	fclose(fich);//Cerramos fichero ya que ya no vamos a hacer nada con ?l
+	fclose(fich);//Cerramos fichero ya que ya no vamos a hacer nada con el
 	
 	//Se ve si hemos copiado bien el archivo entero
 	/*for(i=0;i<n;i++)
 	{
 		printf("%s",numlineas[i].lineas);
 	}*/
-	
-	//Pero solo nos interesa desde la linea que empiezan los tipos de datos(linea 6)
-	/*for(i=6;i<n;i++)
-	{
-		printf("\n%s",numlineas[i].lineas);
-	}*/
-	
-	
-	
+
 	/*Lo siguente que tenemos que hacer es ordenar los nombres de los tipos en la segunda estructura 
 	y cambiar los numeros de caracteres a floats(numeros reales)*/
 	
-	
 	//Para ello encontramos la coma en cada cadena
 	//Al mismo tiempo lo copiamos
-	for(i=5,k=0;i<n;i++,k++)
+	for(i=5,k=0;i<n;i++,k++)//i se inicia en 5 ya que determina en que linea estamos y solo nos interesa copiar los datos
+							//(empiezan en la linea 6 que para el ordenador es el 5 ya que cada vector o array empieza en el elemento 0)
 	{
-		for(j=0,numcomas=0;numcomas<1;j++)
+		for(j=0,numcomas=0;numcomas<1;j++)//Esto nos encontrara la posicion de la coma definida por j
 		{
 			if(numlineas[i].lineas[j]==',')
 			{
@@ -107,22 +100,21 @@ void RECOGER(FILE *fich)//funcion que recoge los datos del archivo y los mete en
 				//printf("\nEn la linea %i la primera coma se encuentra en la posicion %i",i,j);
 				//Ahora copiamos en la segunda estructura el nombre del tipo correspondiente
 				memcpy(numdatos[k].tipo,numlineas[i].lineas,j*sizeof(char));
-				q=j;
+				q=j;//Para los datos empezamos desde la primera coma entcontrada en la linea
 				for(m=0;m<24;m++)
 				{
-					q++;
+					q++;//Debe de empezar en la proxima posicion despues de cada coma le sumamos a q uno
 					//printf("Valor de q= %i",q);
-					//printf("\t%c\t",numlineas[5].lineas[11]);
 					d=0;
 					while(numlineas[i].lineas[q]!=',')//***Aqui es donde lo copiamos***//
 					{
 						extradatos[l].cardato[d]=numlineas[i].lineas[q];/*Se copia cada numero que esta entre comas
-																		desde el primer coma hasta el ?ltimo*/
+																		desde la primera coma hasta la ultima*/
 						d++;											//La d sirve para la posicion en la cadena en la que se copia el numero
-						q++;											//La posicion de la coma est? indicada por la q esta sigue la cadena copiada
+						q++;											//La posicion de la coma esta indicada por la q esta sigue la cadena copiada
 						//printf("\t%s\t",extradatos[l].cardato);
 					}
-					l++;			
+					l++;//Para el siguiente dato			
 				}
 			}
 		}
@@ -134,7 +126,7 @@ void RECOGER(FILE *fich)//funcion que recoge los datos del archivo y los mete en
 	{
 		for(j=0;j<24;j++)
 		{
-			numdatos[i].dato[j]=atof(extradatos[k].cardato);
+			numdatos[i].dato[j]=atof(extradatos[k].cardato);//atof funcion que cambia de ascii a float
 			k++;
 		}
 	}
@@ -152,22 +144,26 @@ void RECOGER(FILE *fich)//funcion que recoge los datos del archivo y los mete en
 
 void ESCRIBIR(FILE *fich)
 {
-	int i=1,j=0,k=0;
-	fprintf(fich,"Generación,Media anio 1,Media anio 2,");
+	//Se empieza a escibir en el nuevo archivo poniendo los titulos
+	//En la primera columna ponemos los tipos de generaciones
+	//En las siguientes columnas ponemos los calculos de los dos anios separados primero va la media, despues la mediana y etc.
+	int i=1,j=0,k=0;//el valor de i NO se puede cambiar es importante que entre en el for como un uno
+	fprintf(fich,"Generación,Media anio 1,Media anio 2,");//Estos printfs no son tan eficientes ya que solo sirven para un caso particular,
+														  //se tendrian que cambiar si se utiliza otra mentalidad con el archivo
 	fprintf(fich,"Mediana anio 1,Mediana anio 2,");
 	fprintf(fich,"Varianza anio 1,Varianza anio 2,");
 	fprintf(fich,"Maximo Minimo anio 1,Maximo Minimo anio 2,");
 	fputc('\n',fich);
-	for(j=0,k=0;j<17;j++,k++)
+	for(j=0,k=0;j<17;j++,k++) //Ahora se escribe en el fichero cada columna
 	{
-		fprintf(fich,"%s,",numdatos[k].tipo);
-		fprintf(fich,"%f,",media(i,j));
+		fprintf(fich,"%s,",numdatos[k].tipo); //Primero va el nombre del tipo, tiene una k y esta se va sumando cada vez que acaba con una linea
+		fprintf(fich,"%f,",media(i,j));//Seguido por la media del primer anio
+		i++;//Las funciones se explicaran despues pero la i sirve para indicar en que anio estamos por eso se suma uno, su valor sera 2(segundo anio)
+		fprintf(fich,"%f,",media(i,j));//y se sigue con la media del segundo anio
+		i--;//Pero el siguiente dato corresponde al primer anio asique se le resta un uno para que quede 1(primer anio)
+		fprintf(fich,"%f,",mediana(i,j));//la cadena sigue con sus correspondientes funciones
 		i++;
-		fprintf(fich,"%f,",media(i,j));
-		i--;
-		fprintf(fich,"%f,",mediana(i,j));
-		i++;
-		fprintf(fich,"%f,",mediana(i,j));
+		fprintf(fich,"%f,",mediana(i,j));//Las comas son MUY importantes ya que queremos que sea un csv separan cada dato con un coma
 		i--;
 		fprintf(fich,"%f,",varianza(i,j));
 		i++;
@@ -177,17 +173,21 @@ void ESCRIBIR(FILE *fich)
 		i++;
 		fprintf(fich,"%f   %f",max(i,j),min(i,j));
 		i--;
-		fputc('\n',fich);
+		fputc('\n',fich);//Para seguir en la siguiente linea se le aniade un retorno de carro al final 
  	}
 }
 
 float RECOGER2(int estad,int anio,int gener)
 {
+	//Ya que tenemos los calculos almacenados dentro del nuevo archivo los vamos a sacar de ahi cuando nos lo pida el usuario
+	//Esta funcion lo hace, los parametros de entrada son la estadistica(que estadistica le interesa la media,mediana,...),el anio y el tipo de generacion
+	//La mentalidad es la misma que con el archivo anterior vamos a almacenar cada linea en una cadena de caracteres
 	int n=0,i=0,j=0,k=0,f=0;
-	char c, rescarac[50];
-	lin *recoger=NULL;
-	FILE *fich=NULL;
-	if((fich=fopen("Calculos_estadisticos.csv","r"))==NULL)printf("Problema al abrir el fichero 3 para recoger el fichero de calculos\n");
+	char c,rescarac[50];//En esta cadena vamos a meter nuetro resultado que vamos a mostrar al usuario esta en caracteres
+	//No nos interesa calcular nada mas con estos calculos por lo que solo mostramos caracteres
+	lin *recoger;//Vamos a reutilizar la estructura que hemos utilizado para almacenar cada linea del archivo anterior
+	FILE *fich;
+	if((fich=fopen("Calculos_estadisticos.csv","r"))==NULL)printf("Problema al abrir el fichero 3 para recoger el archivo de calculos\n");
 	//Se sabe que tenemos 17 generaciones
 	//En nuestro archivo que almacena los calculos hay 18 filas
 	recoger=(lin*)malloc(18*sizeof(lin));//El puntero lo hemos cambiado a un vector con dimension "18".
@@ -197,15 +197,18 @@ float RECOGER2(int estad,int anio,int gener)
 		fgets(recoger[i].lineas,sizeof(recoger[i].lineas),fich);//Esto copia cada fila en cada elemento
 		//Se aniade una coma al final para cerrar la columna
 		recoger[i].lineas[strlen(recoger[i].lineas)-1]=',';
-		//Hay que cerrar la cadena obviamente se a?ade un '\0'
+		//Hay que cerrar la cadena, se aniade un '\0'
 		recoger[i].lineas[strlen(recoger[i].lineas)]='\0';
 	}
-	printf("%s",recoger[gener].lineas);
+	//printf("%s",recoger[gener].lineas); /Esto nos sirve para comprobar si hemos recogido bien la linea
 	fclose(fich);
-	if(estad==1)
+	//Ahora es similar a lo que ya hemos hecho tenemos que encontrar las comas pero esta vez al mismo tiempo de saber su posicion, hay que contarlas
+	if(estad==1)//En el archivo que hemos creado la cantidad de comas que tenemos que encontrar es distinta para cada estadistica
 	{
-		i=1;
-		f=2;
+		i=1;//La i indica cuantas comas hay que contar antes del dato que buscamos
+		f=2;//La f indica cuantas comas hay que contar en total para encontrar el dato
+		/*Por ejemplo, en la media del primer anio el dato esta entre la primera y segunda coma 
+		para la mediana del primer anio el dato esta entre la tercera y la cuarta*/
 		printf("\nLa media deseada es ");	
 	}
 	else if(estad==2)
@@ -226,12 +229,12 @@ float RECOGER2(int estad,int anio,int gener)
 		f=8;
 		printf("\nEl maximo y el minimo deseados son ");
 	}
-	if(anio==2)
+	if(anio==2)//Si nos interesa el segundo anio le sumamos simplemente uno a los dos parametros
 		{
 			i++;
 			f++;
 		}
-	while(n!=i)
+	while(n!=i)//Los whiles sirven para saber en que posicion tenemos las comas deseadas por los parametros
 		{	
 			if(recoger[gener].lineas[k]==',')
 				{
@@ -248,7 +251,7 @@ float RECOGER2(int estad,int anio,int gener)
 				}
 			j++;
 		}
-	for(i=k,n=0;i<j;i++,n++)
+	for(i=k,n=0;i<j;i++,n++)//Entonces simplemente copiamos cada caracter en rescarac para despues imprimer la cadena
 		{
 			rescarac[n]=recoger[gener].lineas[i];
 		}
@@ -258,22 +261,25 @@ float RECOGER2(int estad,int anio,int gener)
 
 float MENU_PRINCIPAL()
 {
-	int menu1=4, i=0,j=0,x=0,e=0,y=0;
+	int i=0,j=0,x=0,e=0,y=0, z, h, resultado;
+	char menu = 4;
 	do
 	{
-		if(menu1==4)
+		if(menu = 4)
 		{
 			printf("---------------------------------------------------MENU PRINCIPAL---------------------------------------------------\n");
-        	printf("1) Buscador de datos.\n");
-        	printf("2) Calculos estadisticos.\n");
-        	printf("3) Ordenacion de datos\n");
-        	printf("4) Salir\n");
-        	printf("A donde quiere acceder? ");
-        	scanf("%i", &menu1);
+            printf("1) Buscador de datos.\n");
+            printf("2) Calculos estadisticos.\n");
+            printf("3) Ordenacion de datos\n");
+            printf("4) Salir\n");
+            printf("A donde quiere acceder? ");
+            fflush(stdin);
+            scanf("%c", &menu);
+            z = verificar_char(menu, &resultado);
 		}
-		if(menu1>=1 && menu1<=4)
+		if(z >= 1 && z <= 4)
 		{
-			switch(menu1)
+			switch(z)
         	{
     	    	case 1:
     	    		MENU_DATOS();
@@ -295,32 +301,35 @@ float MENU_PRINCIPAL()
 		}
 		else
 		{
-			printf("Opcion incorrecta, vuelva a intentarlo porfavor\n");
+			printf("\nOpcion incorrecta, vuelva a intentarlo porfavor\n");
 			MENU_PRINCIPAL();
 			return 0;
 		}
-	}while(menu1!=4);
+	}
+	while(menu != 4);
 	return 0;
 }
 
 int MENU_DATOS()
 {
-	int menu,i=0,j=0;
-	int regresar = 0, volver = 0;
+	int i=0,j=0, x, resultado;
+	char menu;
 	printf("-------------------------------------------MENU PRINCIPAL>>BUSCADOR DATO--------------------------------------------");
 	printf("\nTipos de generaciones a elegir\n");
 	MOSTRARTIPOS(0);
 	printf("\n---> Para volver la menu principal pulsa 0 <---\n");
     printf("\nA que tipo de generacion quiere acceder? ");
-    scanf("%i", &menu);
-    if(menu>0 && menu<18)
+    fflush(stdin);
+    scanf("%c", &menu);
+    x = verificar_char(menu, &resultado);
+    if(x > 0 && x < 18)
     {
     	printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 anios(24 datos en total)\n");
 	    printf("Elija la posicion del valor deseado: ");
 	    scanf("%i", &j);
 	    if(j > 0 && j < 25)
 	    {
-	    	BUSCARDATO(menu,j);
+	    	BUSCARDATO(x,j);
 	    	MENU_DATOS();
 	    	return 0;
 		}
@@ -332,7 +341,7 @@ int MENU_DATOS()
 			return 0;
 		}
 	}
-	else if(menu==0)
+	else if(x == 0)
 	{
 		MENU_PRINCIPAL();
 		return 0;
@@ -348,219 +357,20 @@ int MENU_DATOS()
 
 int MENU_CALCULOS()
 {
-	int menu1,i=0,j=0,x=0,e=0,y=0;
+	int i=0,j=0,x=0,e=0,y=0, z, resultado;
+	char menu;
 	float M,m;
 	printf("\n----------------------------------------------MENU PRINCIPAL>>CALCULOS----------------------------------------------\n");
     x=CALCULOESTAD();
-	if(x==1)
+    fflush(stdin);
+    scanf("%c", &menu);
+    z = verificar_char(menu, &resultado);
+	if(z>0 && z<5)
 	{
-		printf("\nDe que anio desea calcular medias? 1 para el primero(2021) o 2 para el segundo(2022): ");
-		scanf("%i",&e);
-		if(e==1)
-	    {
-	       	printf("Tipos de generacion a elegir:\n");
-	       	MOSTRARTIPOS(0);
-	       	printf("Que generacion desea? ");
-	       	scanf("%i",&y);
-	        if(y>0 && y<18)
-	        	{
-	        		RECOGER2(x,e,y);
-	            	MENU_CALCULOS();
-	            	return 0;
-				}
-			else
-				{
-					printf("Boton incorrecto\n");
-					printf("Vuelva a intentarlo\n");
-					MENU_CALCULOS();
-					return 0;
-	    		}
-	    }
-	    else if(e==2)
-	    {
-			printf("Tipos de generacion a elegir:\n");
-	        MOSTRARTIPOS(0);
-	        printf("Que generacion desea? ");
-	        scanf("%i",&y);
-	        if(y >0 && y <18)
-	        {
-	        	RECOGER2(x,e,y);
-	        	MENU_CALCULOS();
-	            return 0;
-			}
-			else
-			{
-				printf("Boton incorrecto\n");
-				printf("Vuelva a intentarlo\n");
-				MENU_CALCULOS();
-				return 0;
-	    	}		
-	    }
-		else
-	    {
-	    	printf("Boton incorrecto\n");
-			printf("Vuelva a intentarlo\n");
-			MENU_CALCULOS();
-			return 0;
-		}	
+		pregunta_calculos(z);
+		return 0;
 	}
-	else if(x==2)
-	{
-		printf("\nDe que anio desea calcular medianas? 1 para el primero(2021) o 2 para el segundo(2022): ");
-		scanf("%i",&e);
-		if(e==1)
-	    {
-	       	printf("Tipos de generacion a elegir:\n");
-	       	MOSTRARTIPOS(0);
-	       	printf("Que generacion desea? ");
-	       	scanf("%i",&y);
-	        if(y>0 && y<18)
-	        	{
-	        		RECOGER2(x,e,y);
-	            	MENU_CALCULOS();
-	            	return 0;
-				}
-			else
-				{
-					printf("Boton incorrecto\n");
-					printf("Vuelva a intentarlo\n");
-					MENU_CALCULOS();
-					return 0;
-	    		}
-	    }
-	    else if(e==2)
-	    {
-			printf("Tipos de generacion a elegir:\n");
-	        MOSTRARTIPOS(0);
-	        printf("Que generacion desea? ");
-	        scanf("%i",&y);
-	        if(y >0 && y <18)
-	        {
-	        	RECOGER2(x,e,y);
-	            MENU_CALCULOS();
-	            return 0;
-			}
-			else
-			{
-				printf("Boton incorrecto\n");
-				printf("Vuelva a intentarlo\n");
-				MENU_CALCULOS();
-				return 0;
-	    	}		
-	    }
-		else
-	    {
-	    	printf("Boton incorrecto\n");
-			printf("Vuelva a intentarlo\n");
-			MENU_CALCULOS();
-			return 0;
-		}	
-	}
-	else if(x==3)
-	{
-		printf("\nDe que anio desea calcular la varianza? 1 para el primero(2021) o 2 para el segundo(2022): ");
-		scanf("%i",&e);
-		if(e==1)
-	    {
-	       	printf("Tipos de generacion a elegir:\n");
-	       	MOSTRARTIPOS(0);
-	       	printf("Que generacion desea? ");
-	       	scanf("%i",&y);
-	        if(y>0 && y<18)
-	        	{
-	        		RECOGER2(x,e,y);
-	            	MENU_CALCULOS();
-	            	return 0;
-				}
-			else
-				{
-					printf("Boton incorrecto\n");
-					printf("Vuelva a intentarlo\n");
-					MENU_CALCULOS();
-					return 0;
-	    		}
-	    }
-	    else if(e==2)
-	    {
-			printf("Tipos de generacion a elegir:\n");
-	        MOSTRARTIPOS(0);
-	        printf("Que generacion desea? ");
-	        scanf("%i",&y);
-	        if(y >0 && y <18)
-	        {
-	        	RECOGER2(x,e,y);
-	            MENU_CALCULOS();
-	            return 0;
-			}
-			else
-			{
-				printf("Boton incorrecto\n");
-				printf("Vuelva a intentarlo\n");
-				MENU_CALCULOS();
-				return 0;
-	    	}		
-	    }
-		else
-	    {
-	    	printf("Boton incorrecto\n");
-			printf("Vuelva a intentarlo\n");
-			MENU_CALCULOS();
-			return 0;
-		}	
-	}
-	else if(x==4)
-	{
-		printf("\nDe que anio desea calcular el maximo y el minimo? 1 para el primero(2021) o 2 para el segundo(2022): ");
-		scanf("%i",&e);
-		if(e==1)
-	    {
-	       	printf("Tipos de generacion a elegir:\n");
-	       	MOSTRARTIPOS(0);
-	       	printf("Que generacion desea? ");
-	       	scanf("%i",&y);
-	        if(y>0 && y<18)
-	        	{
-	        		RECOGER2(x,e,y);
-	        		MENU_CALCULOS();
-	            	return 0;
-				}
-			else
-				{
-					printf("Boton incorrecto\n");
-					printf("Vuelva a intentarlo\n");
-					MENU_CALCULOS();
-					return 0;
-	    		}
-	    }
-	    else if(e==2)
-	    {
-			printf("Tipos de generacion a elegir:\n");
-	        MOSTRARTIPOS(0);
-	        printf("Que generacion desea? ");
-	        scanf("%i",&y);
-	        if(y >0 && y <18)
-	        {
-	        	RECOGER2(x,e,y);
-	        	MENU_CALCULOS();
-	           	return 0;
-			}
-			else
-			{
-				printf("Boton incorrecto\n");
-				printf("Vuelva a intentarlo\n");
-				MENU_CALCULOS();
-				return 0;
-	    	}		
-	    }
-	    else
-	    {
-	    	printf("Boton incorrecto\n");
-			printf("Vuelva a intentarlo\n");
-			MENU_CALCULOS();
-			return 0;
-		}
-	}
-	else if(x == 0)
+	else if(z == 0)
 	{
 		MENU_PRINCIPAL();
 		return 0;
@@ -576,57 +386,56 @@ int MENU_CALCULOS()
 
 int MENU_ORDENAR()
 {
-	int menu,i=0,j=0;
+	int i=0,j=0, x, resultado;
+	char menu;
 	printf("----------------------------------------------MENU PRINCIPAL>>ORDENAR-----------------------------------------------");
 	printf("\nTipos de generacion a acceder:\n");
     MOSTRARTIPOS(0);
     printf("\n---> Para volver la menu principal pulsa 0 <---\n");
     printf("\nQue generacion desea? ");
     fflush(stdin);
-    scanf("%c", &menu[0]);
-    if(menu[0]>47 && menu[0]<58 )
-    
-    if(menu>0 && menu<18)
-    	{
-    		resp=atoi(menu);
+    scanf("%c", &menu);
+    x = verificar_char(menu, &resultado);
+    if(x > 0 && x < 18)
+    {
     		printf("Que anio le interesa? 2021(1) o 2022(2): ");
     		scanf("%i",&i);
     		if(i == 1 || i == 2)
-    			{
+    		{
     				printf("Como desea ordenar la generacion? Mayor a menor (1) o Menor a mayor(2)?: ");
     	    		scanf("%i",&j);
     	    		if(j == 1 || j == 2)
-    	    			{
-    		    			ordenar(menu,j,i);
+    	    		{
+    		    			ordenar(x,j,i);
     		    			MENU_ORDENAR();
     		    			return 0;
-						}
+					}
 		    		else
-		    			{
+		    		{
 			   				printf("\nOpcion incorrecta\n");
 			    			printf("Vuelva a intentarlo\n");
 			    			MENU_ORDENAR();
 			    			return 0;
-						}   
-				}
+					}   
+			}
 			else
-				{
+			{
 					printf("\nOpcion incorrecta\n");
 					MENU_ORDENAR();
 					return 0;
-				}
-		}
-	else if(menu==0)
-		{
+			}
+	}
+	else if(x == 0)
+	{
 			MENU_PRINCIPAL();
 			return 0;
-		}	
-	else
-		{
-			printf("\nOpcion incorrecta\n");
-			MENU_ORDENAR();
-			return 0;
-		}	
+	}
+    else
+	{
+		printf("\nOpcion incorrecta\n");
+		MENU_ORDENAR();
+		return 0;
+	}	
 }
 
 int BUSCARDATO(int tipo, int numdato)//Funcion que busca el dato deseado
@@ -678,49 +487,6 @@ float mediana(int r,int x)//Funcion que calcula la mediana
 		mediana=numdatos[x].dato[17]+numdatos[x].dato[18];
 		return mediana/2;
 	}
-
-		//printf("De que tipo de generacion quiere calcular la mediana?:\n");
-		//MOSTRARTIPOS(0);
-		//printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
-		//scanf("%i",&x);	
-	/*if(x>=1 && x<=17)
-	{
-			    if(r == 1)
-				{
-					mediana=numdatos[x-1].dato[5]+numdatos[x-1].dato[6];
-					return mediana/2;
-				}
-				else if(r == 2)
-				{
-					mediana=numdatos[x-1].dato[17]+numdatos[x-1].dato[18];
-					return mediana/2;
-				}
-	}
-	else if(x==0)
-	{
-		MENU_CALCULOS();
-		return 0;
-	}
-	else
-	{
-		while(x<1 || x>17)
-		{
-			printf("Boton incorrecto\n");
-			printf("Vuelve a pulsar\n");
-			scanf("%i",&x);
-		}
-		 if(r == 1)
-		{
-			mediana=numdatos[x-1].dato[5]+numdatos[x-1].dato[6];
-			return mediana/2;
-		}
-		else if(r == 2)
-		{
-			mediana=numdatos[x-1].dato[17]+numdatos[x-1].dato[18];
-			return mediana/2;
-		}
-	}*/	
-
 }
 
 float varianza(int r,int x)//Funcion que calcula la varianza de lo deseado
@@ -997,7 +763,8 @@ float POT(float base,int potencia)//Funcion creada para calcular potencias de nu
 
 int CALCULOESTAD()//Esta funcion sirve para elegir que calculo estadistico se quiere acceder
 {
-	int i,x;
+	
+	int i;
 	printf("Distintos calculos a elegir:\n");
 		for(i=0;i<4;i++)
     		{
@@ -1021,6 +788,238 @@ int CALCULOESTAD()//Esta funcion sirve para elegir que calculo estadistico se qu
 			}
 		printf("\n---> Para volver la menu principal pulsa 0 <---\n");	
 		printf("\nQue desea? ");
-		scanf("%i",&x);
-		return x;
+}
+
+int verificar_char(char c, int *resultado)
+{
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+    {
+        *resultado = c;  // Guarda el caracter si es una letra
+        return c;
+    } 
+	else if (c >= '0' && c <= '9') 
+	{
+        *resultado = c;  // Guarda el numero si es un digito
+        return c - 48;
+    } 
+	else 
+	{
+        *resultado = c;
+        return c;
+    }
+}
+
+int pregunta_calculos(int s)
+{
+	int i=0,j=0,x=0,e=0,y=0;
+	float M,m;
+	if(s == 1)
+	{
+		printf("\nDe que anio desea calcular medias? 1 para el primero(2021) o 2 para el segundo(2022): ");
+	    scanf("%i",&e);
+	    if(e==1)
+	    {
+	        printf("Tipos de generacion a elegir:\n");
+	        MOSTRARTIPOS(0);
+	        printf("Que generacion desea? ");
+	        scanf("%i",&y);
+	        if(y>0 && y<18)
+	        {
+	            RECOGER2(s,e,y);
+	            MENU_CALCULOS();
+	            return 0;
+		    }
+		    else
+		    {
+			    printf("Boton incorrecto\n");
+			    printf("Vuelva a intentarlo\n");
+			    MENU_CALCULOS();
+			    return 0;
+	        }
+        }
+        else if(e==2)
+        {
+		    printf("Tipos de generacion a elegir:\n");
+	        MOSTRARTIPOS(0);
+	        printf("Que generacion desea? ");
+	        scanf("%i",&y);
+	        if(y >0 && y <18)
+	        {
+	            RECOGER2(s,e,y);
+	            MENU_CALCULOS();
+	            return 0;
+		    }
+		    else
+		    {
+		        printf("Boton incorrecto\n");
+			    printf("Vuelva a intentarlo\n");
+			    MENU_CALCULOS();
+		        return 0;
+	        }		
+	    }
+	    else
+	    {
+	        printf("Boton incorrecto\n");
+		    printf("Vuelva a intentarlo\n");
+		    MENU_CALCULOS();
+	 	    return 0;
+	    }
+	}
+	else if(s == 2)
+	{
+		printf("\nDe que anio desea calcular medianas? 1 para el primero(2021) o 2 para el segundo(2022): ");
+		scanf("%i",&e);
+		if(e==1)
+	    {
+	       	printf("Tipos de generacion a elegir:\n");
+	       	MOSTRARTIPOS(0);
+	       	printf("Que generacion desea? ");
+	       	scanf("%i",&y);
+	        if(y>0 && y<18)
+	        	{
+	        		RECOGER2(s,e,y);
+	            	MENU_CALCULOS();
+	            	return 0;
+				}
+			else
+				{
+					printf("Boton incorrecto\n");
+					printf("Vuelva a intentarlo\n");
+					MENU_CALCULOS();
+					return 0;
+	    		}
+	    }
+	    else if(e==2)
+	    {
+			printf("Tipos de generacion a elegir:\n");
+	        MOSTRARTIPOS(0);
+	        printf("Que generacion desea? ");
+	        scanf("%i",&y);
+	        if(y >0 && y <18)
+	        {
+	        	RECOGER2(s,e,y);
+	            MENU_CALCULOS();
+	            return 0;
+			}
+			else
+			{
+				printf("Boton incorrecto\n");
+				printf("Vuelva a intentarlo\n");
+				MENU_CALCULOS();
+				return 0;
+	    	}		
+	    }
+		else
+	    {
+	    	printf("Boton incorrecto\n");
+			printf("Vuelva a intentarlo\n");
+			MENU_CALCULOS();
+			return 0;
+		}
+	}
+	else if(s == 3)
+	{
+		printf("\nDe que anio desea calcular la varianza? 1 para el primero(2021) o 2 para el segundo(2022): ");
+		scanf("%i",&e);
+		if(e==1)
+	    {
+	       	printf("Tipos de generacion a elegir:\n");
+	       	MOSTRARTIPOS(0);
+	       	printf("Que generacion desea? ");
+	       	scanf("%i",&y);
+	        if(y>0 && y<18)
+	        	{
+	        		RECOGER2(s,e,y);
+	            	MENU_CALCULOS();
+	            	return 0;
+				}
+			else
+				{
+					printf("Boton incorrecto\n");
+					printf("Vuelva a intentarlo\n");
+					MENU_CALCULOS();
+					return 0;
+	    		}
+	    }
+	    else if(e==2)
+	    {
+			printf("Tipos de generacion a elegir:\n");
+	        MOSTRARTIPOS(0);
+	        printf("Que generacion desea? ");
+	        scanf("%i",&y);
+	        if(y >0 && y <18)
+	        {
+	        	RECOGER2(s,e,y);
+	            MENU_CALCULOS();
+	            return 0;
+			}
+			else
+			{
+				printf("Boton incorrecto\n");
+				printf("Vuelva a intentarlo\n");
+				MENU_CALCULOS();
+				return 0;
+	    	}		
+	    }
+		else
+	    {
+	    	printf("Boton incorrecto\n");
+			printf("Vuelva a intentarlo\n");
+			MENU_CALCULOS();
+			return 0;
+		}
+	}
+	else if(s == 4)
+	{
+		printf("\nDe que anio desea calcular el maximo y el minimo? 1 para el primero(2021) o 2 para el segundo(2022): ");
+		scanf("%i",&e);
+		if(e == 1)
+	    {
+	       	printf("Tipos de generacion a elegir:\n");
+	       	MOSTRARTIPOS(0);
+	       	printf("Que generacion desea? ");
+	       	scanf("%i",&y);
+	        if(y > 0 && y < 18)
+	        	{
+	        		RECOGER2(s,e,y);
+	        		MENU_CALCULOS();
+	            	return 0;
+				}
+			else
+				{
+					printf("Boton incorrecto\n");
+					printf("Vuelva a intentarlo\n");
+					MENU_CALCULOS();
+					return 0;
+	    		}
+	    }
+	    else if(e==2)
+	    {
+			printf("Tipos de generacion a elegir:\n");
+	        MOSTRARTIPOS(0);
+	        printf("Que generacion desea? ");
+	        scanf("%i",&y);
+	        if(y >0 && y <18)
+	        {
+	        	RECOGER2(s,e,y);
+	        	MENU_CALCULOS();
+	           	return 0;
+			}
+			else
+			{
+				printf("Boton incorrecto\n");
+				printf("Vuelva a intentarlo\n");
+				MENU_CALCULOS();
+				return 0;
+	    	}		
+	    }
+	    else
+	    {
+	    	printf("Boton incorrecto\n");
+			printf("Vuelva a intentarlo\n");
+			MENU_CALCULOS();
+			return 0;
+		}
+	}
+	
 }

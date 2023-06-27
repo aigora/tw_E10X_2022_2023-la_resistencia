@@ -307,7 +307,6 @@ float MENU_PRINCIPAL()
 		}
 	}
 	while(menu != 4);
-	
 	return 0;
 }
 
@@ -366,21 +365,10 @@ int MENU_CALCULOS()
     fflush(stdin);
     scanf("%c", &menu);
     z = verificar_char(menu, &resultado);
-	if(z==1)
+	if(z>0 && z<5)
 	{
-		pregunta_calculos(1);
-	}
-	else if(z==2)
-	{
-		pregunta_calculos(2);	
-	}
-	else if(z==3)
-	{
-		pregunta_calculos(3);	
-	}
-	else if(z==4)
-	{
-		pregunta_calculos(4);
+		pregunta_calculos(z);
+		return 0;
 	}
 	else if(z == 0)
 	{
