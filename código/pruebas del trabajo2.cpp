@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#define BUFFERTAMANOMAX 4
 
 typedef struct//Esta estructura sirve para almacenar cada una de las lineas de nuestro archivo csv
 {
@@ -22,7 +23,7 @@ struct extra//Estructura destinada para guardar cada uno de los datos en caracte
 
 void RECOGER(FILE *);//Funcion que recoge los datos del archivo principal y los almacena en la memoria del ordenador con la ayuda de las estructuras
 void ESCRIBIR(FILE *);//Funcion destinada a escribir en otro archivo csv que hemos llamado calculos_estadisticos, almacena los calculos que se utilizaran
-float RECOGER2(int,int,int)//Funcion que recogera el calculo deseado del archivo calculos
+float RECOGER2(int,int,int);//Funcion que recogera el calculo deseado del archivo calculos
 int MOSTRARTIPOS(int);//Funcion que nos muestra los tipos de generacion a elegir
 int CALCULOESTAD();//Funcion que nos muestra los calculos estadisticos que el programa puede calcular
 int BUSCARDATO(int,int);//Esta funcion busca el calculos deseado por el usuario
@@ -37,7 +38,7 @@ float max(int,int);
 float min(int,int);
 int MENU_ORDENAR();//La ultima accion es ordenar de mayor a menor o vice versa los datos de una generacion, este es el menu
 void ordenar(int, int,int);//Esta funcion ordena los datos
-int verificar_char(char c, int *resultado);//Esta funcion nos sirve para verificar si el usuario ha tecleado un numero o una letra
+int validarOpcion();//Esta funcion nos sirve para verificar si el usuario ha tecleado un numero o una letra
 int pregunta_calculos(int);//Para facilitar el menu de calculos metemos gran parte de sus preguntas en una funcion
 
 int main()
@@ -261,75 +262,61 @@ float RECOGER2(int estad,int anio,int gener)
 
 float MENU_PRINCIPAL()
 {
-	int i=0,j=0,x=0,e=0,y=0, z, h, resultado;
-	char menu = 4;
-	do
+	int z;
+	printf("---------------------------------------------------MENU PRINCIPAL---------------------------------------------------\n");
+	printf("1) Buscador de datos.\n");
+    printf("2) Calculos estadisticos.\n");
+    printf("3) Ordenacion de datos\n");
+	printf("4) Salir\n");
+    printf("A donde quiere acceder? ");
+    z=validarOpcion();
+	if(z>0 && z<5)
 	{
-		if(menu = 4)
-		{
-			printf("---------------------------------------------------MENU PRINCIPAL---------------------------------------------------\n");
-            printf("1) Buscador de datos.\n");
-            printf("2) Calculos estadisticos.\n");
-            printf("3) Ordenacion de datos\n");
-            printf("4) Salir\n");
-            printf("A donde quiere acceder? ");
-            fflush(stdin);
-            scanf("%c", &menu);
-            z = verificar_char(menu, &resultado);
-		}
-		if(z >= 1 && z <= 4)
-		{
-			switch(z)
-        	{
-    	    	case 1:
-    	    		MENU_DATOS();
-					return 0;			
-                break;
-    	    	case 2:
-    	    		MENU_CALCULOS();
-    	    		return 0;
-    		    break;
-    			case 3:
-    				MENU_ORDENAR();
-    				return 0;
-			    break;    
-    			case 4:
-    				printf("Hasta pronto!");
-    				return 0;
-			    break; 
-			}
-		}
-		else
-		{
-			printf("\nOpcion incorrecta, vuelva a intentarlo porfavor\n");
-			MENU_PRINCIPAL();
-			return 0;
+		switch(z)
+        {
+    	    case 1:
+    	   		MENU_DATOS();
+				return 0;			
+            break;
+    	    case 2:
+    	    	MENU_CALCULOS();
+    	    	return 0;
+    		break;
+    		case 3:
+    			MENU_ORDENAR();
+    			return 0;
+			break;    
+    		case 4:
+    			printf("Hasta pronto!");
+    			return 0;
+			break; 
 		}
 	}
-	while(menu != 4);
-	return 0;
+	else
+	{
+		printf("\nOpcion incorrecta, vuelva a intentarlo porfavor\n");
+		MENU_PRINCIPAL();
+		return 0;
+	}
 }
 
 int MENU_DATOS()
 {
-	int i=0,j=0, x, resultado;
-	char menu;
+	int z=0,j=0;
 	printf("-------------------------------------------MENU PRINCIPAL>>BUSCADOR DATO--------------------------------------------");
 	printf("\nTipos de generaciones a elegir\n");
 	MOSTRARTIPOS(0);
 	printf("\n---> Para volver la menu principal pulsa 0 <---\n");
     printf("\nA que tipo de generacion quiere acceder? ");
-    fflush(stdin);
-    scanf("%c", &menu);
-    x = verificar_char(menu, &resultado);
-    if(x > 0 && x < 18)
+    z=validarOpcion();
+    if(z>0 && z<18)
     {
     	printf("Sabiendo que los datos estan ordenados por meses a lo largo de 2 anios(24 datos en total)\n");
-	    printf("Elija la posicion del valor deseado: ");
-	    scanf("%i", &j);
+	    printf("Elija la posicion del valor deseada: ");
+    	j=validarOpcion();
 	    if(j > 0 && j < 25)
 	    {
-	    	BUSCARDATO(x,j);
+	    	BUSCARDATO(j,z);
 	    	MENU_DATOS();
 	    	return 0;
 		}
@@ -341,7 +328,7 @@ int MENU_DATOS()
 			return 0;
 		}
 	}
-	else if(x == 0)
+	else if(z == 0)
 	{
 		MENU_PRINCIPAL();
 		return 0;
@@ -357,14 +344,10 @@ int MENU_DATOS()
 
 int MENU_CALCULOS()
 {
-	int i=0,j=0,x=0,e=0,y=0, z, resultado;
-	char menu;
-	float M,m;
+	int z;
 	printf("\n----------------------------------------------MENU PRINCIPAL>>CALCULOS----------------------------------------------\n");
-    x=CALCULOESTAD();
-    fflush(stdin);
-    scanf("%c", &menu);
-    z = verificar_char(menu, &resultado);
+    CALCULOESTAD();
+    z=validarOpcion();
 	if(z>0 && z<5)
 	{
 		pregunta_calculos(z);
@@ -386,27 +369,24 @@ int MENU_CALCULOS()
 
 int MENU_ORDENAR()
 {
-	int i=0,j=0, x, resultado;
-	char menu;
+	int j=0,z=0,x=0;
 	printf("----------------------------------------------MENU PRINCIPAL>>ORDENAR-----------------------------------------------");
 	printf("\nTipos de generacion a acceder:\n");
     MOSTRARTIPOS(0);
     printf("\n---> Para volver la menu principal pulsa 0 <---\n");
     printf("\nQue generacion desea? ");
-    fflush(stdin);
-    scanf("%c", &menu);
-    x = verificar_char(menu, &resultado);
-    if(x > 0 && x < 18)
+    z=validarOpcion();
+    if(z>0 && z<18)
     {
     		printf("Que anio le interesa? 2021(1) o 2022(2): ");
-    		scanf("%i",&i);
-    		if(i == 1 || i == 2)
+    		x=validarOpcion();
+    		if(x == 1 || x == 2)
     		{
     				printf("Como desea ordenar la generacion? Mayor a menor (1) o Menor a mayor(2)?: ");
-    	    		scanf("%i",&j);
+    	    		j=validarOpcion();
     	    		if(j == 1 || j == 2)
     	    		{
-    		    			ordenar(x,j,i);
+    		    			ordenar(z,j,x);
     		    			MENU_ORDENAR();
     		    			return 0;
 					}
@@ -425,7 +405,7 @@ int MENU_ORDENAR()
 					return 0;
 			}
 	}
-	else if(x == 0)
+	else if(z==0)
 	{
 			MENU_PRINCIPAL();
 			return 0;
@@ -438,40 +418,34 @@ int MENU_ORDENAR()
 	}	
 }
 
-int BUSCARDATO(int tipo, int numdato)//Funcion que busca el dato deseado
+int BUSCARDATO(int tipo, int numdato)
 {
-	int i;
-	for(i=0;i<=17;i++)
-			{
-				if(i == tipo)
-				{
-					printf("\tEl dato deseado es %.15lf GWh\n",numdatos[i-1].dato[numdato-1]);
-				}
-			}
-		return 1;
+	//Trabajamos con el tipo y el numero del dato recogido anteriormente			
+	printf("\tEl dato deseado es %.15lf GWh\n",numdatos[tipo-1].dato[numdato-1]);//Mostramos simplemente el dato que queremos de ese tipo
+	return 0;
 }
 
-float media(int r,int y)//Funcion que calcula la media de lo deseado
+float media(int r,int x)//La r es el anio y la x es la generacion que se escoge
 {
 	int i=0;
 	float media=0;
-	if(r==1)
+	if(r==1)//Si hemos pedido la media del primer anio hacemos el calculo con los 12 primeros datos
 	{
 			for(i=0;i<12;i++)
 			{
-				media+=numdatos[y].dato[i];
+				media+=numdatos[x].dato[i];//Hacemos el sumatorio de los datos de la generacion "y"
 				//printf("%f\t",media);
 			}	
 	}
-	else if(r==2)
+	else if(r==2)//si es el segundo anio el calculo es desde el dato 13 que seria enero de 2022(segundo anio) para el ordenador es el 12
 	{
 		for(i=12;i<24;i++)
 			{
-				media+=numdatos[y].dato[i];
+				media+=numdatos[x].dato[i];
 				//printf("%f\t",media);
 			}
 	}
-	return media/12;
+	return media/12;//Se devuelve simplemente el sumatorio dividido por el numero de datos sumados
 }
 
 float mediana(int r,int x)//Funcion que calcula la mediana
@@ -479,93 +453,57 @@ float mediana(int r,int x)//Funcion que calcula la mediana
 	float mediana;
 	if(r == 1)
 	{
-		mediana=numdatos[x].dato[5]+numdatos[x].dato[6];
-		return mediana/2;
+		mediana=numdatos[x].dato[5]+numdatos[x].dato[6];//Como el numero de datos que tenemos es par la mediana es el promedio de los dos datos centrales
+						    						   //Para el anio 1 los dos datos centrales son el 6 y el 7 para el ordenador el 5 y el 6
 	}
 	else if(r == 2)
 	{
 		mediana=numdatos[x].dato[17]+numdatos[x].dato[18];
-		return mediana/2;
+													  //Para el anio 2 los dos datos centrales son el 18 y el 19 para el ordenador el 17 y el 18
 	}
+	return mediana/2;
 }
 
 float varianza(int r,int x)//Funcion que calcula la varianza de lo deseado
 {
+	//Para la varianza utilizamos una formula que hemos estudiado en estadistica:
+	//La varianza es el sumatorio del cuadrado de la resta de cada dato y la media dividido por el numero de datos totales
 	int i=0;
 	float m;
 	float varianza=0;
 	if(r==1)
 	{
-			m=media(1,x);
+			m=media(1,x);//Calculamos rapidamente la media de la generacion de la que queremos calcular la varianza
 			for(i=0;i<12;i++)
 			{
 					varianza+=POT((numdatos[x].dato[i]-m),2);
 			}
-			return varianza/12;
 	}
 	else if(r==2)
 	{
 			m=media(2,x);
-			for(i=0;i<12;i++)
+			for(i=12;i<24;i++)
 			{
 					varianza+=POT((numdatos[x].dato[i]-m),2);
 			}
-			return varianza/12;
 	}
-	/*printf("De que tipo de generacion quiere calcular la varianza?:\n");
-	MOSTRARTIPOS(0);
-	printf("\n---> Para volver la menu de calculos estadisticos pulsa 0 <---\n");
-	scanf("%i",&x);
-	if(x == 0)
-	{
-		MENU_CALCULOS();
-		return 0;
-	}
-	else if(x>=1 && x<=17)
-	{
-		if(r==1)
-		{
-			m=media(1,x);
-			for(i=0;i<12;i++)
-			{
-				varianza+=POT((numdatos[x-1].dato[i]-m),2);
-			}
-		}
-		else if(r==2)
-		{
-			m=media(1,x);
-			for(i=12;i<24;i++)
-			{
-				varianza+=POT((numdatos[x-1].dato[i]-m),2);
-			}
-		}
-	return varianza/12;	
-	}
-	else
-	{
-		printf("Boton incorrecto, vuelve a intentarlo\n");
-		MENU_CALCULOS();
-		return 0;
-	}*/
+	return varianza/12;
 }
 
 float max(int r,int x)//Funcion que calcula el maximo
 {
+	//La mentalidad es ordenar los datos de mayor a menor y simplemente devolver el primer dato
 	int i,j;
 	float MAX[24],aux=0;
-	//printf("De que tipo de generacion quiere calcular el maximo?:\n");
-	//MOSTRARTIPOS(0);
-	//scanf("%i",&x);
-	
 	if(r==1)
 	{
 		for(i=0;i<12;i++)
 		{
 			MAX[i]=numdatos[x].dato[i];//Lo copiamos en un vector para facilitar el trabajo y no tener que pensar en estructuras
 		}
-		for(i=0;i<12;i++)//Vamos a organizar el vector tal que el maximo sea el primer elemento
-		{				//El primer for es para hacer la comparacion entre numeros 12 veces
-			for(j=0;j<11;j++)//Este for compara cada elemento con su siguiente
+		for(i=0;i<12;i++)//El primer for es para hacer la comparacion entre numeros 12 veces
+		{				
+			for(j=0;j<11;j++)//Este for compara cada elemento con su siguiente pero lo hace 11 veces ya que un elemento no se compara con si mismo 
 			{	
 				if(MAX[j]<MAX[j+1])//Si el anterior es menor que su siguiente se cambian de posicion
 				{			  	  //Tal que quedaria el minimo ultimo y el maximo primero
@@ -603,10 +541,6 @@ float min(int r,int x)//Funcion que calcula el minimo
 {
 	int i,j;
 	float MIN[24],aux=0;
-	//printf("De que tipo de generacion quiere calcular el minimo?:\n");
-	//MOSTRARTIPOS(0);
-	//scanf("%i",&x);
-	
 	if(r==1)
 	{
 		for(i=0;i<12;i++)
@@ -651,6 +585,7 @@ float min(int r,int x)//Funcion que calcula el minimo
 
 void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 {
+	//Esta funcion hace lo mismo que el maximo y minimo pero el resultado en este caso es todos los datos ordenados
 	int i,j;
 	float V1[24],aux;
 	
@@ -658,7 +593,7 @@ void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 	{
 		V1[i]=numdatos[tipo-1].dato[i];
 	}
-	if(r==1)
+	if(r==1)//Se devide la funcion es dos partes una para un anio y otra para el otro con sus dos sub-partes que sirven para las dos formas distintas
 	{
 		if(forma == 1)
 		{
@@ -750,11 +685,12 @@ int MOSTRARTIPOS(int t)//Para no repetir el mostrado de los tipos de generacion 
 
 float POT(float base,int potencia)//Funcion creada para calcular potencias de numeros enteros con cualquier tipo de base
 {
+	//Recibimos como parametros de entrada la base y la potencia
 	int i;
 	float aux;
 	aux=base;
-	if(potencia==0)return 1;
-	for(i=1;i<potencia;i++)
+	if(potencia==0)return 1;//si la potencia es 0 el resultado es 1 por lo que devoldemos ese numero
+	for(i=1;i<potencia;i++)//Se multiplica el numero menos uno de la potencia veces la base por el numero original que era la base
 	{
 		base*=aux;
 	}
@@ -766,7 +702,7 @@ int CALCULOESTAD()//Esta funcion sirve para elegir que calculo estadistico se qu
 	
 	int i;
 	printf("Distintos calculos a elegir:\n");
-		for(i=0;i<4;i++)
+		for(i=0;i<4;i++)//Este for no es imprescindible ya que se puede hacer manualmente con printfs pero es mas rapido asi
     		{
     			printf("%i)",i+1);
     			if(i==0)
@@ -790,27 +726,33 @@ int CALCULOESTAD()//Esta funcion sirve para elegir que calculo estadistico se qu
 		printf("\nQue desea? ");
 }
 
-int verificar_char(char c, int *resultado)
+int validarOpcion()//La funcion que nos permite averiguar si la tecla introducida es un numero o no
 {
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-    {
-        *resultado = c;  // Guarda el caracter si es una letra
-        return c;
-    } 
-	else if (c >= '0' && c <= '9') 
+	char c,resp[BUFFERTAMANOMAX];//Ponemos como dimension la constante que hemos definido esto es el numero de digitos maximos permitido al introducir algo
+	int i=0,x;				   //En nuestro programa es igual a 2 ya que no hay ninguna opcion que pida un numero con mas digitos
+	fflush(stdin);
+    gets(resp);//Recogemos la cadena
+    while(resp[i]!='\0')//Lo primero que vamos a averiguar es si el numero introducido no lleva mas digitos de lo permitido
 	{
-        *resultado = c;  // Guarda el numero si es un digito
-        return c - 48;
-    } 
-	else 
+		i++;//Esto cuenta el numero de caracteres introducidos el gets incluye a los espacios y los enters
+	}
+	if(i>2)return -1;//Si es mayor que dos volvemos un menos uno ya que esto lo tomara la funcion de llamada como una opcion invalida
+	i=0;
+	while(resp[i]!='\0')//Lo segundo que tenemos que averiguar es que solo contenga numeros
 	{
-        *resultado = c;
-        return c;
-    }
+		c=resp[i];
+		if(!(c>47 && c<58))//Esto incluye cualquier digito en la tabla ascii
+		{
+			return -1;		
+		}
+		i++;
+	}
+	return atoi(resp);//Si todo ha ido bien retorna el numero convertido en int
 }
 
 int pregunta_calculos(int s)
 {
+	//Esta es nuestra funcion mas larga esta dividida en 4 partes para las distintas estadisticas que hay
 	int i=0,j=0,x=0,e=0,y=0;
 	float M,m;
 	if(s == 1)
