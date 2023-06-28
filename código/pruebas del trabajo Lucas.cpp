@@ -976,4 +976,3 @@ int pregunta_calculos(int s)
 	}
 	
 }
-
