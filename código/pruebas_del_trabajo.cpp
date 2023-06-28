@@ -274,7 +274,7 @@ float MENU_PRINCIPAL()
             printf("A donde quiere acceder? ");
             fflush(stdin);
             scanf("%c", &menu);
-            z = verificar_char(menu, &resultado);
+            z = verificar_char(menu,&resultado);
 		}
 		
 		if(z >= 1 && z <= 4)

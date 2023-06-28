@@ -726,29 +726,40 @@ int CALCULOESTAD()//Esta funcion sirve para elegir que calculo estadistico se qu
 		printf("\nQue desea? ");
 }
 
-int validarOpcion()//La funcion que nos permite averiguar si la tecla introducida es un numero o no
+int validarOpcion()//La funcion que nos permite averiguar si lo introducido es valido o no
 {
-	char c,resp[BUFFERTAMANOMAX];//Ponemos como dimension la constante que hemos definido esto es el numero de digitos maximos permitido al introducir algo
-	int i=0,x;				   //En nuestro programa es igual a 2 ya que no hay ninguna opcion que pida un numero con mas digitos
-	fflush(stdin);
-    gets(resp);//Recogemos la cadena
-    while(resp[i]!='\0')//Lo primero que vamos a averiguar es si el numero introducido no lleva mas digitos de lo permitido
-	{
-		i++;//Esto cuenta el numero de caracteres introducidos el gets incluye a los espacios y los enters
-	}
-	if(i>2)return -1;//Si es mayor que dos volvemos un menos uno ya que esto lo tomara la funcion de llamada como una opcion invalida
-	i=0;
-	while(resp[i]!='\0')//Lo segundo que tenemos que averiguar es que solo contenga numeros
-	{
+	char c,resp[BUFFERTAMANOMAX];//Ponemos como dimension la constante que hemos definido esto es el numero-1 de caracteres maximo permitido al introducir algo
+	int i=0;		      		//En nuestro programa es igual a 2 ya que no hay ninguna opcion que pida un numero con mas digitos
+	fflush(stdin); 				//Pero el fgets nos recoge tambien el retorno de carro por lo que vamos a poner dimension 4 para incluirlo e incluir '\0'
+    fgets(resp,4,stdin);//Recogemos la cadena
+    
+	while(resp[i]!='\0')//Lo primero que vamos a hacer es encotrar un caracter en nuestro string si lo hay
+	{					//Si hemos puesto como maximo dos numeros por ejemoplo, puede haber solo un caracter en nuestro string y es el retorno de carro
+						//estaria en la tercera posicion
 		c=resp[i];
-		if(!(c>47 && c<58))//Esto incluye cualquier digito en la tabla ascii
+		if(!(c>47 && c<58))//Este if se activa cuando encuentra un caracter que no sea un numero, incluye cualquier digito en la tabla ascii
 		{
-			return -1;		
+			if(c=='\n')
+			{
+				resp[i]='\0';/*Aqui encontramos el retorno de carro y lo cambiamos a '\0'
+							 ya que si hemos entrado en este if es porque no ha encotrado ningun otro caracter y lo anterior es todo numero aceptable*/
+				return atoi(resp);
+			}
+			else return -1;//Si encuentra otro caracter sabemos inmediatamente que la opcion es incorrecta y retornamos un -1 NO un 0 ya que es valido tambien	
 		}
 		i++;
 	}
-	return atoi(resp);//Si todo ha ido bien retorna el numero convertido en int
-}
+	i=0;
+	while(resp[i]!='\0')//Si el primer while no ha encontrado ningun caracter podria ser que nuestro numero introducido sea de mas de dos digitos 
+	{
+		i++;//Un simple contador de digitos y si es mayor que dos retornamos opcion incorrecta
+	}
+	if(i>2)
+	{
+		return -1;		
+	}
+	return atoi(resp);//Si todo ha ido bien retorna el numero convertido en int aun asi podria ser un numero de dos digitos y ser mayor que nuestras opciones
+}					  //En ese caso la opcion incorrecta la detecta la otra funcion	
 
 int pregunta_calculos(int s)
 {
