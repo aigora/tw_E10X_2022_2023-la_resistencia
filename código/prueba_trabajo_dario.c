@@ -316,7 +316,7 @@ int MENU_DATOS()
     	j=validarOpcion();
 	    if(j > 0 && j < 25)
 	    {
-	    	BUSCARDATO(j,z);
+	    	BUSCARDATO(z,j);
 	    	MENU_DATOS();
 	    	return 0;
 		}
