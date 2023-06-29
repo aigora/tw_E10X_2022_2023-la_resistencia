@@ -28,7 +28,7 @@ int MOSTRARTIPOS(int);//Funcion que nos muestra los tipos de generacion a elegir
 int CALCULOESTAD();//Funcion que nos muestra los calculos estadisticos que el programa puede calcular
 int BUSCARDATO(int,int);//Esta funcion busca el calculos deseado por el usuario
 float MENU_PRINCIPAL();//El menu principal que contiene las acciones principales que puede realizar el programa
-int MENU_DATOS();//Una de las acciones es buscar un dato, esta funcion muestra el menu destinado a buscar con sus preguntas 
+int MENU_DATOS();//Una de las acciones es buscar un dato, esta funcion muestra el menu destinado a buscar con sus preguntas
 int MENU_CALCULOS();//Otra de las acciones es calcular unas estadisticas, este es el menu
 float media(int,int);//Calcula medias de la generacion deseada
 float varianza(int,int);
@@ -78,16 +78,16 @@ void RECOGER(FILE *fich)
 		numlineas[i].lineas[strlen(numlineas[i].lineas)]='\0';
 	}
 	fclose(fich);//Cerramos fichero ya que ya no vamos a hacer nada con el
-	
+
 	//Se ve si hemos copiado bien el archivo entero
 	/*for(i=0;i<n;i++)
 	{
 		printf("%s",numlineas[i].lineas);
 	}*/
 
-	/*Lo siguente que tenemos que hacer es ordenar los nombres de los tipos en la segunda estructura 
+	/*Lo siguente que tenemos que hacer es ordenar los nombres de los tipos en la segunda estructura
 	y cambiar los numeros de caracteres a floats(numeros reales)*/
-	
+
 	//Para ello encontramos la coma en cada cadena
 	//Al mismo tiempo lo copiamos
 	for(i=5,k=0;i<n;i++,k++)//i se inicia en 5 ya que determina en que linea estamos y solo nos interesa copiar los datos
@@ -115,7 +115,7 @@ void RECOGER(FILE *fich)
 						q++;											//La posicion de la coma esta indicada por la q esta sigue la cadena copiada
 						//printf("\t%s\t",extradatos[l].cardato);
 					}
-					l++;//Para el siguiente dato			
+					l++;//Para el siguiente dato
 				}
 			}
 		}
@@ -131,9 +131,9 @@ void RECOGER(FILE *fich)
 			k++;
 		}
 	}
-	
+
 	//Comprobacion
-	
+
 	/*for(i=0;i<17;i++)
 	{
 		for(j=0;j<24;j++)
@@ -150,7 +150,8 @@ void ESCRIBIR(FILE *fich)
 	//En las siguientes columnas ponemos los calculos de los dos anios separados primero va la media, despues la mediana y etc.
 	int i=1,j=0,k=0;//el valor de i NO se puede cambiar es importante que entre en el for como un uno
 	fprintf(fich,"Generación,Media anio 1,Media anio 2,");//Estos printfs no son tan eficientes ya que solo sirven para un caso particular,
-														  //se tendrian que cambiar si se utiliza otra mentalidad con el archivo
+	fprintf(fich,"Generación,Cuartil_primero anio1,Cuartil_primero anio2,");
+	fprintf(fich,"Generación,Cuartil_tercero anio1,Cuartil_tercero anio2,");												  //se tendrian que cambiar si se utiliza otra mentalidad con el archivo
 	fprintf(fich,"Mediana anio 1,Mediana anio 2,");
 	fprintf(fich,"Varianza anio 1,Varianza anio 2,");
 	fprintf(fich,"Maximo Minimo anio 1,Maximo Minimo anio 2,");
@@ -174,7 +175,7 @@ void ESCRIBIR(FILE *fich)
 		i++;
 		fprintf(fich,"%f   %f",max(i,j),min(i,j));
 		i--;
-		fputc('\n',fich);//Para seguir en la siguiente linea se le aniade un retorno de carro al final 
+		fputc('\n',fich);//Para seguir en la siguiente linea se le aniade un retorno de carro al final
  	}
 }
 
@@ -208,9 +209,9 @@ float RECOGER2(int estad,int anio,int gener)
 	{
 		i=1;//La i indica cuantas comas hay que contar antes del dato que buscamos
 		f=2;//La f indica cuantas comas hay que contar en total para encontrar el dato
-		/*Por ejemplo, en la media del primer anio el dato esta entre la primera y segunda coma 
+		/*Por ejemplo, en la media del primer anio el dato esta entre la primera y segunda coma
 		para la mediana del primer anio el dato esta entre la tercera y la cuarta*/
-		printf("\nLa media deseada es ");	
+		printf("\nLa media deseada es ");
 	}
 	else if(estad==2)
 	{
@@ -236,7 +237,7 @@ float RECOGER2(int estad,int anio,int gener)
 			f++;
 		}
 	while(n!=i)//Los whiles sirven para saber en que posicion tenemos las comas deseadas por los parametros
-		{	
+		{
 			if(recoger[gener].lineas[k]==',')
 				{
 					n++;
@@ -276,7 +277,7 @@ float MENU_PRINCIPAL()
         {
     	    case 1:
     	   		MENU_DATOS();
-				return 0;			
+				return 0;
             break;
     	    case 2:
     	    	MENU_CALCULOS();
@@ -285,11 +286,11 @@ float MENU_PRINCIPAL()
     		case 3:
     			MENU_ORDENAR();
     			return 0;
-			break;    
+			break;
     		case 4:
     			printf("Hasta pronto!");
     			return 0;
-			break; 
+			break;
 		}
 	}
 	else
@@ -396,7 +397,7 @@ int MENU_ORDENAR()
 			    			printf("Vuelva a intentarlo\n");
 			    			MENU_ORDENAR();
 			    			return 0;
-					}   
+					}
 			}
 			else
 			{
@@ -415,12 +416,12 @@ int MENU_ORDENAR()
 		printf("\nOpcion incorrecta\n");
 		MENU_ORDENAR();
 		return 0;
-	}	
+	}
 }
 
 int BUSCARDATO(int tipo, int numdato)
 {
-	//Trabajamos con el tipo y el numero del dato recogido anteriormente			
+	//Trabajamos con el tipo y el numero del dato recogido anteriormente
 	printf("\tEl dato deseado es %.15lf GWh\n",numdatos[tipo-1].dato[numdato-1]);//Mostramos simplemente el dato que queremos de ese tipo
 	return 0;
 }
@@ -435,7 +436,7 @@ float media(int r,int x)//La r es el anio y la x es la generacion que se escoge
 			{
 				media+=numdatos[x].dato[i];//Hacemos el sumatorio de los datos de la generacion "y"
 				//printf("%f\t",media);
-			}	
+			}
 	}
 	else if(r==2)//si es el segundo anio el calculo es desde el dato 13 que seria enero de 2022(segundo anio) para el ordenador es el 12
 	{
@@ -502,9 +503,9 @@ float max(int r,int x)//Funcion que calcula el maximo
 			MAX[i]=numdatos[x].dato[i];//Lo copiamos en un vector para facilitar el trabajo y no tener que pensar en estructuras
 		}
 		for(i=0;i<12;i++)//El primer for es para hacer la comparacion entre numeros 12 veces
-		{				
-			for(j=0;j<11;j++)//Este for compara cada elemento con su siguiente pero lo hace 11 veces ya que un elemento no se compara con si mismo 
-			{	
+		{
+			for(j=0;j<11;j++)//Este for compara cada elemento con su siguiente pero lo hace 11 veces ya que un elemento no se compara con si mismo
+			{
 				if(MAX[j]<MAX[j+1])//Si el anterior es menor que su siguiente se cambian de posicion
 				{			  	  //Tal que quedaria el minimo ultimo y el maximo primero
 					aux=MAX[j];
@@ -524,7 +525,7 @@ float max(int r,int x)//Funcion que calcula el maximo
 		for(i=0;i<12;i++)
 		{
 			for(j=12;j<23;j++)//Para el segundo año hacemos lo mismo pero hay que hacerlo desde el dato 12
-			{	
+			{
 				if(MAX[j]<MAX[j+1])
 				{
 					aux=MAX[j];
@@ -550,9 +551,9 @@ float min(int r,int x)//Funcion que calcula el minimo
 		for(i=0;i<12;i++)
 		{
 			for(j=0;j<11;j++)
-			{	
+			{
 				if(MIN[j]>MIN[j+1])//En el minimo es hacer lo mismo que en el maximo pero con > en vez de <
-				{			  	  
+				{
 					aux=MIN[j];
 					MIN[j]=MIN[j+1];
 					MIN[j+1]=aux;
@@ -570,7 +571,7 @@ float min(int r,int x)//Funcion que calcula el minimo
 		for(i=0;i<12;i++)
 		{
 			for(j=12;j<23;j++)//Para el segundo año hacemos lo mismo pero hay que hacerlo desde el dato 12
-			{	
+			{
 				if(MIN[j]>MIN[j+1])
 				{
 					aux=MIN[j];
@@ -588,7 +589,7 @@ void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 	//Esta funcion hace lo mismo que el maximo y minimo pero el resultado en este caso es todos los datos ordenados
 	int i,j;
 	float V1[24],aux;
-	
+
 	for(i=0;i<24;i++)
 	{
 		V1[i]=numdatos[tipo-1].dato[i];
@@ -602,22 +603,7 @@ void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 				for(j=0;j<11;j++)
 				{
 					if(V1[j]<V1[j+1])
-					{			  	  
-						aux=V1[j];
-						V1[j]=V1[j+1];
-						V1[j+1]=aux;
-					}
-				}
-			}
-		}	
-		else if(forma == 2)
-		{
-			for(i=0;i<12;i++)
-			{
-				for(j=0;j<11;j++)
-				{
-					if(V1[j]>V1[j+1])
-					{			  	  
+					{
 						aux=V1[j];
 						V1[j]=V1[j+1];
 						V1[j+1]=aux;
@@ -625,7 +611,22 @@ void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 				}
 			}
 		}
-		
+		else if(forma == 2)
+		{
+			for(i=0;i<12;i++)
+			{
+				for(j=0;j<11;j++)
+				{
+					if(V1[j]>V1[j+1])
+					{
+						aux=V1[j];
+						V1[j]=V1[j+1];
+						V1[j+1]=aux;
+					}
+				}
+			}
+		}
+
 		printf("La generacion ordenada por la forma deseada es:\n");
 		for(i=0;i<12;i++)
 		{
@@ -641,22 +642,7 @@ void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 				for(j=12;j<23;j++)
 				{
 					if(V1[j]<V1[j+1])
-					{			  	  
-						aux=V1[j];
-						V1[j]=V1[j+1];
-						V1[j+1]=aux;
-					}
-				}
-			}
-		}	
-		else if(forma == 2)
-		{
-			for(i=0;i<12;i++)
-			{
-				for(j=12;j<23;j++)
-				{
-					if(V1[j]>V1[j+1])
-					{			  	  
+					{
 						aux=V1[j];
 						V1[j]=V1[j+1];
 						V1[j+1]=aux;
@@ -664,7 +650,22 @@ void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 				}
 			}
 		}
-		
+		else if(forma == 2)
+		{
+			for(i=0;i<12;i++)
+			{
+				for(j=12;j<23;j++)
+				{
+					if(V1[j]>V1[j+1])
+					{
+						aux=V1[j];
+						V1[j]=V1[j+1];
+						V1[j+1]=aux;
+					}
+				}
+			}
+		}
+
 		printf("La generacion ordenada por la forma deseada es:\n");
 		for(i=12;i<24;i++)
 		{
@@ -699,7 +700,7 @@ float POT(float base,int potencia)//Funcion creada para calcular potencias de nu
 
 int CALCULOESTAD()//Esta funcion sirve para elegir que calculo estadistico se quiere acceder
 {
-	
+
 	int i;
 	printf("Distintos calculos a elegir:\n");
 		for(i=0;i<4;i++)//Este for no es imprescindible ya que se puede hacer manualmente con printfs pero es mas rapido asi
@@ -707,7 +708,7 @@ int CALCULOESTAD()//Esta funcion sirve para elegir que calculo estadistico se qu
     			printf("%i)",i+1);
     			if(i==0)
 				{
-    				printf("\tCalculo de media anual.\n");	
+    				printf("\tCalculo de media anual.\n");
 				}
 				else if(i==1)
 				{
@@ -722,7 +723,7 @@ int CALCULOESTAD()//Esta funcion sirve para elegir que calculo estadistico se qu
 					printf("\tCalculo del maximo y minimo anual.\n");
 				}
 			}
-		printf("\n---> Para volver la menu principal pulsa 0 <---\n");	
+		printf("\n---> Para volver la menu principal pulsa 0 <---\n");
 		printf("\nQue desea? ");
 }
 
@@ -732,7 +733,7 @@ int validarOpcion()//La funcion que nos permite averiguar si lo introducido es v
 	int i=0;		      		//En nuestro programa es igual a 2 ya que no hay ninguna opcion que pida un numero con mas digitos
 	fflush(stdin); 				//Pero el fgets nos recoge tambien el retorno de carro por lo que vamos a poner dimension 4 para incluirlo e incluir '\0'
     fgets(resp,4,stdin);//Recogemos la cadena
-    
+
 	while(resp[i]!='\0')//Lo primero que vamos a hacer es encotrar un caracter en nuestro string si lo hay
 	{					//Si hemos puesto como maximo dos numeros por ejemoplo, puede haber solo un caracter en nuestro string y es el retorno de carro
 						//estaria en la tercera posicion
@@ -745,21 +746,21 @@ int validarOpcion()//La funcion que nos permite averiguar si lo introducido es v
 							 ya que si hemos entrado en este if es porque no ha encotrado ningun otro caracter y lo anterior es todo numero aceptable*/
 				return atoi(resp);
 			}
-			else return -1;//Si encuentra otro caracter sabemos inmediatamente que la opcion es incorrecta y retornamos un -1 NO un 0 ya que es valido tambien	
+			else return -1;//Si encuentra otro caracter sabemos inmediatamente que la opcion es incorrecta y retornamos un -1 NO un 0 ya que es valido tambien
 		}
 		i++;
 	}
 	i=0;
-	while(resp[i]!='\0')//Si el primer while no ha encontrado ningun caracter podria ser que nuestro numero introducido sea de mas de dos digitos 
+	while(resp[i]!='\0')//Si el primer while no ha encontrado ningun caracter podria ser que nuestro numero introducido sea de mas de dos digitos
 	{
 		i++;//Un simple contador de digitos y si es mayor que dos retornamos opcion incorrecta
 	}
 	if(i>2)
 	{
-		return -1;		
+		return -1;
 	}
 	return atoi(resp);//Si todo ha ido bien retorna el numero convertido en int aun asi podria ser un numero de dos digitos y ser mayor que nuestras opciones
-}					  //En ese caso la opcion incorrecta la detecta la otra funcion	
+}					  //En ese caso la opcion incorrecta la detecta la otra funcion
 
 int pregunta_calculos(int s)
 {
@@ -808,7 +809,7 @@ int pregunta_calculos(int s)
 			    printf("Vuelva a intentarlo\n");
 			    MENU_CALCULOS();
 		        return 0;
-	        }		
+	        }
 	    }
 	    else
 	    {
@@ -860,7 +861,7 @@ int pregunta_calculos(int s)
 				printf("Vuelva a intentarlo\n");
 				MENU_CALCULOS();
 				return 0;
-	    	}		
+	    	}
 	    }
 		else
 	    {
@@ -912,7 +913,7 @@ int pregunta_calculos(int s)
 				printf("Vuelva a intentarlo\n");
 				MENU_CALCULOS();
 				return 0;
-	    	}		
+	    	}
 	    }
 		else
 	    {
@@ -964,7 +965,7 @@ int pregunta_calculos(int s)
 				printf("Vuelva a intentarlo\n");
 				MENU_CALCULOS();
 				return 0;
-	    	}		
+	    	}
 	    }
 	    else
 	    {
@@ -974,6 +975,6 @@ int pregunta_calculos(int s)
 			return 0;
 		}
 	}
-	
+
 }
 
