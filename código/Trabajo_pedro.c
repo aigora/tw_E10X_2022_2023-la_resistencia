@@ -977,5 +977,79 @@ int pregunta_calculos(int s)
 	}
 
 }
+// En este caso diseñamos unas funciones para calcular los cuartiles:
+
+  //Prototipos
+
+ void ordenar2(int arr[], int n);
+ float calcularPrimerCuartil(int arr[], int n);
+ float calcularSegundoCuartil(int arr[], int n);
+
+ int main(){
+
+  int n, i;
+
+   printf("Ingrese el numero de datos: ");
+   scanf("%d", &n);
+   int *arr = (int *)malloc(n * sizeof(int)); // Lo usamos para reservar la memoria para después el arreglo dinámico
+
+   printf("Ingrese los datos:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+
+ ordenar2(arr, n); // Ordena el arreglo en orden ascendente
+
+    float primerCuartil = calcularPrimerCuartil(arr, n);
+    float segundoCuartil = calcularSegundoCuartil(arr, n);
+
+    printf("Primer Cuartil: %.2f\n", primerCuartil);
+    printf("Segundo Cuartil: %.2f\n", segundoCuartil);
+
+    free(arr); // Libera la memoria del arreglo dinámico
+
+    return 0;
+}
+
+// Función para ordenar el arreglo en orden ascendente
+
+void ordenar2(int arr[], int n) {
+    int i, j, temp;
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+               arr[j+1]= temp;
+            }
+        }
+    }
+}
+
+// Función para calcular el primer cuartil
+float calcularPrimerCuartil(int arr[], int n) {
+    int posicion;
+    float cuartil;
+    posicion = (n + 1) / 4; // Calcula la posición del primer cuartil
+    cuartil = arr[posicion - 1]; // Obtiene el valor del primer cuartil
+    return cuartil;
+}
+
+// Funcion para calcular el segundo cuartil
+
+float calcularSegundoCuartil(int arr[], int n) {
+    float cuartil;
+    if (n % 2 == 0) { // Si el número de elementos es par
+        cuartil = (arr[n / 2 - 1] + arr[n / 2]) / 2.0; // Calcula el promedio de los dos valores del centro
+    } else { // Si el número de elementos es impar
+        cuartil = arr[n / 2]; // Obtiene directamente el valor del centro
+    }
+    return cuartil;
+}
+
+
+
+
 
 
