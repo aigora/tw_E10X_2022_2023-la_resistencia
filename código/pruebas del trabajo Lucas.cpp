@@ -37,9 +37,11 @@ float mediana(int,int);
 float max(int,int);
 float min(int,int);
 int MENU_ORDENAR();//La ultima accion es ordenar de mayor a menor o vice versa los datos de una generacion, este es el menu
-void ordenar(int, int,int);//Esta funcion ordena los datos
+void ordenar(int, int,int,float *,float *);//Esta funcion ordena los datos
 int validarOpcion();//Esta funcion nos sirve para verificar si el usuario ha tecleado un numero o una letra
 int pregunta_calculos(int);//Para facilitar el menu de calculos metemos gran parte de sus preguntas en una funcion
+//float calcularprimercuartil(int,int);
+//float calculartercercuartil(int,int);
 
 int main()
 {
@@ -154,6 +156,7 @@ void ESCRIBIR(FILE *fich)
 	fprintf(fich,"Mediana anio 1,Mediana anio 2,");
 	fprintf(fich,"Varianza anio 1,Varianza anio 2,");
 	fprintf(fich,"Maximo Minimo anio 1,Maximo Minimo anio 2,");
+	//fprintf(fich,"Cuartil primero tercero anio 1,Cuartil primero tercero anio 2,");
 	fputc('\n',fich);
 	for(j=0,k=0;j<17;j++,k++) //Ahora se escribe en el fichero cada columna
 	{
@@ -174,6 +177,11 @@ void ESCRIBIR(FILE *fich)
 		i++;
 		fprintf(fich,"%f   %f",max(i,j),min(i,j));
 		i--;
+		fprintf(fich,"%f   %f,",calcularprimercuartil(i,j),calculartercercuartil(i,j));
+		i++;
+		fprintf(fich,"%f   %f,",calcularprimercuartil(i,j),calculartercercuartil(i,j));
+		i--;
+		
 		fputc('\n',fich);//Para seguir en la siguiente linea se le aniade un retorno de carro al final 
  	}
 }
@@ -230,6 +238,12 @@ float RECOGER2(int estad,int anio,int gener)
 		f=8;
 		printf("\nEl maximo y el minimo deseados son ");
 	}
+	else if(estad==5)
+	{
+		i=9;
+		f=10;
+		printf("\nEl cuartil 1 y 3 deseados son ");
+	}
 	if(anio==2)//Si nos interesa el segundo anio le sumamos simplemente uno a los dos parametros
 		{
 			i++;
@@ -285,7 +299,7 @@ float MENU_PRINCIPAL()
     		case 3:
     			MENU_ORDENAR();
     			return 0;
-			break;    
+			break;
     		case 4:
     			printf("Hasta pronto!");
     			return 0;
@@ -370,6 +384,7 @@ int MENU_CALCULOS()
 int MENU_ORDENAR()
 {
 	int j=0,z=0,x=0;
+	float n,t;
 	printf("----------------------------------------------MENU PRINCIPAL>>ORDENAR-----------------------------------------------");
 	printf("\nTipos de generacion a acceder:\n");
     MOSTRARTIPOS(0);
@@ -386,7 +401,7 @@ int MENU_ORDENAR()
     	    		j=validarOpcion();
     	    		if(j == 1 || j == 2)
     	    		{
-    		    			ordenar(z,j,x);
+    		    			ordenar(z,j,x,&n,&t);
     		    			MENU_ORDENAR();
     		    			return 0;
 					}
@@ -583,7 +598,7 @@ float min(int r,int x)//Funcion que calcula el minimo
 	}
 }
 
-void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
+void ordenar(int tipo, int forma,int r,float *CP1,float *CP3)//Funcion que ordena los datos
 {
 	//Esta funcion hace lo mismo que el maximo y minimo pero el resultado en este caso es todos los datos ordenados
 	int i,j;
@@ -625,12 +640,13 @@ void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 				}
 			}
 		}
-		
 		printf("La generacion ordenada por la forma deseada es:\n");
 		for(i=0;i<12;i++)
 		{
 		 	printf("\t%.3f\n",V1[i]);
 		}
+		//*CP1=V1[2];
+		//*CP3=V1[9];
 	}
 	if(r==2)
 	{
@@ -664,12 +680,13 @@ void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 				}
 			}
 		}
-		
 		printf("La generacion ordenada por la forma deseada es:\n");
 		for(i=12;i<24;i++)
 		{
 		 	printf("\t%.3f\n",V1[i]);
 		}
+		//*CP1=V1[14];
+		//*CP3=V1[20];
 	}
 }
 
@@ -702,7 +719,7 @@ int CALCULOESTAD()//Esta funcion sirve para elegir que calculo estadistico se qu
 	
 	int i;
 	printf("Distintos calculos a elegir:\n");
-		for(i=0;i<4;i++)//Este for no es imprescindible ya que se puede hacer manualmente con printfs pero es mas rapido asi
+		for(i=0;i<5;i++)//Este for no es imprescindible ya que se puede hacer manualmente con printfs pero es mas rapido asi
     		{
     			printf("%i)",i+1);
     			if(i==0)
@@ -720,6 +737,10 @@ int CALCULOESTAD()//Esta funcion sirve para elegir que calculo estadistico se qu
 				else if(i==3)
 				{
 					printf("\tCalculo del maximo y minimo anual.\n");
+				}
+				else if(i==4)
+				{
+					printf("\tCalculo del cuartil 1 y 3.\n");
 				}
 			}
 		printf("\n---> Para volver la menu principal pulsa 0 <---\n");	
@@ -966,7 +987,52 @@ int pregunta_calculos(int s)
 				return 0;
 	    	}		
 	    }
-	    else
+	}
+	else if(s==5)
+	{
+	    	printf("\nDe que anio desea calcular el cuartil 1 y 3? 1 para el primero(2021) o 2 para el segundo(2022): ");
+			scanf("%i",&e);
+		if(e == 1)
+	    {
+	       	printf("Tipos de generacion a elegir:\n");
+	       	MOSTRARTIPOS(0);
+	       	printf("Que generacion desea? ");
+	       	scanf("%i",&y);
+	        if(y > 0 && y < 18)
+	        	{
+	        		RECOGER2(s,e,y);
+	        		MENU_CALCULOS();
+	            	return 0;
+				}
+			else
+				{
+					printf("Boton incorrecto\n");
+					printf("Vuelva a intentarlo\n");
+					MENU_CALCULOS();
+					return 0;
+	    		}
+	    }
+	    else if(e==2)
+	    {
+			printf("Tipos de generacion a elegir:\n");
+	        MOSTRARTIPOS(0);
+	        printf("Que generacion desea? ");
+	        scanf("%i",&y);
+	        if(y >0 && y <18)
+	        {
+	        	RECOGER2(s,e,y);
+	        	MENU_CALCULOS();
+	           	return 0;
+			}
+			else
+			{
+				printf("Boton incorrecto\n");
+				printf("Vuelva a intentarlo\n");
+				MENU_CALCULOS();
+				return 0;
+	    	}
+		}
+		else
 	    {
 	    	printf("Boton incorrecto\n");
 			printf("Vuelva a intentarlo\n");
@@ -974,5 +1040,18 @@ int pregunta_calculos(int s)
 			return 0;
 		}
 	}
-	
 }
+
+/*float calcularprimercuartil(int anio, int gener)
+{
+	float Cuart1,Cuart3;
+	ordenar(gener,1,anio,&Cuart1,&Cuart3);
+	return Cuart1;
+}*/
+
+/*float calculartercercuartil(int anio, int gener)
+{
+	float Cuart3,Cuart1;
+	ordenar(gener,1,anio,&Cuart1,&Cuart3);
+	return Cuart3;
+}*/
