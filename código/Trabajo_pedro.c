@@ -40,7 +40,11 @@ int MENU_ORDENAR();//La ultima accion es ordenar de mayor a menor o vice versa l
 void ordenar(int, int,int);//Esta funcion ordena los datos
 int validarOpcion();//Esta funcion nos sirve para verificar si el usuario ha tecleado un numero o una letra
 int pregunta_calculos(int);//Para facilitar el menu de calculos metemos gran parte de sus preguntas en una funcion
-
+float calcularPrimerCuartil(int arr[], int n);
+float calcularSegundoCuartil(int arr[], int n);
+int MENU_Comparacion_primeranio(int,int);
+int MENU_Comparacion_segundoanio(int,int);
+int MENU_Comparacion_todo(int,int);
 int main()
 {
 	FILE *fich;//fichero para recoger
@@ -149,12 +153,13 @@ void ESCRIBIR(FILE *fich)
 	//En la primera columna ponemos los tipos de generaciones
 	//En las siguientes columnas ponemos los calculos de los dos anios separados primero va la media, despues la mediana y etc.
 	int i=1,j=0,k=0;//el valor de i NO se puede cambiar es importante que entre en el for como un uno
-	fprintf(fich,"Generación,Media anio 1,Media anio 2,");//Estos printfs no son tan eficientes ya que solo sirven para un caso particular,
-	fprintf(fich,"Generación,Cuartil_primero anio1,Cuartil_primero anio2,");
-	fprintf(fich,"Generación,Cuartil_tercero anio1,Cuartil_tercero anio2,");												  //se tendrian que cambiar si se utiliza otra mentalidad con el archivo
+	fprintf(fich,"Generación,Media anio 1,Media anio 2,");//Estos printfs no son tan eficientes ya que solo sirven para un caso particular,												  //se tendrian que cambiar si se utiliza otra mentalidad con el archivo
 	fprintf(fich,"Mediana anio 1,Mediana anio 2,");
 	fprintf(fich,"Varianza anio 1,Varianza anio 2,");
 	fprintf(fich,"Maximo Minimo anio 1,Maximo Minimo anio 2,");
+    fprintf(fich,"Cuartil_primero anio 1,Cuartil_primero anio 2,");
+	fprintf(fich,"Cuartil_tercero anio 1,Cuartil_tercero anio 2,");
+
 	fputc('\n',fich);
 	for(j=0,k=0;j<17;j++,k++) //Ahora se escribe en el fichero cada columna
 	{
@@ -175,6 +180,14 @@ void ESCRIBIR(FILE *fich)
 		i++;
 		fprintf(fich,"%f   %f",max(i,j),min(i,j));
 		i--;
+		fprintf(fich,"%f"  calcularPrimerCuartil(i,j));
+		i++
+		fprintf(fich,"%f"  calcularPrimerCuartil(i,j));
+		i--
+		fprintf(fich,"%f"  calcularTercerCuartil(i,j));
+		i++
+        fprintf(fich,"%f"  calcularTercerCuartil(i,j));
+        i--
 		fputc('\n',fich);//Para seguir en la siguiente linea se le aniade un retorno de carro al final
  	}
 }
@@ -267,8 +280,9 @@ float MENU_PRINCIPAL()
 	printf("---------------------------------------------------MENU PRINCIPAL---------------------------------------------------\n");
 	printf("1) Buscador de datos.\n");
     printf("2) Calculos estadisticos.\n");
-    printf("3) Ordenacion de datos\n");
-	printf("4) Salir\n");
+    printf("3) Ordenacion de datos.\n");
+    printf("4) Comparacion de datos\n");
+	printf("5) Salir\n");
     printf("A donde quiere acceder? ");
     z=validarOpcion();
 	if(z>0 && z<5)
@@ -418,6 +432,35 @@ int MENU_ORDENAR()
 		return 0;
 	}
 }
+
+
+int Menu_Comparacion()
+int x;
+if(x>0 && (x<2)
+   {
+
+
+switch(z)
+        {
+    	    case 1:
+    	   		MENU_Comparacion_primeraño();
+				return 0;
+            break;
+    	    case 2:
+    	    	MENU_Comparacion_segundoaño();
+    	    	return 0;
+    		break;
+    		case 3:
+    			MENU_Comparacion_todo();
+    			return 0;
+			break;
+
+		}
+
+   }
+
+
+
 
 int BUSCARDATO(int tipo, int numdato)
 {
@@ -981,10 +1024,7 @@ int pregunta_calculos(int s)
 
   //Prototipos
 
- void ordenar2(int arr[], int n);
- float calcularPrimerCuartil(int arr[], int n);
- float calcularSegundoCuartil(int arr[], int n);
-
+/*
  int main(){
 
   int n, i;
@@ -1012,33 +1052,22 @@ int pregunta_calculos(int s)
     return 0;
 }
 
-// Función para ordenar el arreglo en orden ascendente
 
-void ordenar2(int arr[], int n) {
-    int i, j, temp;
-    for (i = 0; i < n - 1; i++) {
-        for (j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-               arr[j+1]= temp;
-            }
-        }
-    }
-}
 
 // Función para calcular el primer cuartil
-float calcularPrimerCuartil(int arr[], int n) {
-    int posicion;
+float calcularPrimerCuartil(int anio, int gener) {
+    int i,j;
     float cuartil;
-    posicion = (n + 1) / 4; // Calcula la posición del primer cuartil
-    cuartil = arr[posicion - 1]; // Obtiene el valor del primer cuartil
+    *ptr=v1
+    int anio,gener;
+    posicion = 12 / 4; // Ver la posición del primer cuartil
+
     return cuartil;
 }
 
 // Funcion para calcular el segundo cuartil
 
-float calcularSegundoCuartil(int arr[], int n) {
+float calcularTercerCuartil(int arr[], int n) {
     float cuartil;
     if (n % 2 == 0) { // Si el número de elementos es par
         cuartil = (arr[n / 2 - 1] + arr[n / 2]) / 2.0; // Calcula el promedio de los dos valores del centro
@@ -1047,9 +1076,89 @@ float calcularSegundoCuartil(int arr[], int n) {
     }
     return cuartil;
 }
+*/
+int Menu_Comparacion()
+if(r==1)//Si hemos pedido la media del primer anio hacemos el calculo con los 12 primeros datos
+	{
+			for(i=0;i<12;i++)
+			{
+				   printf("Cogemos datos del primer año")	//Hacemos el sumatorio de los datos de la generacion "y"
+				//printf("%f\t",media);
+			}
+	   printf(Cogemos datos del primer a)
+	}
+	else if(r==2)//si es el segundo anio el calculo es desde el dato 13 que seria enero de 2022(segundo anio) para el ordenador es el 12
+	{
+		for(i=12;i<24;i++)
+			{
+				media+=numdatos[x].dato[i];
+				//printf("%f\t",media);
+			}
+	}
+	return 0;
+}
+
+switch(z)
+        {
+    	    case 1:
+    	   		MENU_Comparacion_primeraño();
+				return 0;
+            break;
+    	    case 2:
+    	    	MENU_Comparacion_segundoaño();
+    	    	return 0;
+    		break;
+    		case 3:
+    			MENU_Comparacion_todo();
+    			return 0;
+			break;
+
+		}
+
+int Menu_Comparacion_segundoaño();
+
+    printf("----------------------------------------------MENU PRINCIPAL>>ORDENAR-----------------------------------------------");
+	printf("\nTipos de generacion a acceder:\n");
+    MOSTRARTIPOS(0);
+    printf("\n---> Para volver la menu principal pulsa 0 <---\n");
 
 
+int i;
+char e=validarOpcion;
 
+int validarOpcion()//La funcion que nos permite averiguar si lo introducido es valido o no
+{
+	char c,resp[BUFFERTAMANOMAX];//Ponemos como dimension la constante que hemos definido esto es el numero-1 de caracteres maximo permitido al introducir algo
+	int i=0;		      		//En nuestro programa es igual a 2 ya que no hay ninguna opcion que pida un numero con mas digitos
+	fflush(stdin); 				//Pero el fgets nos recoge tambien el retorno de carro por lo que vamos a poner dimension 4 para incluirlo e incluir '\0'
+    fgets(resp,4,stdin);//Recogemos la cadena
 
+	while(resp[i]!='\0')//Lo primero que vamos a hacer es encotrar un caracter en nuestro string si lo hay
+	{					//Si hemos puesto como maximo dos numeros por ejemoplo, puede haber solo un caracter en nuestro string y es el retorno de carro
+						//estaria en la tercera posicion
+		c=resp[i];
+		if(!(c>47 && c<58))//Este if se activa cuando encuentra un caracter que no sea un numero, incluye cualquier digito en la tabla ascii
+		{
+			if(c=='\n')
+			{
+				resp[i]='\0';/*Aqui encontramos el retorno de carro y lo cambiamos a '\0'
+							 ya que si hemos entrado en este if es porque no ha encotrado ningun otro caracter y lo anterior es todo numero aceptable*/
+				return atoi(resp);
+			}
+			else return -1;//Si encuentra otro caracter sabemos inmediatamente que la opcion es incorrecta y retornamos un -1 NO un 0 ya que es valido tambien
+		}
+		i++;
+	}
+	i=0;
+	while(resp[i]!='\0')//Si el primer while no ha encontrado ningun caracter podria ser que nuestro numero introducido sea de mas de dos digitos
+	{
+		i++;//Un simple contador de digitos y si es mayor que dos retornamos opcion incorrecta
+	}
+	if(i>2)
+	{
+		return -1;
+	}
+	return atoi(resp);//Si todo ha ido bien retorna el numero convertido en int aun asi podria ser un numero de dos digitos y ser mayor que nuestras opciones
+}					  //En ese caso la opcion incorrecta la detecta la otra funcion
 
 
