@@ -37,6 +37,9 @@ float mediana(int,int);
 float max(int,int);
 float min(int,int);
 int MENU_ORDENAR();//La ultima accion es ordenar de mayor a menor o vice versa los datos de una generacion, este es el menu
+int MENU_COMPARACION();//Compara los datos de entre los meses de las diferentes energias
+int MENU_COMPARACION_1ANO();
+//int MENU_COMPARACION_2ANO();
 void ordenar(int, int,int);//Esta funcion ordena los datos
 int validarOpcion();//Esta funcion nos sirve para verificar si el usuario ha tecleado un numero o una letra
 int pregunta_calculos(int);//Para facilitar el menu de calculos metemos gran parte de sus preguntas en una funcion
@@ -267,10 +270,11 @@ float MENU_PRINCIPAL()
 	printf("1) Buscador de datos.\n");
     printf("2) Calculos estadisticos.\n");
     printf("3) Ordenacion de datos\n");
-	printf("4) Salir\n");
+    printf("4) Comparacion de datos\n");
+	printf("5) Salir\n");
     printf("A donde quiere acceder? ");
     z=validarOpcion();
-	if(z>0 && z<5)
+	if(z>0 && z<6)
 	{
 		switch(z)
         {
@@ -286,8 +290,11 @@ float MENU_PRINCIPAL()
     			MENU_ORDENAR();
     			return 0;
 			break;
-    		case 4:
-    			printf("Hasta pronto!");
+			case 4:
+                MENU_COMPARACION();
+            break;
+    		case 5:
+    			printf("Hasta pronto!\n");
     			return 0;
 			break;
 		}
@@ -414,6 +421,37 @@ int MENU_ORDENAR()
 	{
 		printf("\nOpcion incorrecta\n");
 		MENU_ORDENAR();
+		return 0;
+	}
+}
+int MENU_COMPARACION()
+{
+    // En el menu apareceran tres opciones: comparar datos entre diferentres energias del primer año, la segunda del segundo año y entre los dos años.
+    int z;
+    printf("\n-------------------------------------------MENU PRINCIPAL>>COMPARACION DE DATOS-----------------------------------------");
+    printf("1) Comparacion del primer ano\n");
+    printf("2) Comparacion del segundo ano\n");
+    printf("\n---> Para volver la menu principal pulsa 0 <---\n");
+    printf("A que ano quiere acceder? ");
+    z=validarOpcion();
+    if(z>0 && z<3)
+	{
+		switch(z)
+        {
+    	    case 1:
+    	   		MENU_COMPARACION_1ANO();
+				return 0;
+            break;
+    	    case 2:
+    	    	//MENU_COMPACION_2ANO();
+    	    	return 0;
+    		break;
+        }
+	}
+	else
+	{
+		printf("\nOpcion incorrecta, vuelva a intentarlo porfavor\n");
+		MENU_PRINCIPAL();
 		return 0;
 	}
 }
@@ -974,5 +1012,63 @@ int pregunta_calculos(int s)
 			return 0;
 		}
 	}
+}
+
+int MENU_COMPARACION_1ANO()
+{
+    int e, a;
+    printf("-------------------------------------------MENU PRINCIPAL>>COMPARACION DE DATOS-----------------------------------------");
+    printf("\nTipos de generacion a acceder:\n");
+    MOSTRARTIPOS(0);
+    printf("\n---> Para volver la menu principal pulsa 0 <---\n");
+    printf("\nA que tipo de generacion quiere acceder? ");
+    e=validarOpcion();
+    if(e>0 && e<18)
+    {
+    	printf("Coja otro año para comparar\n");
+        MOSTRARTIPOS(0);
+	    printf("La comparacion la quiere realizar con: ");
+        a=validarOpcion();
+        if(e>0 && e<18)
+        {
+            for(int i = 0; i < 12; i++)
+            {
+                printf("\t %.15lf GWh \t %.15lf GWh\n", numdatos[e].dato[i], numdatos[a].dato[i]);
+            }
+            MENU_COMPARACION();
+            return 0;
+        }
+        else
+		{
+			printf("\nBoton incorrecto\n");
+			printf("Vuelva a intentarlo\n");
+			MENU_COMPARACION();
+			return 0;
+		}
+    }
+	else if(e == 0)
+	{
+		MENU_PRINCIPAL();
+		return 0;
+	}
+	else
+	{
+		printf("\nBoton incorrecto\n");
+		printf("Vuelva a intentarlo\n");
+		MENU_DATOS();
+		return 0;
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

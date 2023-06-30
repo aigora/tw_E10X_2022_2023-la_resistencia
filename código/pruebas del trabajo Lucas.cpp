@@ -765,17 +765,16 @@ int pregunta_calculos(int s)
 {
 	//Esta es nuestra funcion mas larga esta dividida en 4 partes para las distintas estadisticas que hay
 	int i=0,j=0,x=0,e=0,y=0;
-	float M,m;
 	if(s == 1)
 	{
 		printf("\nDe que anio desea calcular medias? 1 para el primero(2021) o 2 para el segundo(2022): ");
-	    scanf("%i",&e);
+	    e=validarOpcion();
 	    if(e==1)
 	    {
 	        printf("Tipos de generacion a elegir:\n");
 	        MOSTRARTIPOS(0);
 	        printf("Que generacion desea? ");
-	        scanf("%i",&y);
+	        y=validarOpcion();
 	        if(y>0 && y<18)
 	        {
 	            RECOGER2(s,e,y);
@@ -795,7 +794,7 @@ int pregunta_calculos(int s)
 		    printf("Tipos de generacion a elegir:\n");
 	        MOSTRARTIPOS(0);
 	        printf("Que generacion desea? ");
-	        scanf("%i",&y);
+	        y=validarOpcion();
 	        if(y >0 && y <18)
 	        {
 	            RECOGER2(s,e,y);
@@ -821,13 +820,13 @@ int pregunta_calculos(int s)
 	else if(s == 2)
 	{
 		printf("\nDe que anio desea calcular medianas? 1 para el primero(2021) o 2 para el segundo(2022): ");
-		scanf("%i",&e);
+		e=validarOpcion();
 		if(e==1)
 	    {
 	       	printf("Tipos de generacion a elegir:\n");
 	       	MOSTRARTIPOS(0);
 	       	printf("Que generacion desea? ");
-	       	scanf("%i",&y);
+	       	y=validarOpcion();
 	        if(y>0 && y<18)
 	        	{
 	        		RECOGER2(s,e,y);
@@ -847,7 +846,7 @@ int pregunta_calculos(int s)
 			printf("Tipos de generacion a elegir:\n");
 	        MOSTRARTIPOS(0);
 	        printf("Que generacion desea? ");
-	        scanf("%i",&y);
+	        y=validarOpcion();
 	        if(y >0 && y <18)
 	        {
 	        	RECOGER2(s,e,y);
@@ -873,13 +872,13 @@ int pregunta_calculos(int s)
 	else if(s == 3)
 	{
 		printf("\nDe que anio desea calcular la varianza? 1 para el primero(2021) o 2 para el segundo(2022): ");
-		scanf("%i",&e);
+		e=validarOpcion();
 		if(e==1)
 	    {
 	       	printf("Tipos de generacion a elegir:\n");
 	       	MOSTRARTIPOS(0);
 	       	printf("Que generacion desea? ");
-	       	scanf("%i",&y);
+	       	y=validarOpcion();
 	        if(y>0 && y<18)
 	        	{
 	        		RECOGER2(s,e,y);
@@ -899,7 +898,7 @@ int pregunta_calculos(int s)
 			printf("Tipos de generacion a elegir:\n");
 	        MOSTRARTIPOS(0);
 	        printf("Que generacion desea? ");
-	        scanf("%i",&y);
+	        y=validarOpcion();
 	        if(y >0 && y <18)
 	        {
 	        	RECOGER2(s,e,y);
@@ -925,13 +924,13 @@ int pregunta_calculos(int s)
 	else if(s == 4)
 	{
 		printf("\nDe que anio desea calcular el maximo y el minimo? 1 para el primero(2021) o 2 para el segundo(2022): ");
-		scanf("%i",&e);
+		e=validarOpcion();
 		if(e == 1)
 	    {
 	       	printf("Tipos de generacion a elegir:\n");
 	       	MOSTRARTIPOS(0);
 	       	printf("Que generacion desea? ");
-	       	scanf("%i",&y);
+	       	y=validarOpcion();
 	        if(y > 0 && y < 18)
 	        	{
 	        		RECOGER2(s,e,y);
@@ -951,7 +950,7 @@ int pregunta_calculos(int s)
 			printf("Tipos de generacion a elegir:\n");
 	        MOSTRARTIPOS(0);
 	        printf("Que generacion desea? ");
-	        scanf("%i",&y);
+	        y=validarOpcion();
 	        if(y >0 && y <18)
 	        {
 	        	RECOGER2(s,e,y);
@@ -974,5 +973,4 @@ int pregunta_calculos(int s)
 			return 0;
 		}
 	}
-	
 }
