@@ -1016,7 +1016,7 @@ int pregunta_calculos(int s)
 
 int MENU_COMPARACION_1ANO()
 {
-    int e, a;
+    int e, a,i;
     printf("-------------------------------------------MENU PRINCIPAL>>COMPARACION DE DATOS-----------------------------------------");
     printf("\nTipos de generacion a acceder:\n");
     MOSTRARTIPOS(0);
@@ -1029,9 +1029,9 @@ int MENU_COMPARACION_1ANO()
         MOSTRARTIPOS(0);
 	    printf("La comparacion la quiere realizar con: ");
         a=validarOpcion();
-        if(e>0 && e<18)
+        if(a>0 && a<18)
         {
-            for(int i = 0; i < 12; i++)
+            for( i = 0; i < 12; i++)
             {
                 printf("\t %.15lf GWh \t %.15lf GWh\n", numdatos[e].dato[i], numdatos[a].dato[i]);
             }
