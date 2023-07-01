@@ -1029,7 +1029,7 @@ int MENU_COMPARACION_1ANO()
         MOSTRARTIPOS(0);
 	    printf("La comparacion la quiere realizar con: ");
         a=validarOpcion();
-        if(e>0 && e<18)
+        if(a>0 && a<18)
         {
             for( i = 0; i < 12; i++)
             {

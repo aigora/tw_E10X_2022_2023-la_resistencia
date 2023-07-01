@@ -257,7 +257,7 @@ float RECOGER2(int estad,int anio,int gener)
 			rescarac[n]=recoger[gener].lineas[i];
 		}
 	rescarac[n-1]='\0';
-	printf("%s",rescarac);
+	printf("%s GWh",rescarac);
 }
 
 float MENU_PRINCIPAL()
@@ -629,7 +629,7 @@ void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 		printf("La generacion ordenada por la forma deseada es:\n");
 		for(i=0;i<12;i++)
 		{
-		 	printf("\t%.3f\n",V1[i]);
+		 	printf("\t%.3f GWh\n",V1[i]);
 		}
 	}
 	if(r==2)
@@ -668,7 +668,7 @@ void ordenar(int tipo, int forma,int r)//Funcion que ordena los datos
 		printf("La generacion ordenada por la forma deseada es:\n");
 		for(i=12;i<24;i++)
 		{
-		 	printf("\t%.3f\n",V1[i]);
+		 	printf("\t%.3f GWh\n",V1[i]);
 		}
 	}
 }
