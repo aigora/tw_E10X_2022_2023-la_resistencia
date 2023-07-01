@@ -444,8 +444,6 @@ int MENU_ORDENAR()
 
 int MENU_COMPARACION()
 {
-
-
  // En el menu aparecerán tres opciones: comparara datos entre diferentes energias del primer año la segunda del segundo año y la ultima entre los dos años.
  int z;
     printf("\n-------------------------------------------MENU PRINCIPAL>>COMPARACION DE DATOS-----------------------------------------");
@@ -483,8 +481,6 @@ switch(z)
 		return 0;
 	}
 }
-
-
 
 int BUSCARDATO(int tipo, int numdato)
 {
@@ -1104,7 +1100,7 @@ float calcularTercerCuartil(int arr[], int n) {
 
 int MENU_COMPARACION_1ANO()
 {
-    int e, a;
+    int e, a,i;
     printf("-------------------------------------------MENU PRINCIPAL>>COMPARACION DE DATOS-----------------------------------------");
     printf("\nTipos de generacion a acceder:\n");
     MOSTRARTIPOS(0);
@@ -1126,7 +1122,7 @@ int MENU_COMPARACION_1ANO()
         }
         if(a>0 && a<18)
         {
-            for(int i = 0; i < 12; i++)
+            for( i = 0; i < 12; i++)
             {
                 printf("\t %.15lf GWh \t %.15lf GWh\n", numdatos[e].dato[i], numdatos[a].dato[i]);
             }
@@ -1160,7 +1156,7 @@ int MENU_COMPARACION_1ANO()
 int MENU_COMPARACION_2ANO()
 {
 
-  int e, a;
+  int e, a,i;
     printf("-------------------------------------------MENU PRINCIPAL>>COMPARACION DE DATOS-----------------------------------------");
     printf("\nTipos de generacion a acceder:\n");
     MOSTRARTIPOS(0);
@@ -1178,14 +1174,14 @@ int MENU_COMPARACION_2ANO()
         if(a==e)
         {
               printf("\nBoton incorrecto\n");
-        printf("\Vuelva a intentarlo\n");
+        printf("Vuelva a intentarlo\n");
 
         MENU_COMPARACION();
         return 0;
         }
          else if(a>0 && a<18)
          {
-             for(int i=12; i<24; i++)
+             for( i=12; i<24; i++)
              {
                 printf("\t %.15lf GWh \t %.15lf GWh\n", numdatos[e].dato[i], numdatos[a].dato[i]);
              }
