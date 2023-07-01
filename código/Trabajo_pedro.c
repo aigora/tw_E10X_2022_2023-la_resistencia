@@ -37,14 +37,17 @@ float mediana(int,int);
 float max(int,int);
 float min(int,int);
 int MENU_ORDENAR();//La ultima accion es ordenar de mayor a menor o vice versa los datos de una generacion, este es el menu
+int MENU_COMPARACION();
+int MENU_COMPARACION_1ANO();
+int MENU_COMPARACION_2ANO();
 void ordenar(int, int,int);//Esta funcion ordena los datos
 int validarOpcion();//Esta funcion nos sirve para verificar si el usuario ha tecleado un numero o una letra
-int pregunta_calculos(int);//Para facilitar el menu de calculos metemos gran parte de sus preguntas en una funcion
+int pregunta_calculos(int);
+/*//Para facilitar el menu de calculos metemos gran parte de sus preguntas en una funcion
 float calcularPrimerCuartil(int arr[], int n);
 float calcularSegundoCuartil(int arr[], int n);
-int MENU_Comparacion_primeranio(int,int);
-int MENU_Comparacion_segundoanio(int,int);
-int MENU_Comparacion_todo(int,int);
+*/
+
 int main()
 {
 	FILE *fich;//fichero para recoger
@@ -180,6 +183,7 @@ void ESCRIBIR(FILE *fich)
 		i++;
 		fprintf(fich,"%f   %f",max(i,j),min(i,j));
 		i--;
+		/*
 		fprintf(fich,"%f"  calcularPrimerCuartil(i,j));
 		i++
 		fprintf(fich,"%f"  calcularPrimerCuartil(i,j));
@@ -187,7 +191,9 @@ void ESCRIBIR(FILE *fich)
 		fprintf(fich,"%f"  calcularTercerCuartil(i,j));
 		i++
         fprintf(fich,"%f"  calcularTercerCuartil(i,j));
+
         i--
+        */
 		fputc('\n',fich);//Para seguir en la siguiente linea se le aniade un retorno de carro al final
  	}
 }
@@ -285,7 +291,7 @@ float MENU_PRINCIPAL()
 	printf("5) Salir\n");
     printf("A donde quiere acceder? ");
     z=validarOpcion();
-	if(z>0 && z<5)
+	if(z>0 && z<6)
 	{
 		switch(z)
         {
@@ -302,7 +308,10 @@ float MENU_PRINCIPAL()
     			return 0;
 			break;
     		case 4:
-    			printf("Hasta pronto!");
+    		    MENU_COMPARACION();
+    		break;
+    		case 5:
+                printf("Hasta pronto!\n");
     			return 0;
 			break;
 		}
@@ -433,32 +442,47 @@ int MENU_ORDENAR()
 	}
 }
 
+int MENU_COMPARACION()
+{
 
-int Menu_Comparacion()
-int x;
-if(x>0 && (x<2)
-   {
+
+ // En el menu aparecerán tres opciones: comparara datos entre diferentes energias del primer año la segunda del segundo año y la ultima entre los dos años.
+ int z;
+    printf("\n-------------------------------------------MENU PRINCIPAL>>COMPARACION DE DATOS-----------------------------------------");
+    printf("1) Comparacion del primer ano\n");
+    printf("2) Comparacion del segundo ano\n");
+    printf("\n---> Para volver la menu principal pulsa 0 <---\n");
+    printf("A que ano quiere acceder? ");
+    z=validarOpcion();
+    if(z>0 && z<3)
+    {
+
+
 
 
 switch(z)
         {
-    	    case 1:
-    	   		MENU_Comparacion_primeraño();
+    	     case 1:
+    	   		MENU_COMPARACION_1ANO();
 				return 0;
             break;
+
     	    case 2:
-    	    	MENU_Comparacion_segundoaño();
+    	    	MENU_COMPARACION_2ANO();
     	    	return 0;
     		break;
-    		case 3:
-    			MENU_Comparacion_todo();
-    			return 0;
-			break;
+
 
 		}
 
-   }
-
+    }
+   else
+    {
+		printf("\nOpcion incorrecta, vuelva a intentarlo porfavor\n");
+		MENU_PRINCIPAL();
+		return 0;
+	}
+}
 
 
 
@@ -1077,88 +1101,120 @@ float calcularTercerCuartil(int arr[], int n) {
     return cuartil;
 }
 */
-int Menu_Comparacion()
-if(r==1)//Si hemos pedido la media del primer anio hacemos el calculo con los 12 primeros datos
-	{
-			for(i=0;i<12;i++)
-			{
-				   printf("Cogemos datos del primer año")	//Hacemos el sumatorio de los datos de la generacion "y"
-				//printf("%f\t",media);
-			}
-	   printf(Cogemos datos del primer a)
-	}
-	else if(r==2)//si es el segundo anio el calculo es desde el dato 13 que seria enero de 2022(segundo anio) para el ordenador es el 12
-	{
-		for(i=12;i<24;i++)
-			{
-				media+=numdatos[x].dato[i];
-				//printf("%f\t",media);
-			}
-	}
-	return 0;
-}
 
-switch(z)
-        {
-    	    case 1:
-    	   		MENU_Comparacion_primeraño();
-				return 0;
-            break;
-    	    case 2:
-    	    	MENU_Comparacion_segundoaño();
-    	    	return 0;
-    		break;
-    		case 3:
-    			MENU_Comparacion_todo();
-    			return 0;
-			break;
-
-		}
-
-int Menu_Comparacion_segundoaño();
-
-    printf("----------------------------------------------MENU PRINCIPAL>>ORDENAR-----------------------------------------------");
-	printf("\nTipos de generacion a acceder:\n");
+int MENU_COMPARACION_1ANO()
+{
+    int e, a;
+    printf("-------------------------------------------MENU PRINCIPAL>>COMPARACION DE DATOS-----------------------------------------");
+    printf("\nTipos de generacion a acceder:\n");
     MOSTRARTIPOS(0);
     printf("\n---> Para volver la menu principal pulsa 0 <---\n");
-
-
-int i;
-char e=validarOpcion;
-
-int validarOpcion()//La funcion que nos permite averiguar si lo introducido es valido o no
-{
-	char c,resp[BUFFERTAMANOMAX];//Ponemos como dimension la constante que hemos definido esto es el numero-1 de caracteres maximo permitido al introducir algo
-	int i=0;		      		//En nuestro programa es igual a 2 ya que no hay ninguna opcion que pida un numero con mas digitos
-	fflush(stdin); 				//Pero el fgets nos recoge tambien el retorno de carro por lo que vamos a poner dimension 4 para incluirlo e incluir '\0'
-    fgets(resp,4,stdin);//Recogemos la cadena
-
-	while(resp[i]!='\0')//Lo primero que vamos a hacer es encotrar un caracter en nuestro string si lo hay
-	{					//Si hemos puesto como maximo dos numeros por ejemoplo, puede haber solo un caracter en nuestro string y es el retorno de carro
-						//estaria en la tercera posicion
-		c=resp[i];
-		if(!(c>47 && c<58))//Este if se activa cuando encuentra un caracter que no sea un numero, incluye cualquier digito en la tabla ascii
+    printf("\nA que tipo de generacion quiere acceder? ");
+    e=validarOpcion();
+    if(e>0 && e<18)
+    {
+    	printf("Coja otro año para comparar\n");
+        MOSTRARTIPOS(0);
+	    printf("La comparacion la quiere realizar con: ");
+        a=validarOpcion();
+        if(a==e )
+        {
+          printf("\nEs la misma generacion \n");
+			printf("Vuelva a intentarlo\n");
+			MENU_COMPARACION();
+			return 0;
+        }
+        if(a>0 && a<18)
+        {
+            for(int i = 0; i < 12; i++)
+            {
+                printf("\t %.15lf GWh \t %.15lf GWh\n", numdatos[e].dato[i], numdatos[a].dato[i]);
+            }
+            MENU_COMPARACION();
+            return 0;
+        }
+        else
 		{
-			if(c=='\n')
-			{
-				resp[i]='\0';/*Aqui encontramos el retorno de carro y lo cambiamos a '\0'
-							 ya que si hemos entrado en este if es porque no ha encotrado ningun otro caracter y lo anterior es todo numero aceptable*/
-				return atoi(resp);
-			}
-			else return -1;//Si encuentra otro caracter sabemos inmediatamente que la opcion es incorrecta y retornamos un -1 NO un 0 ya que es valido tambien
+			printf("\nBoton incorrecto\n");
+			printf("Vuelva a intentarlo\n");
+			MENU_COMPARACION();
+			return 0;
 		}
-		i++;
-	}
-	i=0;
-	while(resp[i]!='\0')//Si el primer while no ha encontrado ningun caracter podria ser que nuestro numero introducido sea de mas de dos digitos
+    }
+	else if(e == 0)
 	{
-		i++;//Un simple contador de digitos y si es mayor que dos retornamos opcion incorrecta
+		MENU_PRINCIPAL();
+		return 0;
 	}
-	if(i>2)
+	else
 	{
-		return -1;
+		printf("\nBoton incorrecto\n");
+		printf("Vuelva a intentarlo\n");
+		MENU_DATOS();
+		return 0;
 	}
-	return atoi(resp);//Si todo ha ido bien retorna el numero convertido en int aun asi podria ser un numero de dos digitos y ser mayor que nuestras opciones
-}					  //En ese caso la opcion incorrecta la detecta la otra funcion
+
+}
 
 
+int MENU_COMPARACION_2ANO()
+{
+
+  int e, a;
+    printf("-------------------------------------------MENU PRINCIPAL>>COMPARACION DE DATOS-----------------------------------------");
+    printf("\nTipos de generacion a acceder:\n");
+    MOSTRARTIPOS(0);
+    printf("\n---> Para volver la menu principal pulsa 0 <---\n");
+    printf("\nA que tipo de generacion quiere acceder usted? ");
+
+    e= validarOpcion();
+
+    if(e>0 && e<18)
+    {
+        printf("Coja otro año mas para comparar \n");
+        MOSTRARTIPOS(0);
+        printf("La comparacion la quiere realizar con:");
+        a=validarOpcion();
+        if(a==e)
+        {
+              printf("\nBoton incorrecto\n");
+        printf("\Vuelva a intentarlo\n");
+
+        MENU_COMPARACION();
+        return 0;
+        }
+         else if(a>0 && a<18)
+         {
+             for(int i=12; i<24; i++)
+             {
+                printf("\t %.15lf GWh \t %.15lf GWh\n", numdatos[e].dato[i], numdatos[a].dato[i]);
+             }
+
+         MENU_COMPARACION();
+         return 0;
+
+         }
+        else
+      {
+        printf("\nBoton incorrecto\n");
+        printf("\nVuelva a intentarlo\n");
+        MENU_COMPARACION();
+        return 0;
+      }
+
+   }
+
+   else if(e==0)
+    {
+       MENU_PRINCIPAL();
+       return 0;
+    }
+
+ else
+    {
+		printf("\nBoton incorrecto\n");
+		printf("Vuelva a intentarlo\n");
+		MENU_DATOS();
+		return 0;
+	}
+}
