@@ -39,7 +39,7 @@ float min(int,int);
 int MENU_ORDENAR();//La ultima accion es ordenar de mayor a menor o vice versa los datos de una generacion, este es el menu
 int MENU_COMPARACION();//Compara los datos de entre los meses de las diferentes energias
 int MENU_COMPARACION_1ANO();
-//int MENU_COMPARACION_2ANO();
+int MENU_COMPARACION_2ANO();
 void ordenar(int, int,int);//Esta funcion ordena los datos
 int validarOpcion();//Esta funcion nos sirve para verificar si el usuario ha tecleado un numero o una letra
 int pregunta_calculos(int);//Para facilitar el menu de calculos metemos gran parte de sus preguntas en una funcion
@@ -443,7 +443,7 @@ int MENU_COMPARACION()
 				return 0;
             break;
     	    case 2:
-    	    	//MENU_COMPACION_2ANO();
+    	    	MENU_COMPARACION_2ANO();
     	    	return 0;
     		break;
         }
@@ -1016,7 +1016,7 @@ int pregunta_calculos(int s)
 
 int MENU_COMPARACION_1ANO()
 {
-    int e, a,i;
+    int e, a, i;
     printf("-------------------------------------------MENU PRINCIPAL>>COMPARACION DE DATOS-----------------------------------------");
     printf("\nTipos de generacion a acceder:\n");
     MOSTRARTIPOS(0);
@@ -1061,14 +1061,65 @@ int MENU_COMPARACION_1ANO()
 
 }
 
+int MENU_COMPARACION_2ANO()
+{
 
+  int e, a;
+    printf("-------------------------------------------MENU PRINCIPAL>>COMPARACION DE DATOS-----------------------------------------");
+    printf("\nTipos de generacion a acceder:\n");
+    MOSTRARTIPOS(0);
+    printf("\n---> Para volver la menu principal pulsa 0 <---\n");
+    printf("\nA que tipo de generacion quiere acceder usted? ");
 
+    e= validarOpcion();
 
+    if(e>0 && e<18)
+    {
+        printf("Coja otro año mas para comparar \n");
+        MOSTRARTIPOS(0);
+        printf("La comparacion la quiere realizar con:");
+        a=validarOpcion();
+        if(a==e)
+        {
+            printf("\nBoton incorrecto\n");
+            printf("\nVuelva a intentarlo\n");
 
+        MENU_COMPARACION();
+        return 0;
+        }
+         else if(a>0 && a<18)
+         {
+             for(int i=12; i<24; i++)
+             {
+                printf("\t %.15lf GWh \t %.15lf GWh\n", numdatos[e].dato[i], numdatos[a].dato[i]);
+             }
 
+            MENU_COMPARACION();
+            return 0;
 
+         }
+        else
 
+        {
+            printf("\nBoton incorrecto\n");
+            printf("\nVuelva a intentarlo\n");
+            MENU_COMPARACION();
+            return 0;
+        }
 
+   }
 
+   else if(e==0)
+    {
+       MENU_PRINCIPAL();
+       return 0;
+    }
 
-
+ else
+    {
+		printf("\nBoton incorrecto\n");
+		printf("Vuelva a intentarlo\n");
+		MENU_DATOS();
+		return 0;
+	}
+}
