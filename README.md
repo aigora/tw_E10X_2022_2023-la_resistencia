@@ -6,10 +6,10 @@ realizando cálculos estadísticos, búsqueda de datos específicos y ordenació
 
 ## Integrantes del equipo
 
-·Lucas van Tatenhove(Ha trabajado desde la funcion void meses hasta la funcion int pregunta_calculos junto a Bogdan Adrian Suruianu)
-·Bogdan Adrian Suruianu(Ha trabajado desde la funcion void meses hasta la funcion int pregunta_calculos junto a Lucas van Tatenhove)
-·Darío Sirera(Ha trabajado desde la funcion int MENU_COMPARACION hasta la funcion MENU_COMPARACION_2ANO junto a Pedro Seguí)
-·Pedro Seguí(Ha trabajado desde la funcion int MENU_COMPARACION hasta la funcion MENU_COMPARACION_2ANO junto a Dario Sirera)
+·Lucas van Tatenhove(Ha trabajado desde la funcion void meses hasta la funcion int pregunta_calculos junto a Bogdan Adrian Suruianu)\n
+·Bogdan Adrian Suruianu(Ha trabajado desde la funcion void meses hasta la funcion int pregunta_calculos junto a Lucas van Tatenhove)\n
+·Darío Sirera(Ha trabajado desde la funcion int MENU_COMPARACION hasta la funcion MENU_COMPARACION_2ANO junto a Pedro Seguí)\n
+·Pedro Seguí(Ha trabajado desde la funcion int MENU_COMPARACION hasta la funcion MENU_COMPARACION_2ANO junto a Dario Sirera)\n
 
 ## Objetivos del trabajo
 
